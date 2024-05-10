@@ -64,7 +64,7 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   500
 );
-camera.position.set(0, 3, 10);
+camera.position.set(0, 3, 20);
 cameraGroup.add(camera);
 
 const controls = new OrbitControls(camera, canvas);
