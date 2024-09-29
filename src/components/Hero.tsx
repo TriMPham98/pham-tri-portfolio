@@ -7,7 +7,9 @@ export function Hero() {
         text="Welcome to My Portfolio"
         className="text-6xl font-bold text-white"
       />
-      {/* Add more content here */}
+      <p className="mt-6 text-xl text-gray-300 max-w-2xl mx-auto">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      </p>
     </section>
   );
 }
