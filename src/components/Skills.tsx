@@ -17,7 +17,7 @@ export function Skills() {
     "nodejs",
     "git",
     "github",
-    "vscode",
+    "visualstudiocode",
     "vercel",
     "adobelightroom",
     "adobephotoshop",
