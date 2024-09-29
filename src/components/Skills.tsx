@@ -28,9 +28,9 @@ export function Skills() {
 
   return (
     <section id="skills" className="relative py-16">
-      {/* Modified radial gradient background with faster falloff */}
+      {/* Modified radial gradient background with faster falloff and further upward translation */}
       <div
-        className="absolute inset-0"
+        className="absolute inset-0 transform -translate-y-24"
         style={{
           background: `
             radial-gradient(
@@ -53,7 +53,7 @@ export function Skills() {
           Technical Skills
         </h2>
 
-        {/* Icon Cloud */}
+        {/* Icon Cloud with slight downward translation */}
         <div className="mb-12">
           <IconCloud iconSlugs={techStackSlugs} />
         </div>
