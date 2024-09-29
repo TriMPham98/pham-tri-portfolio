@@ -19,6 +19,7 @@ export function Skills() {
     "nodejs",
     "python",
     "react",
+    "sqlite",
     "typescript",
     "vercel",
     "visualstudiocode",
@@ -69,7 +70,7 @@ export function Skills() {
           <li className="flex items-start">
             <span className="text-green-400 mr-2">•</span>
             <span>
-              <strong>Databases:</strong> MySQL
+              <strong>Databases:</strong> MySQL, SQLite
             </span>
           </li>
           <li className="flex items-start">
