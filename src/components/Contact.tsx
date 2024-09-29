@@ -14,22 +14,30 @@ export function Contact() {
       <div className="flex justify-center space-x-6">
         <Link
           href="mailto:trimpham98@gmail.com"
-          className="text-blue-400 hover:text-blue-300 transition-colors">
+          className="text-blue-400 hover:text-blue-300 transition-colors"
+          target="_blank"
+          rel="noopener noreferrer">
           Email
         </Link>
         <Link
-          href="https://www.linkedin.com/in/pham-tri/"
-          className="text-blue-400 hover:text-blue-300 transition-colors">
-          LinkedIn
-        </Link>
-        <Link
           href="https://github.com/TriMPham98"
-          className="text-blue-400 hover:text-blue-300 transition-colors">
+          className="text-blue-400 hover:text-blue-300 transition-colors"
+          target="_blank"
+          rel="noopener noreferrer">
           GitHub
         </Link>
         <Link
+          href="https://www.linkedin.com/in/pham-tri/"
+          className="text-blue-400 hover:text-blue-300 transition-colors"
+          target="_blank"
+          rel="noopener noreferrer">
+          LinkedIn
+        </Link>
+        <Link
           href="https://x.com/TriMPham98"
-          className="text-blue-400 hover:text-blue-300 transition-colors">
+          className="text-blue-400 hover:text-blue-300 transition-colors"
+          target="_blank"
+          rel="noopener noreferrer">
           X (Twitter)
         </Link>
       </div>
