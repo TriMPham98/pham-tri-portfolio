@@ -8,6 +8,7 @@ export function Skills() {
     "c",
     "cplusplus",
     "css3",
+    "figma",
     "git",
     "github",
     "html5",
@@ -87,7 +88,8 @@ export function Skills() {
           <li className="flex items-start">
             <span className="text-green-400 mr-2">•</span>
             <span>
-              <strong>Design Tools:</strong> Adobe Lightroom and Photoshop
+              <strong>Design Tools:</strong> Figma, Adobe Lightroom, Adobe
+              Photoshop
             </span>
           </li>
           <li className="flex items-start">
