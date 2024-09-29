@@ -3,24 +3,25 @@ import IconCloud from "./ui/icon-cloud";
 
 export function Skills() {
   const techStackSlugs = [
-    "javascript",
-    "html5",
-    "css3",
-    "python",
-    "c",
-    "cplusplus",
-    "java",
-    "mysql",
-    "react",
-    "nextjs",
-    "vuejs",
-    "nodejs",
-    "git",
-    "github",
-    "visualstudiocode",
-    "vercel",
     "adobelightroom",
     "adobephotoshop",
+    "c",
+    "cplusplus",
+    "css3",
+    "git",
+    "github",
+    "html5",
+    "java",
+    "javascript",
+    "mysql",
+    "nextjs",
+    "nodejs",
+    "python",
+    "react",
+    "typescript",
+    "vercel",
+    "visualstudiocode",
+    "vuejs",
   ];
 
   return (
@@ -60,8 +61,14 @@ export function Skills() {
           <li className="flex items-start">
             <span className="text-green-400 mr-2">•</span>
             <span>
-              <strong>Programming Languages:</strong> JavaScript, HTML/CSS,
-              Python, C/C++, Java, MySQL
+              <strong>Programming Languages:</strong> JavaScript, TypeScript,
+              HTML/CSS, Python, C/C++, Java
+            </span>
+          </li>
+          <li className="flex items-start">
+            <span className="text-green-400 mr-2">•</span>
+            <span>
+              <strong>Databases:</strong> MySQL
             </span>
           </li>
           <li className="flex items-start">
