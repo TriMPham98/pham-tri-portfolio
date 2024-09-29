@@ -46,12 +46,12 @@ export function Projects() {
   return (
     <section
       id="projects"
-      className="py-12 px-4 md:px-6 bg-gradient-to-br from-gray-900 to-black">
+      className="py-16 px-4 md:px-6 bg-gradient-to-br from-gray-900 to-black">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl font-extrabold text-white text-center mb-8">
+        <h2 className="text-3xl font-extrabold text-white text-center mb-12">
           Projects
         </h2>
-        <BentoGrid className="grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+        <BentoGrid className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {projects.map((project, index) => (
             <BentoCard
               key={index}
@@ -60,7 +60,7 @@ export function Projects() {
               Icon={project.icon}
               href={project.href}
               cta={project.cta}
-              className="h-full"
+              className="h-full min-h-[250px] flex flex-col justify-between"
               background={
                 <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900 opacity-50" />
               }
