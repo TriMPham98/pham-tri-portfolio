@@ -27,10 +27,12 @@ export function Skills() {
   ];
 
   return (
-    <section id="skills" className="relative py-16">
-      {/* Modified radial gradient background with faster falloff and further upward translation */}
+    <section id="skills" className="relative py-12">
+      {" "}
+      // Reduced padding
+      {/* Modified radial gradient background with less upward translation */}
       <div
-        className="absolute inset-0 transform -translate-y-24"
+        className="absolute inset-0 transform -translate-y-16" // Reduced upward translation
         style={{
           background: `
             radial-gradient(
@@ -46,20 +48,21 @@ export function Skills() {
           backgroundRepeat: "no-repeat",
         }}
       />
-
       {/* Content container */}
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-extrabold text-white text-center mb-8">
+        <h2 className="text-3xl font-extrabold text-white text-center mb-6">
+          {" "}
           Technical Skills
         </h2>
 
         {/* Icon Cloud with slight downward translation */}
-        <div className="mb-12">
+        <div className="mb-8">
+          {" "}
           <IconCloud iconSlugs={techStackSlugs} />
         </div>
 
         {/* Skills list */}
-        <ul className="text-gray-300 max-w-2xl mx-auto space-y-4 text-lg">
+        <ul className="text-gray-300 max-w-2xl mx-auto space-y-2 text-base">
           <li className="flex items-start">
             <span className="text-green-400 mr-2">•</span>
             <span>
