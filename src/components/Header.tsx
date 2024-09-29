@@ -13,6 +13,14 @@ export function Header() {
     <header className="p-4 md:p-6 flex flex-col md:flex-row justify-between items-center bg-black">
       <FadeText
         direction="down"
+        framerProps={{
+          hidden: { opacity: 0, y: -10 },
+          show: {
+            opacity: 1,
+            y: 0,
+            transition: { delay: 0.2, type: "spring" },
+          },
+        }}
         text={
           <Link
             href="/"
@@ -34,7 +42,7 @@ export function Header() {
                   show: {
                     opacity: 1,
                     y: 0,
-                    transition: { delay: index * 0.1, type: "spring" },
+                    transition: { delay: 0.3 + index * 0.1, type: "spring" },
                   },
                 }}
                 text={
