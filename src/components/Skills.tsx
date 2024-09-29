@@ -2,7 +2,6 @@ import React from "react";
 import IconCloud from "./ui/icon-cloud";
 
 export function Skills() {
-  // Updated tech stack slugs based on your resume
   const techStackSlugs = [
     "javascript",
     "html5",
@@ -27,7 +26,7 @@ export function Skills() {
   return (
     <section
       id="skills"
-      className="p-4 md:p-6 bg-black bg-opacity-50 backdrop-blur-sm">
+      className="p-4 md:p-6 bg-gradient-to-b from-black via-gray-900 to-black backdrop-blur-sm">
       <h2 className="text-2xl font-bold text-white mb-6">Technical Skills</h2>
 
       {/* Icon Cloud */}
