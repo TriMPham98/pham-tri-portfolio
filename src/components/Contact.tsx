@@ -6,7 +6,7 @@ export function Contact() {
     <section
       id="contact"
       className="p-4 md:p-6 bg-black bg-opacity-50 backdrop-blur-sm">
-      <h2 className="text-2xl font-bold text-white mb-6">Contact Me</h2>
+      <h2 className="text-3xl font-extrabold text-white text-center mb-8">Contact Me</h2>
       <p className="text-gray-300 max-w-2xl mx-auto mb-6">
         Feel free to reach out to me through any of the following platforms. I'm
         always open to new opportunities and connections!
