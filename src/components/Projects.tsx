@@ -46,7 +46,7 @@ export function Projects() {
   return (
     <section
       id="projects"
-      className="py-16 px-4 md:px-6 bg-gradient-to-br from-gray-900 to-black">
+      className="py-16 px-4 md:px-6 bg-gradient-to-br from-gray-900 to-black mb-16">
       <div className="max-w-6xl mx-auto">
         <h2 className="text-3xl font-extrabold text-white text-center mb-12">
           Projects
