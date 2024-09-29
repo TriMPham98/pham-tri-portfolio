@@ -24,30 +24,64 @@ export function Skills() {
   ];
 
   return (
-    <section
-      id="skills"
-      className="p-4 md:p-6 bg-gradient-to-b from-black via-gray-900 to-black backdrop-blur-sm">
-      <h2 className="text-2xl font-bold text-white mb-6">Technical Skills</h2>
+    <section id="skills" className="relative py-16">
+      {/* Optimized radial gradient background */}
+      <div
+        className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gray-800/50 via-gray-900/20 to-black"
+        style={{
+          backgroundSize: "100% 100%",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      />
 
-      {/* Icon Cloud */}
-      <div className="mb-8">
-        <IconCloud iconSlugs={techStackSlugs} />
+      {/* Content container */}
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 className="text-3xl font-extrabold text-white text-center mb-8">
+          Technical Skills
+        </h2>
+
+        {/* Icon Cloud */}
+        <div className="mb-12">
+          <IconCloud iconSlugs={techStackSlugs} />
+        </div>
+
+        {/* Skills list */}
+        <ul className="text-gray-300 max-w-2xl mx-auto space-y-4 text-lg">
+          <li className="flex items-start">
+            <span className="text-green-400 mr-2">•</span>
+            <span>
+              <strong>Programming Languages:</strong> JavaScript, HTML/CSS,
+              Python, C/C++, Java, MySQL
+            </span>
+          </li>
+          <li className="flex items-start">
+            <span className="text-green-400 mr-2">•</span>
+            <span>
+              <strong>Frameworks:</strong> React, Next.js, Vue.js, Node.js
+            </span>
+          </li>
+          <li className="flex items-start">
+            <span className="text-green-400 mr-2">•</span>
+            <span>
+              <strong>Developer Tools:</strong> Git, GitHub, VS Code, Cursor,
+              PyCharm, CLion, Eclipse, Vercel
+            </span>
+          </li>
+          <li className="flex items-start">
+            <span className="text-green-400 mr-2">•</span>
+            <span>
+              <strong>Design Tools:</strong> Adobe Lightroom and Photoshop
+            </span>
+          </li>
+          <li className="flex items-start">
+            <span className="text-green-400 mr-2">•</span>
+            <span>
+              <strong>Libraries:</strong> shadcn/ui, Three.js, Vite, pyautogui
+            </span>
+          </li>
+        </ul>
       </div>
-
-      {/* Updated Skills list */}
-      <ul className="list-disc list-inside text-gray-300 max-w-2xl mx-auto space-y-2">
-        <li>
-          Programming Languages: JavaScript, HTML/CSS, Python, C/C++, Java,
-          MySQL
-        </li>
-        <li>Frameworks: React, Next.js, Vue.js, Node.js</li>
-        <li>
-          Developer Tools: Git, GitHub, VS Code, Cursor, PyCharm, CLion,
-          Eclipse, Vercel
-        </li>
-        <li>Design Tools: Adobe Lightroom and Photoshop</li>
-        <li>Libraries: shadcn/ui, Three.js, Vite, pyautogui</li>
-      </ul>
     </section>
   );
 }
