@@ -25,10 +25,19 @@ export function Skills() {
 
   return (
     <section id="skills" className="relative py-16">
-      {/* Optimized radial gradient background */}
+      {/* Modified radial gradient background with faster falloff */}
       <div
-        className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gray-800/50 via-gray-900/20 to-black"
+        className="absolute inset-0"
         style={{
+          background: `
+            radial-gradient(
+              circle at center,
+              rgba(31, 41, 55, 0.8) 0%,
+              rgba(17, 24, 39, 0.6) 25%,
+              rgba(0, 0, 0, 0.8) 50%,
+              rgba(0, 0, 0, 1) 75%
+            )
+          `,
           backgroundSize: "100% 100%",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
