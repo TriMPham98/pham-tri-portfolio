@@ -5,6 +5,14 @@ import { Projects } from "@/components/Projects";
 import { Skills } from "@/components/Skills";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
+import dynamic from "next/dynamic";
+
+const DynamicSkills = dynamic(
+  () => import("@/components/Skills").then((mod) => mod.Skills),
+  {
+    ssr: false,
+  }
+);
 
 export default function Portfolio() {
   return (
@@ -19,7 +27,7 @@ export default function Portfolio() {
           <Projects />
         </section>
         <section id="skills">
-          <Skills />
+          <DynamicSkills />
         </section>
         <section id="contact">
           <Contact />

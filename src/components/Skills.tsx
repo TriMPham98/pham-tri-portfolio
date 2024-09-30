@@ -1,6 +1,8 @@
+"use client";
+
 import React from "react";
 import IconCloud from "./ui/icon-cloud";
-import { FadeText } from "@/components/ui/fade-text";
+import { AnimateOnScroll } from "@/components/AnimateOnScroll";
 
 export function Skills() {
   const techStackSlugs = [
@@ -65,22 +67,19 @@ export function Skills() {
         }}
       />
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <FadeText
-          direction="up"
-          framerProps={{
+        <AnimateOnScroll
+          animation={{
             hidden: { opacity: 0, y: 20 },
-            show: {
+            visible: {
               opacity: 1,
               y: 0,
-              transition: { delay: 0.2, type: "spring" },
+              transition: { duration: 0.6, ease: "easeOut" },
             },
-          }}
-          text={
-            <h2 className="text-3xl font-extrabold text-white text-center mb-6">
-              Technical Skills
-            </h2>
-          }
-        />
+          }}>
+          <h2 className="text-3xl font-extrabold text-white text-center mb-6">
+            Technical Skills
+          </h2>
+        </AnimateOnScroll>
 
         <div className="mb-8">
           <IconCloud iconSlugs={techStackSlugs} />
@@ -88,26 +87,27 @@ export function Skills() {
 
         <ul className="text-gray-300 max-w-2xl mx-auto space-y-2 text-base">
           {skillsList.map((item, index) => (
-            <FadeText
+            <AnimateOnScroll
               key={item.category}
-              direction="up"
-              framerProps={{
+              animation={{
                 hidden: { opacity: 0, y: 20 },
-                show: {
+                visible: {
                   opacity: 1,
                   y: 0,
-                  transition: { delay: 0.3 + index * 0.1, type: "spring" },
+                  transition: {
+                    delay: index * 0.1,
+                    duration: 0.6,
+                    ease: "easeOut",
+                  },
                 },
-              }}
-              text={
-                <li className="flex items-start">
-                  <span className="text-green-400 mr-2">•</span>
-                  <span>
-                    <strong>{item.category}:</strong> {item.skills}
-                  </span>
-                </li>
-              }
-            />
+              }}>
+              <li className="flex items-start">
+                <span className="text-green-400 mr-2">•</span>
+                <span>
+                  <strong>{item.category}:</strong> {item.skills}
+                </span>
+              </li>
+            </AnimateOnScroll>
           ))}
         </ul>
       </div>
