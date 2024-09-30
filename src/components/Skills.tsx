@@ -1,5 +1,6 @@
 import React from "react";
 import IconCloud from "./ui/icon-cloud";
+import { FadeText } from "@/components/ui/fade-text";
 
 export function Skills() {
   const techStackSlugs = [
@@ -26,13 +27,28 @@ export function Skills() {
     "vuejs",
   ];
 
+  const skillsList = [
+    {
+      category: "Programming Languages",
+      skills: "JavaScript, TypeScript, HTML/CSS, Python, C/C++, Java",
+    },
+    { category: "Databases", skills: "MySQL, SQLite" },
+    { category: "Frameworks", skills: "React, Next.js, Vue.js, Node.js" },
+    {
+      category: "Developer Tools",
+      skills: "Git, GitHub, VS Code, Cursor, PyCharm, CLion, Eclipse, Vercel",
+    },
+    {
+      category: "Design Tools",
+      skills: "Figma, Adobe Lightroom, Adobe Photoshop",
+    },
+    { category: "Libraries", skills: "shadcn/ui, Three.js, Vite, pyautogui" },
+  ];
+
   return (
     <section id="skills" className="relative py-12">
-      {" "}
-      // Reduced padding
-      {/* Modified radial gradient background with less upward translation */}
       <div
-        className="absolute inset-0 transform -translate-y-16" // Reduced upward translation
+        className="absolute inset-0 transform -translate-y-16"
         style={{
           background: `
             radial-gradient(
@@ -48,60 +64,51 @@ export function Skills() {
           backgroundRepeat: "no-repeat",
         }}
       />
-      {/* Content container */}
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-extrabold text-white text-center mb-6">
-          {" "}
-          Technical Skills
-        </h2>
+        <FadeText
+          direction="up"
+          framerProps={{
+            hidden: { opacity: 0, y: 20 },
+            show: {
+              opacity: 1,
+              y: 0,
+              transition: { delay: 0.2, type: "spring" },
+            },
+          }}
+          text={
+            <h2 className="text-3xl font-extrabold text-white text-center mb-6">
+              Technical Skills
+            </h2>
+          }
+        />
 
-        {/* Icon Cloud with slight downward translation */}
         <div className="mb-8">
-          {" "}
           <IconCloud iconSlugs={techStackSlugs} />
         </div>
 
-        {/* Skills list */}
         <ul className="text-gray-300 max-w-2xl mx-auto space-y-2 text-base">
-          <li className="flex items-start">
-            <span className="text-green-400 mr-2">•</span>
-            <span>
-              <strong>Programming Languages:</strong> JavaScript, TypeScript,
-              HTML/CSS, Python, C/C++, Java
-            </span>
-          </li>
-          <li className="flex items-start">
-            <span className="text-green-400 mr-2">•</span>
-            <span>
-              <strong>Databases:</strong> MySQL, SQLite
-            </span>
-          </li>
-          <li className="flex items-start">
-            <span className="text-green-400 mr-2">•</span>
-            <span>
-              <strong>Frameworks:</strong> React, Next.js, Vue.js, Node.js
-            </span>
-          </li>
-          <li className="flex items-start">
-            <span className="text-green-400 mr-2">•</span>
-            <span>
-              <strong>Developer Tools:</strong> Git, GitHub, VS Code, Cursor,
-              PyCharm, CLion, Eclipse, Vercel
-            </span>
-          </li>
-          <li className="flex items-start">
-            <span className="text-green-400 mr-2">•</span>
-            <span>
-              <strong>Design Tools:</strong> Figma, Adobe Lightroom, Adobe
-              Photoshop
-            </span>
-          </li>
-          <li className="flex items-start">
-            <span className="text-green-400 mr-2">•</span>
-            <span>
-              <strong>Libraries:</strong> shadcn/ui, Three.js, Vite, pyautogui
-            </span>
-          </li>
+          {skillsList.map((item, index) => (
+            <FadeText
+              key={item.category}
+              direction="up"
+              framerProps={{
+                hidden: { opacity: 0, y: 20 },
+                show: {
+                  opacity: 1,
+                  y: 0,
+                  transition: { delay: 0.3 + index * 0.1, type: "spring" },
+                },
+              }}
+              text={
+                <li className="flex items-start">
+                  <span className="text-green-400 mr-2">•</span>
+                  <span>
+                    <strong>{item.category}:</strong> {item.skills}
+                  </span>
+                </li>
+              }
+            />
+          ))}
         </ul>
       </div>
     </section>
