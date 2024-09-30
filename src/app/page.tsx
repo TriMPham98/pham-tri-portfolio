@@ -1,9 +1,15 @@
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
-import { About } from "@/components/About";
 import { Projects } from "@/components/Projects";
 import { Footer } from "@/components/Footer";
 import dynamic from "next/dynamic";
+
+const DynamicAbout = dynamic(
+  () => import("@/components/About").then((mod) => mod.About),
+  {
+    ssr: false,
+  }
+);
 
 const DynamicSkills = dynamic(
   () => import("@/components/Skills").then((mod) => mod.Skills),
@@ -26,7 +32,7 @@ export default function Portfolio() {
       <main className="flex-grow">
         <Hero />
         <section id="about">
-          <About />
+          <DynamicAbout />
         </section>
         <section id="projects">
           <Projects />
