@@ -2,13 +2,18 @@ import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
 import { About } from "@/components/About";
 import { Projects } from "@/components/Projects";
-import { Skills } from "@/components/Skills";
-import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
 import dynamic from "next/dynamic";
 
 const DynamicSkills = dynamic(
   () => import("@/components/Skills").then((mod) => mod.Skills),
+  {
+    ssr: false,
+  }
+);
+
+const DynamicContact = dynamic(
+  () => import("@/components/Contact").then((mod) => mod.Contact),
   {
     ssr: false,
   }
@@ -30,7 +35,7 @@ export default function Portfolio() {
           <DynamicSkills />
         </section>
         <section id="contact">
-          <Contact />
+          <DynamicContact />
         </section>
       </main>
       <Footer />
