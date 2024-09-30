@@ -1,8 +1,14 @@
 import { Header } from "@/components/Header";
-import { Hero } from "@/components/Hero";
 import { Projects } from "@/components/Projects";
 import { Footer } from "@/components/Footer";
 import dynamic from "next/dynamic";
+
+const DynamicHero = dynamic(
+  () => import("@/components/Hero").then((mod) => mod.Hero),
+  {
+    ssr: false,
+  }
+);
 
 const DynamicAbout = dynamic(
   () => import("@/components/About").then((mod) => mod.About),
@@ -30,7 +36,7 @@ export default function Portfolio() {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-grow">
-        <Hero />
+        <DynamicHero />
         <section id="about">
           <DynamicAbout />
         </section>
