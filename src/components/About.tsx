@@ -2,12 +2,14 @@ import React from "react";
 import { AnimateOnScroll } from "@/components/AnimateOnScroll";
 
 const TimelineItem = ({ year, title, description }) => (
-  <div className="mb-8 flex justify-between items-center w-full">
-    <div className="order-1 w-5/12"></div>
-    <div className="z-20 flex items-center order-1 bg-gray-800 shadow-xl w-8 h-8 rounded-full">
-      <h1 className="mx-auto font-semibold text-lg text-white">{year}</h1>
+  <div className="mb-8 flex w-full">
+    <div className="flex flex-col items-center mr-4">
+      <div className="flex items-center justify-center w-16 h-16 rounded-full bg-gray-800 text-white text-xl font-bold">
+        {year}
+      </div>
+      <div className="w-1 h-full bg-gray-800 mt-2"></div>
     </div>
-    <div className="order-1 bg-gray-900 rounded-lg shadow-xl w-5/12 px-6 py-4">
+    <div className="bg-gray-900 rounded-lg shadow-xl px-6 py-4 w-full">
       <h3 className="mb-3 font-bold text-white text-xl">{title}</h3>
       <p className="text-sm leading-snug tracking-wide text-gray-300 text-opacity-100">
         {description}
@@ -64,18 +66,15 @@ export function About() {
 
       <AnimateOnScroll
         animation={{
-          hidden: { opacity: 0, y: 20 },
+          hidden: { opacity: 0, x: -20 },
           visible: {
             opacity: 1,
-            y: 0,
+            x: 0,
             transition: { delay: 0.2, duration: 0.6, ease: "easeOut" },
           },
         }}>
-        <div className="container mx-auto w-full h-full">
-          <div className="relative wrap overflow-hidden p-10 h-full">
-            <div
-              className="border-2-2 absolute border-opacity-20 border-gray-700 h-full border"
-              style={{ left: "50%" }}></div>
+        <div className="container mx-auto w-full max-w-2xl">
+          <div className="relative wrap overflow-hidden p-4 h-full">
             {timelineData.map((item, index) => (
               <TimelineItem key={index} {...item} />
             ))}
