@@ -33,9 +33,9 @@ export function Contact() {
           },
         }}>
         <p className="text-gray-300 max-w-2xl mx-auto mb-6">
-          Thanks for choosing to spend your time to get to know me. Please feel
-          free to connect through any of the following platforms. I'm always
-          open to new opportunities and collaborations!
+          Thanks for spending your time to get to know me. Please feel free to
+          connect through any of the following platforms. I'm always open to new
+          opportunities and collaborations!
         </p>
       </AnimateOnScroll>
 
