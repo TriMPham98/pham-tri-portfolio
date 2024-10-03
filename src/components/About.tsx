@@ -15,13 +15,15 @@ const TimelineItem = ({ year, title, description, isEven }) => (
       className={`mb-12 flex w-full items-center justify-center ${
         isEven ? "flex-row-reverse" : "flex-row"
       }`}>
-      <div className={`w-5/12 ${isEven ? "text-right" : "text-left"}`}>
+      <div className="w-5/12">
         <div
           className={`p-6 bg-gray-900 rounded-lg shadow-xl ${
             isEven ? "ml-auto" : "mr-auto"
           }`}>
-          <h3 className="mb-3 font-bold text-white text-2xl">{title}</h3>
-          <p className="text-base leading-relaxed tracking-wide text-gray-300">
+          <h3 className="mb-3 font-bold text-white text-2xl text-left">
+            {title}
+          </h3>
+          <p className="text-base leading-relaxed tracking-wide text-gray-300 text-left">
             {description}
           </p>
         </div>
