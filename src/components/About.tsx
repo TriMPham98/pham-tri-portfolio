@@ -40,28 +40,28 @@ const TimelineItem = ({ year, title, description, isEven }) => (
 export function About() {
   const timelineData = [
     {
-      year: "2018",
-      title: "Started Coding Journey",
+      year: "2019",
+      title: "Started Computer Science Journey",
       description:
-        "Embarked on my web development journey, diving deep into online courses and tackling personal projects with enthusiasm. This period was marked by rapid learning and the excitement of creating my first web applications.",
-    },
-    {
-      year: "2020",
-      title: "First Developer Job",
-      description:
-        "Secured my first role as a junior developer at an innovative local tech startup. This opportunity allowed me to apply my skills in a professional setting, collaborate with experienced developers, and contribute to real-world projects.",
+        "Began my academic journey in Computer Science at De Anza College, laying the foundation for my future in technology.",
     },
     {
       year: "2022",
-      title: "Freelance Work",
+      title: "Advanced Education & Career Start",
       description:
-        "Ventured into the world of freelancing, taking on diverse projects that challenged me to expand my skillset. This phase was crucial in developing my client communication skills and adapting to various project requirements and technologies.",
+        "Transferred to California State University, East Bay to pursue a Bachelor of Science in Computer Science. Simultaneously, I began my role as a Rock Band Instructor at San Jose Jazz - Bridges Academy Middle School, combining my passion for music and education.",
+    },
+    {
+      year: "2023",
+      title: "Expanding Skills & Projects",
+      description:
+        "Developed the 'Infinite Ocean' 3D art gallery using JavaScript and Three.js, showcasing my growing expertise in web development and interactive design. Also started as a Freelance Photographer, enhancing my visual design skills.",
     },
     {
       year: "2024",
-      title: "Current Position",
+      title: "Diversifying Portfolio & Graduation",
       description:
-        "Now thriving as a full-stack developer, I continue to push the boundaries of my expertise. My focus is on staying at the forefront of web technologies, mentoring junior developers, and contributing to cutting-edge projects that make a real impact.",
+        "Created multiple projects including an Upscale Restaurant Landing Page, a Pokédex React App, and a Music Teacher Admin Dashboard, demonstrating proficiency in various technologies like React, Next.js, and SQLite. Graduated with a BS in Computer Science from Cal State East Bay.",
     },
   ];
 
