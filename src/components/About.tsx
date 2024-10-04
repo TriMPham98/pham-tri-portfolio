@@ -1,25 +1,25 @@
 import React from "react";
 import { AnimateOnScroll } from "@/components/AnimateOnScroll";
 
-const TimelineItem = ({ year, title, description, isEven }) => (
+const TimelineItem = ({ year, title, description }) => (
   <AnimateOnScroll
     animation={{
-      hidden: { opacity: 0, x: isEven ? 20 : -20 },
+      hidden: { opacity: 0, x: -20 },
       visible: {
         opacity: 1,
         x: 0,
         transition: { duration: 0.6, ease: "easeOut" },
       },
     }}>
-    <div
-      className={`mb-12 flex w-full items-center justify-center ${
-        isEven ? "flex-row-reverse" : "flex-row"
-      }`}>
-      <div className="w-5/12">
-        <div
-          className={`p-6 bg-gray-900 rounded-lg shadow-xl ${
-            isEven ? "ml-auto" : "mr-auto"
-          }`}>
+    <div className="mb-12 flex w-full items-start">
+      <div className="flex flex-col items-center mr-4">
+        <div className="flex items-center justify-center w-16 h-16 rounded-full bg-gray-800 text-white text-xl font-bold">
+          {year}
+        </div>
+        <div className="w-1 h-full bg-gray-800 mt-2"></div>
+      </div>
+      <div className="flex-1">
+        <div className="p-6 bg-gray-900 rounded-lg shadow-xl">
           <h3 className="mb-3 font-bold text-white text-2xl text-left">
             {title}
           </h3>
@@ -28,13 +28,6 @@ const TimelineItem = ({ year, title, description, isEven }) => (
           </p>
         </div>
       </div>
-      <div className="flex flex-col items-center mx-8">
-        <div className="flex items-center justify-center w-16 h-16 rounded-full bg-gray-800 text-white text-xl font-bold">
-          {year}
-        </div>
-        <div className="w-1 h-32 bg-gray-800 mt-2"></div>
-      </div>
-      <div className="w-5/12"></div>
     </div>
   </AnimateOnScroll>
 );
@@ -55,15 +48,15 @@ export function About() {
     },
     {
       year: "2023",
-      title: "Expanding Skills & Projects",
+      title: "Expanded Career Experience",
       description:
-        "Developed the 'Infinite Ocean' 3D art gallery using JavaScript and Three.js, showcasing my growing expertise in web development and interactive design. Also started as a Freelance Photographer, enhancing my visual design skills.",
+        "Started as a Freelance Photographer, broadening my professional skill set and gaining experience in visual arts alongside my technical studies.",
     },
     {
       year: "2024",
-      title: "Diversifying Portfolio & Graduation",
+      title: "Graduation",
       description:
-        "Created multiple projects including an Upscale Restaurant Landing Page, a Pokédex React App, and a Music Teacher Admin Dashboard, demonstrating proficiency in various technologies like React, Next.js, and SQLite. Graduated with a BS in Computer Science from Cal State East Bay.",
+        "Graduated with a BS in Computer Science from California State University, East Bay, marking a significant milestone in my academic and professional journey.",
     },
   ];
 
@@ -85,10 +78,10 @@ export function About() {
         </h2>
       </AnimateOnScroll>
 
-      <div className="container mx-auto w-full max-w-6xl">
+      <div className="container mx-auto w-full max-w-3xl">
         <div className="relative wrap overflow-hidden p-4 h-full">
           {timelineData.map((item, index) => (
-            <TimelineItem key={index} {...item} isEven={index % 2 !== 0} />
+            <TimelineItem key={index} {...item} />
           ))}
         </div>
       </div>
