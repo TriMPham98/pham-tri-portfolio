@@ -1,44 +1,44 @@
 import React from "react";
 import { BentoGrid, BentoCard } from "@/components/ui/bento-grid";
 import {
-  CodeIcon,
-  RocketIcon,
-  BrainCircuitIcon,
+  Code2Icon,
+  UtensilsIcon,
   GlobeIcon,
+  LayoutDashboardIcon,
 } from "lucide-react";
 
 export function Projects() {
   const projects = [
     {
-      name: "Project 1",
+      name: "Infinite Ocean 3D Art Gallery",
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      icon: CodeIcon,
-      href: "#",
+        "Interactive 3D art gallery featuring art and photography, with day-night transitions, dynamic frame lighting, and audio feedback. Built with Three.js, JavaScript, Node.js, and Vercel.",
+      icon: GlobeIcon,
+      href: "https://github.com/TriMPham98/Infinite-Ocean-3D-Art-Gallery",
       cta: "View Project",
     },
     {
-      name: "Project 2",
+      name: "Upscale Restaurant Landing Page",
       description:
-        "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-      icon: RocketIcon,
-      href: "#",
+        "Modern UI/UX restaurant landing page with responsive design, animations, and gradients. Developed using React, JavaScript, CSS, HTML, and Node.js.",
+      icon: UtensilsIcon,
+      href: "https://github.com/TriMPham98/fine-dining-restaurant-landing-page",
       cta: "Explore",
     },
     {
-      name: "Project 3",
+      name: "Pokédex React App",
       description:
-        "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-      icon: BrainCircuitIcon,
-      href: "#",
+        "Responsive web application displaying Pokémon data from PokéAPI. Features include an interactive grid, animated sprites, and detailed information. Built with React and JavaScript.",
+      icon: Code2Icon,
+      href: "https://github.com/TriMPham98/pokedex",
       cta: "Learn More",
     },
     {
-      name: "Project 4",
+      name: "Music Teacher Admin Dashboard",
       description:
-        "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-      icon: GlobeIcon,
-      href: "#",
+        "Comprehensive web app for music lesson management and student progress tracking. Includes an interactive music note reading quiz. Developed with Next.js, Tailwind CSS, and SQLite.",
+      icon: LayoutDashboardIcon,
+      href: "https://github.com/TriMPham98/sjz-dashboard",
       cta: "Discover",
     },
   ];
