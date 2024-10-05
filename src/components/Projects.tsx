@@ -51,7 +51,7 @@ export function Projects() {
         <h2 className="text-3xl font-extrabold text-white text-center mb-12">
           Projects
         </h2>
-        <BentoGrid className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <BentoGrid className="grid-cols-1 md:grid-cols-2 gap-8">
           {projects.map((project, index) => (
             <BentoCard
               key={index}
@@ -60,7 +60,7 @@ export function Projects() {
               Icon={project.icon}
               href={project.href}
               cta={project.cta}
-              className="h-full min-h-[250px] flex flex-col justify-between"
+              className="col-span-1 h-full min-h-[250px]"
               background={
                 <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900 opacity-50" />
               }
