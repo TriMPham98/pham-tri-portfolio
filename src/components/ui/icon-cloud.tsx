@@ -25,7 +25,7 @@ export const cloudProps: Omit<ICloud, "children"> = {
     depth: 1,
     wheelZoom: false,
     imageScale: 2,
-    activeCursor: "default",
+    activeCursor: "pointer", // Changed from 'default' to 'pointer'
     tooltip: "native",
     initial: [0.1, -0.1],
     clickToFront: 500,
@@ -53,6 +53,7 @@ export const renderCustomIcon = (icon: SimpleIcon, theme: string) => {
       target: undefined,
       rel: undefined,
       onClick: (e: any) => e.preventDefault(),
+      style: { cursor: "pointer" }, // Added style to make the cursor a pointer
     },
   });
 };
