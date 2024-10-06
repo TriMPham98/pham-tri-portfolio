@@ -40,15 +40,15 @@ export function Projects() {
       href: "https://github.com/TriMPham98/pokedex",
       cta: "Learn More",
       background: (
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 overflow-hidden">
           <Image
             src="/images/pokedex.png"
             alt="Pokédex App Screenshot"
             layout="fill"
             objectFit="cover"
-            className="opacity-50"
+            className="transform scale-105 hover:scale-110 transition-transform duration-300"
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900 opacity-50" />
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-900/70 to-black/70" />
         </div>
       ),
     },
@@ -82,7 +82,7 @@ export function Projects() {
               Icon={project.icon}
               href={project.href}
               cta={project.cta}
-              className="col-span-1 h-full min-h-[250px]"
+              className="col-span-1 h-full min-h-[250px] group"
               background={project.background}
             />
           ))}
