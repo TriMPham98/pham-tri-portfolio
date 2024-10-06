@@ -6,6 +6,7 @@ import {
   GlobeIcon,
   LayoutDashboardIcon,
 } from "lucide-react";
+import Image from "next/image";
 
 export function Projects() {
   const projects = [
@@ -16,6 +17,9 @@ export function Projects() {
       icon: GlobeIcon,
       href: "https://github.com/TriMPham98/Infinite-Ocean-3D-Art-Gallery",
       cta: "View Project",
+      background: (
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900 opacity-50" />
+      ),
     },
     {
       name: "Upscale Restaurant Landing Page",
@@ -24,6 +28,9 @@ export function Projects() {
       icon: UtensilsIcon,
       href: "https://github.com/TriMPham98/fine-dining-restaurant-landing-page",
       cta: "Explore",
+      background: (
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900 opacity-50" />
+      ),
     },
     {
       name: "Pokédex React App",
@@ -32,6 +39,18 @@ export function Projects() {
       icon: Code2Icon,
       href: "https://github.com/TriMPham98/pokedex",
       cta: "Learn More",
+      background: (
+        <div className="absolute inset-0">
+          <Image
+            src="/images/pokedex.png"
+            alt="Pokédex App Screenshot"
+            layout="fill"
+            objectFit="cover"
+            className="opacity-50"
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900 opacity-50" />
+        </div>
+      ),
     },
     {
       name: "Music Teacher Admin Dashboard",
@@ -40,6 +59,9 @@ export function Projects() {
       icon: LayoutDashboardIcon,
       href: "https://github.com/TriMPham98/sjz-dashboard",
       cta: "Discover",
+      background: (
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900 opacity-50" />
+      ),
     },
   ];
 
@@ -61,9 +83,7 @@ export function Projects() {
               href={project.href}
               cta={project.cta}
               className="col-span-1 h-full min-h-[250px]"
-              background={
-                <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900 opacity-50" />
-              }
+              background={project.background}
             />
           ))}
         </BentoGrid>
