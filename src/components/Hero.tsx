@@ -21,7 +21,7 @@ export function Hero() {
           },
         }}>
         <p className="mt-4 md:mt-6 text-lg md:text-xl text-gray-300 max-w-2xl mx-auto px-4 md:px-0">
-          I connect humans and machines through user interfaces.
+          I design user interfaces that connect humans and machines.
         </p>
       </AnimateOnScroll>
     </section>
