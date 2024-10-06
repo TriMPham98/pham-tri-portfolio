@@ -93,6 +93,7 @@ export function Projects() {
               cta={project.cta}
               className="col-span-1 h-full min-h-[250px] group"
               background={project.background}
+              descriptionClassName="text-white" // Add this line to make description text white
             />
           ))}
         </BentoGrid>
