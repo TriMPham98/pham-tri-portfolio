@@ -55,9 +55,9 @@ export function Skills() {
           background: `
             radial-gradient(
               circle at center,
-              rgba(31, 41, 55, 0.8) 0%,
-              rgba(17, 24, 39, 0.6) 25%,
-              rgba(0, 0, 0, 0.8) 50%,
+              rgba(55, 65, 81, 0.9) 0%,
+              rgba(31, 41, 55, 0.7) 25%,
+              rgba(17, 24, 39, 0.8) 50%,
               rgba(0, 0, 0, 1) 75%
             )
           `,
