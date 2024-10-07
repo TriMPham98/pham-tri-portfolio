@@ -76,7 +76,7 @@ export function Skills() {
               transition: { duration: 0.6, ease: "easeOut" },
             },
           }}>
-          <h2 className="text-3xl font-extrabold text-white text-center mb-6">
+          <h2 className="text-3xl font-extrabold text-white text-center mb-4">
             Technical Skills
           </h2>
         </AnimateOnScroll>
@@ -89,7 +89,7 @@ export function Skills() {
           />
         </div>
 
-        <ul className="text-gray-300 max-w-2xl mx-auto space-y-2 text-base">
+        <ul className="text-gray-300 max-w-2xl mx-auto space-y-2 text-base mb-12">
           {skillsList.map((item, index) => (
             <AnimateOnScroll
               key={item.category}
