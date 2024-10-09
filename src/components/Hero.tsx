@@ -7,6 +7,7 @@ import { AnimateOnScroll } from "@/components/AnimateOnScroll";
 import ProfileAvatar from "./ProfileAvatar";
 import ParticleLinks from "@/components/ui/particle-links";
 import { RainbowButton } from "@/components/ui/rainbow-button";
+import { FileText } from "lucide-react";
 
 export function Hero() {
   return (
@@ -37,7 +38,8 @@ export function Hero() {
               href="/files/Tri-Pham-Resume.pdf"
               target="_blank"
               rel="noopener noreferrer">
-              <RainbowButton className="hover:scale-105">
+              <RainbowButton className="hover:scale-105 flex items-center gap-2">
+                <FileText size={18} />
                 View Résumé
               </RainbowButton>
             </Link>
