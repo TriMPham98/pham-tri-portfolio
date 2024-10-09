@@ -25,7 +25,7 @@ export const cloudProps: Omit<ICloud, "children"> = {
     depth: 1,
     wheelZoom: false,
     imageScale: 2,
-    activeCursor: "pointer", // Changed from 'default' to 'pointer'
+    activeCursor: "pointer",
     tooltip: "native",
     initial: [0.1, -0.1],
     clickToFront: 500,
@@ -52,8 +52,8 @@ export const renderCustomIcon = (icon: SimpleIcon, theme: string) => {
       href: undefined,
       target: undefined,
       rel: undefined,
-      onClick: (e: any) => e.preventDefault(),
-      style: { cursor: "pointer" }, // Added style to make the cursor a pointer
+      onClick: (e: React.MouseEvent<HTMLAnchorElement>) => e.preventDefault(),
+      style: { cursor: "pointer" },
     },
   });
 };
@@ -81,7 +81,6 @@ export default function IconCloud({ iconSlugs }: DynamicCloudProps) {
   }, [data, theme]);
 
   return (
-    // @ts-ignore
     <Cloud {...cloudProps}>
       <>{renderedIcons}</>
     </Cloud>
