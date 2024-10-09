@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
-import { motion, useAnimation, AnimationControls } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
 
 interface AnimateOnScrollProps {
   children: React.ReactNode;
@@ -19,6 +19,7 @@ export const AnimateOnScroll: React.FC<AnimateOnScrollProps> = ({
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const currentRef = ref.current;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -28,13 +29,13 @@ export const AnimateOnScroll: React.FC<AnimateOnScrollProps> = ({
       { threshold: 0.1 }
     );
 
-    if (ref.current) {
-      observer.observe(ref.current);
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
     return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
     };
   }, [controls]);
