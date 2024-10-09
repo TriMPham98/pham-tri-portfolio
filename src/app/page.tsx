@@ -39,6 +39,10 @@ const DynamicContact = dynamic(
   }
 );
 
+const ScrollToTop = dynamic(() => import("@/components/ScrollToTop"), {
+  ssr: false,
+});
+
 export default function Portfolio() {
   return (
     <div className="min-h-screen flex flex-col">
@@ -51,6 +55,7 @@ export default function Portfolio() {
         <DynamicContact />
       </main>
       <Footer />
+      <ScrollToTop />
     </div>
   );
 }
