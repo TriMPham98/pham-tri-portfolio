@@ -5,13 +5,15 @@ import GradualSpacing from "./ui/gradual-spacing";
 import { AnimateOnScroll } from "@/components/AnimateOnScroll";
 import ProfileAvatar from "./ProfileAvatar";
 import ParticleLinks from "@/components/ui/particle-links";
+import { RainbowButton } from "@/components/ui/rainbow-button";
 
 export function Hero() {
   return (
     <section className="min-h-screen flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm relative overflow-hidden">
       <ParticleLinks />
       <div className="container mx-auto px-4 flex flex-col items-center -mt-16 relative z-10">
-        <div className="mb-8">
+        <div className="flex flex-col items-center mb-8">
+          <RainbowButton className="mb-8">Download Résumé</RainbowButton>
           <ProfileAvatar />
         </div>
         <GradualSpacing
