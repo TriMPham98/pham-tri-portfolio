@@ -20,15 +20,13 @@ export function Header() {
             y: 0,
             transition: { delay: 0.2, type: "spring" },
           },
-        }}
-        text={
-          <Link
-            href="/"
-            className="text-2xl font-bold text-white hover:text-gray-300 transition-colors mb-4 md:mb-0">
-            Tri Pham
-          </Link>
-        }
-      />
+        }}>
+        <Link
+          href="/"
+          className="text-2xl font-bold text-white hover:text-gray-300 transition-colors mb-4 md:mb-0">
+          Tri Pham
+        </Link>
+      </FadeText>
       <NavigationMenu>
         <NavigationMenuList className="flex flex-wrap justify-center md:space-x-6">
           {["About", "Projects", "Skills", "Contact"].map((item, index) => (
@@ -44,15 +42,13 @@ export function Header() {
                     y: 0,
                     transition: { delay: 0.3 + index * 0.1, type: "spring" },
                   },
-                }}
-                text={
-                  <Link href={`#${item.toLowerCase()}`} legacyBehavior passHref>
-                    <NavigationMenuLink className="text-gray-300 hover:text-white transition-colors px-2 py-1 md:px-0 md:py-0">
-                      {item}
-                    </NavigationMenuLink>
-                  </Link>
-                }
-              />
+                }}>
+                <Link href={`#${item.toLowerCase()}`} legacyBehavior passHref>
+                  <NavigationMenuLink className="text-gray-300 hover:text-white transition-colors px-2 py-1 md:px-0 md:py-0">
+                    {item}
+                  </NavigationMenuLink>
+                </Link>
+              </FadeText>
             </NavigationMenuItem>
           ))}
         </NavigationMenuList>
