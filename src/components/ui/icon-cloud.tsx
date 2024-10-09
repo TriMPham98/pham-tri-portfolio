@@ -95,5 +95,5 @@ export default function IconCloud({
     );
   }, [data, theme, onIconClick]);
 
-  return <Cloud {...cloudProps}>{renderedIcons}</Cloud>;
+  return <Cloud {...cloudProps}>{renderedIcons || []}</Cloud>;
 }
