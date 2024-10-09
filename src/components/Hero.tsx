@@ -7,8 +7,8 @@ import ProfileAvatar from "./ProfileAvatar";
 
 export function Hero() {
   return (
-    <section className="py-20 md:py-32 bg-black bg-opacity-50 backdrop-blur-sm">
-      <div className="container mx-auto px-4 flex flex-col items-center">
+    <section className="h-screen flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
+      <div className="container mx-auto px-4 flex flex-col items-center -mt-16">
         <div className="mb-8">
           <ProfileAvatar />
         </div>
