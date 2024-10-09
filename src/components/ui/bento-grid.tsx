@@ -22,6 +22,8 @@ const BentoGrid = ({
   );
 };
 
+type IconComponent = React.ComponentType<React.SVGProps<SVGSVGElement>>;
+
 const BentoCard = ({
   name,
   className,
@@ -36,7 +38,7 @@ const BentoCard = ({
   name: string;
   className: string;
   background: ReactNode;
-  Icon: any;
+  Icon: IconComponent;
   description: string;
   href: string;
   cta: string;
