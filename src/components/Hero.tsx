@@ -33,8 +33,13 @@ export function Hero() {
             I design user interfaces that connect humans and machines.
           </p>
           <div className="flex justify-center">
-            <Link href="/files/Tri-Pham-Resume.pdf" target="_blank" rel="noopener noreferrer">
-              <RainbowButton>View Résumé</RainbowButton>
+            <Link
+              href="/files/Tri-Pham-Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer">
+              <RainbowButton className="hover:scale-105">
+                View Résumé
+              </RainbowButton>
             </Link>
           </div>
         </AnimateOnScroll>
