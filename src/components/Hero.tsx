@@ -43,7 +43,7 @@ const ParticlesComponent = () => {
                 enable: true,
                 area: 800,
               },
-              value: 80,
+              value: 169,
             },
           },
           background: {
