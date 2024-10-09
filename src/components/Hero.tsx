@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import GradualSpacing from "./ui/gradual-spacing";
 import { AnimateOnScroll } from "@/components/AnimateOnScroll";
 import ProfileAvatar from "./ProfileAvatar";
@@ -32,7 +33,9 @@ export function Hero() {
             I design user interfaces that connect humans and machines.
           </p>
           <div className="flex justify-center">
-            <RainbowButton>Download Résumé</RainbowButton>
+            <Link href="/files/Tri-Pham-Resume.pdf" download>
+              <RainbowButton>Download Résumé</RainbowButton>
+            </Link>
           </div>
         </AnimateOnScroll>
       </div>
