@@ -13,7 +13,6 @@ export function Hero() {
       <ParticleLinks />
       <div className="container mx-auto px-4 flex flex-col items-center -mt-16 relative z-10">
         <div className="flex flex-col items-center mb-8">
-          <RainbowButton className="mb-8">Download Résumé</RainbowButton>
           <ProfileAvatar />
         </div>
         <GradualSpacing
@@ -29,9 +28,12 @@ export function Hero() {
               transition: { delay: 0.2, duration: 0.6, ease: "easeOut" },
             },
           }}>
-          <p className="text-lg sm:text-xl md:text-2xl text-gray-300 max-w-2xl text-center">
+          <p className="text-lg sm:text-xl md:text-2xl text-gray-300 max-w-2xl text-center mb-8">
             I design user interfaces that connect humans and machines.
           </p>
+          <div className="flex justify-center">
+            <RainbowButton>Download Résumé</RainbowButton>
+          </div>
         </AnimateOnScroll>
       </div>
     </section>
