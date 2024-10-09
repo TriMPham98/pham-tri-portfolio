@@ -81,10 +81,9 @@ export function Skills() {
           </h2>
         </AnimateOnScroll>
 
-        <div className="mb-8">
+        <div className="mb-8 cursor-pointer">
           <IconCloud
             iconSlugs={techStackSlugs}
-            iconStyle={{ cursor: "pointer" }}
             onIconClick={(slug) => console.log(`Clicked on ${slug}`)}
           />
         </div>
