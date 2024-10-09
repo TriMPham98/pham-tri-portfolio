@@ -1,6 +1,5 @@
 import React from "react";
 import { AnimateOnScroll } from "@/components/AnimateOnScroll";
-import { ReactNode } from "react";
 
 interface TimelineItemProps {
   year: string;
