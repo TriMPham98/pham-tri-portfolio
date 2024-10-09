@@ -1,7 +1,14 @@
 import React from "react";
 import { AnimateOnScroll } from "@/components/AnimateOnScroll";
+import { ReactNode } from "react";
 
-const TimelineItem = ({ year, title, description }) => (
+interface TimelineItemProps {
+  year: string;
+  title: string;
+  description: string;
+}
+
+const TimelineItem = ({ year, title, description }: TimelineItemProps) => (
   <AnimateOnScroll
     animation={{
       hidden: { opacity: 0, x: -20 },
