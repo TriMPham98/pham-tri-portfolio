@@ -6,28 +6,36 @@ import dynamic from "next/dynamic";
 const DynamicHero = dynamic(
   () => import("@/components/Hero").then((mod) => mod.Hero),
   {
-    ssr: false,
+    loading: () => (
+      <div className="h-screen bg-black bg-opacity-50 backdrop-blur-sm"></div>
+    ),
   }
 );
 
 const DynamicAbout = dynamic(
   () => import("@/components/About").then((mod) => mod.About),
   {
-    ssr: false,
+    loading: () => (
+      <div className="h-96 bg-black bg-opacity-50 backdrop-blur-sm"></div>
+    ),
   }
 );
 
 const DynamicSkills = dynamic(
   () => import("@/components/Skills").then((mod) => mod.Skills),
   {
-    ssr: false,
+    loading: () => (
+      <div className="h-96 bg-gradient-to-br from-gray-900 to-black"></div>
+    ),
   }
 );
 
 const DynamicContact = dynamic(
   () => import("@/components/Contact").then((mod) => mod.Contact),
   {
-    ssr: false,
+    loading: () => (
+      <div className="h-96 bg-gradient-to-br from-gray-900 to-black"></div>
+    ),
   }
 );
 
@@ -37,18 +45,10 @@ export default function Portfolio() {
       <Header />
       <main className="flex-grow">
         <DynamicHero />
-        <section id="about">
-          <DynamicAbout />
-        </section>
-        <section id="projects">
-          <Projects />
-        </section>
-        <section id="skills">
-          <DynamicSkills />
-        </section>
-        <section id="contact">
-          <DynamicContact />
-        </section>
+        <DynamicAbout />
+        <Projects />
+        <DynamicSkills />
+        <DynamicContact />
       </main>
       <Footer />
     </div>
