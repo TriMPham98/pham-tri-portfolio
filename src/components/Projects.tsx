@@ -93,8 +93,8 @@ export function Projects() {
               cta={project.cta}
               className="col-span-1 h-full min-h-[250px] group"
               background={project.background}
-              target="_blank" // Add this line to open links in a new tab
-              rel="noopener noreferrer" // Add this line for security when opening links in a new tab
+              target="_blank"
+              rel="noopener noreferrer"
             />
           ))}
         </BentoGrid>
