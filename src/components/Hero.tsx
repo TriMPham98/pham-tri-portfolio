@@ -1,82 +1,15 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import GradualSpacing from "./ui/gradual-spacing";
 import { AnimateOnScroll } from "@/components/AnimateOnScroll";
 import ProfileAvatar from "./ProfileAvatar";
-import Particles, { initParticlesEngine } from "@tsparticles/react";
-import { loadLinksPreset } from "@tsparticles/preset-links";
-
-const ParticlesComponent = () => {
-  const [init, setInit] = useState(false);
-
-  useEffect(() => {
-    initParticlesEngine(async (engine) => {
-      await loadLinksPreset(engine);
-    }).then(() => {
-      setInit(true);
-    });
-  }, []);
-
-  if (init) {
-    return (
-      <Particles
-        id="tsparticles"
-        options={{
-          preset: "links",
-          particles: {
-            color: {
-              value: "#ffffff",
-            },
-            links: {
-              color: "#ffffff",
-              opacity: 0.3,
-            },
-            move: {
-              speed: 1,
-            },
-            size: {
-              value: { min: 1, max: 3 },
-            },
-            number: {
-              density: {
-                enable: true,
-                area: 800,
-              },
-              value: 169,
-            },
-          },
-          background: {
-            color: "transparent",
-          },
-          interactivity: {
-            events: {
-              onHover: {
-                enable: true,
-                mode: "grab",
-              },
-            },
-            modes: {
-              grab: {
-                distance: 140,
-                links: {
-                  opacity: 0.5,
-                },
-              },
-            },
-          },
-        }}
-      />
-    );
-  }
-
-  return null;
-};
+import ParticleLinks from "@/components/ui/particle-links";
 
 export function Hero() {
   return (
     <section className="h-screen flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm relative overflow-hidden">
-      <ParticlesComponent />
+      <ParticleLinks />
       <div className="container mx-auto px-4 flex flex-col items-center -mt-16 relative z-10">
         <div className="mb-8">
           <ProfileAvatar />
