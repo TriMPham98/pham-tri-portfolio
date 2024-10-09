@@ -47,7 +47,7 @@ export function Header() {
                 }}
                 text={
                   <Link href={`#${item.toLowerCase()}`} legacyBehavior passHref>
-                    <NavigationMenuLink className="text-gray-300 hover:text-white transition-colors">
+                    <NavigationMenuLink className="text-gray-300 hover:text-white transition-colors px-2 py-1 md:px-0 md:py-0">
                       {item}
                     </NavigationMenuLink>
                   </Link>
