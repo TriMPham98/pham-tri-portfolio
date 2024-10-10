@@ -85,7 +85,7 @@ export function Skills() {
               <IconCloud
                 iconSlugs={techStackSlugs}
                 onIconClick={(slug) => console.log(`Clicked on ${slug}`)}
-                className="w-full h-64"
+                // Remove the className prop from here
               />
             </div>
           </NeonGradientCard>
