@@ -4,6 +4,7 @@ import React from "react";
 import IconCloud from "./ui/icon-cloud";
 import { AnimateOnScroll } from "@/components/AnimateOnScroll";
 import ParticleLinks from "@/components/ui/particle-links";
+import { NeonGradientCard } from "@/components/ui/neon-gradient-card";
 
 export function Skills() {
   const techStackSlugs = [
@@ -54,24 +55,27 @@ export function Skills() {
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <AnimateOnScroll
           animation={{
-            hidden: { opacity: 0, y: 20 },
+            hidden: { opacity: 0, scale: 0.9 },
             visible: {
               opacity: 1,
-              y: 0,
+              scale: 1,
               transition: { duration: 0.6, ease: "easeOut" },
             },
           }}>
-          <h2 className="text-3xl font-extrabold text-white text-center mb-4">
-            Technical Skills
-          </h2>
+          <NeonGradientCard
+            className="mb-12 animate-neon-pulse"
+            borderSize={3}
+            borderRadius={30}
+            neonColors={{ firstColor: "#4ade80", secondColor: "#3b82f6" }}
+          >
+            <div className="p-8 cursor-pointer">
+              <IconCloud
+                iconSlugs={techStackSlugs}
+                onIconClick={(slug) => console.log(`Clicked on ${slug}`)}
+              />
+            </div>
+          </NeonGradientCard>
         </AnimateOnScroll>
-
-        <div className="mb-8 cursor-pointer">
-          <IconCloud
-            iconSlugs={techStackSlugs}
-            onIconClick={(slug) => console.log(`Clicked on ${slug}`)}
-          />
-        </div>
 
         <ul className="text-gray-300 max-w-2xl mx-auto space-y-2 text-base mb-12">
           {skillsList.map((item, index) => (
