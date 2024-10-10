@@ -24,9 +24,7 @@ const DynamicAbout = dynamic(
 const DynamicSkills = dynamic(
   () => import("@/components/Skills").then((mod) => mod.Skills),
   {
-    loading: () => (
-      <div className="h-96 bg-gradient-to-br from-gray-900 to-black"></div>
-    ),
+    loading: () => <div className="h-96"></div>,
   }
 );
 

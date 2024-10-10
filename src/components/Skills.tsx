@@ -3,6 +3,7 @@
 import React from "react";
 import IconCloud from "./ui/icon-cloud";
 import { AnimateOnScroll } from "@/components/AnimateOnScroll";
+import ParticleLinks from "@/components/ui/particle-links";
 
 export function Skills() {
   const techStackSlugs = [
@@ -49,23 +50,7 @@ export function Skills() {
 
   return (
     <section id="skills" className="relative py-12">
-      <div
-        className="absolute inset-0 transform -translate-y-16"
-        style={{
-          background: `
-            radial-gradient(
-              circle at center,
-              rgba(55, 65, 81, 0.9) 0%,
-              rgba(31, 41, 55, 0.7) 25%,
-              rgba(17, 24, 39, 0.8) 50%,
-              rgba(0, 0, 0, 1) 75%
-            )
-          `,
-          backgroundSize: "100% 100%",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-        }}
-      />
+      <ParticleLinks className="absolute inset-0" />
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <AnimateOnScroll
           animation={{
