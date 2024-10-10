@@ -52,7 +52,21 @@ export function Skills() {
   return (
     <section id="skills" className="relative py-12">
       <ParticleLinks className="absolute inset-0" />
-      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <AnimateOnScroll
+          animation={{
+            hidden: { opacity: 0, y: 20 },
+            visible: {
+              opacity: 1,
+              y: 0,
+              transition: { duration: 0.6, ease: "easeOut" },
+            },
+          }}>
+          <h2 className="text-3xl font-extrabold text-white text-center mb-8">
+            Technical Skills
+          </h2>
+        </AnimateOnScroll>
+
         <AnimateOnScroll
           animation={{
             hidden: { opacity: 0, scale: 0.9 },
@@ -63,15 +77,16 @@ export function Skills() {
             },
           }}>
           <NeonGradientCard
-            className="mb-12 animate-neon-pulse"
-            borderSize={3}
-            borderRadius={30}
+            className="mb-12 animate-neon-pulse max-w-2xl mx-auto"
+            borderSize={2}
+            borderRadius={20}
             neonColors={{ firstColor: "#4ade80", secondColor: "#3b82f6" }}
           >
-            <div className="p-8 cursor-pointer">
+            <div className="p-4 cursor-pointer">
               <IconCloud
                 iconSlugs={techStackSlugs}
                 onIconClick={(slug) => console.log(`Clicked on ${slug}`)}
+                className="w-full h-64" // Adjust the height as needed
               />
             </div>
           </NeonGradientCard>
