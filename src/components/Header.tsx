@@ -1,4 +1,6 @@
-import React from "react";
+'use client';
+
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import {
   NavigationMenu,
@@ -9,8 +11,21 @@ import {
 import { FadeText } from "@/components/ui/fade-text";
 
 export function Header() {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <header className="p-4 md:p-6 flex flex-col md:flex-row justify-between items-center bg-transparent fixed w-full z-50">
+    <header className={`p-4 md:p-6 flex flex-col md:flex-row justify-between items-center fixed w-full z-50 transition-all duration-300 ${
+      isScrolled ? "bg-black bg-opacity-70 backdrop-blur-md shadow-lg" : "bg-transparent"
+    }`}>
       <FadeText
         direction="down"
         framerProps={{

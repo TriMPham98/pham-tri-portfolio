@@ -44,11 +44,9 @@ const ScrollToTop = dynamic(() => import("@/components/ScrollToTop"), {
 export default function Portfolio() {
   return (
     <div className="min-h-screen flex flex-col">
-      <div className="relative">
-        <Header />
+      <Header />
+      <main className="flex-grow pt-20 md:pt-24"> {/* Added padding-top */}
         <DynamicHero />
-      </div>
-      <main className="flex-grow">
         <DynamicAbout />
         <Projects />
         <DynamicSkills />
