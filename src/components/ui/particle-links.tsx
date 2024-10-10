@@ -5,7 +5,11 @@ import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadLinksPreset } from "@tsparticles/preset-links";
 import type { ISourceOptions, Engine } from "@tsparticles/engine";
 
-const ParticleLinks = () => {
+interface ParticleLinksProps {
+  className?: string;
+}
+
+const ParticleLinks: React.FC<ParticleLinksProps> = ({ className }) => {
   const [init, setInit] = useState(false);
 
   useEffect(() => {
@@ -63,7 +67,9 @@ const ParticleLinks = () => {
   };
 
   if (init) {
-    return <Particles id="tsparticles" options={options} />;
+    return (
+      <Particles id="tsparticles" options={options} className={className} />
+    );
   }
 
   return null;

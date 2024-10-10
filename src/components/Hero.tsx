@@ -11,9 +11,9 @@ import { FileText } from "lucide-react";
 
 export function Hero() {
   return (
-    <section className="min-h-screen flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm relative overflow-hidden">
-      <ParticleLinks />
-      <div className="container mx-auto px-4 flex flex-col items-center -mt-16 relative z-10">
+    <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
+      <ParticleLinks className="absolute inset-0" />
+      <div className="container mx-auto px-4 flex flex-col items-center relative z-10">
         <div className="flex flex-col items-center mb-8">
           <ProfileAvatar />
         </div>

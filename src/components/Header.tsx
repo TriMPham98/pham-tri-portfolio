@@ -10,7 +10,7 @@ import { FadeText } from "@/components/ui/fade-text";
 
 export function Header() {
   return (
-    <header className="p-4 md:p-6 flex flex-col md:flex-row justify-between items-center bg-black">
+    <header className="p-4 md:p-6 flex flex-col md:flex-row justify-between items-center bg-transparent fixed w-full z-50">
       <FadeText
         direction="down"
         framerProps={{
