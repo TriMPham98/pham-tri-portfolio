@@ -23,7 +23,7 @@ const ParticleLinks = () => {
     },
     particles: {
       number: {
-        value: 100,
+        value: 369,
         density: {
           enable: true,
         },
@@ -34,14 +34,14 @@ const ParticleLinks = () => {
       links: {
         enable: true,
         color: "#ffffff",
-        opacity: 0.3,
+        opacity: 0.15,
       },
       move: {
         enable: true,
-        speed: 1,
+        speed: 0.69,
       },
       size: {
-        value: { min: 1, max: 3 },
+        value: { min: 0.69, max: 1.69 },
       },
     },
     interactivity: {
@@ -55,7 +55,7 @@ const ParticleLinks = () => {
         grab: {
           distance: 140,
           links: {
-            opacity: 0.5,
+            opacity: 0.69,
           },
         },
       },
