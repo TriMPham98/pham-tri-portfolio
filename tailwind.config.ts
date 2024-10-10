@@ -66,7 +66,7 @@ const config: Config = {
         rainbow: "rainbow var(--speed, 2s) infinite linear",
         "background-position-spin":
           "background-position-spin 3000ms infinite alternate",
-        "neon-pulse": "neon-pulse 2s ease-in-out infinite",
+        "neon-pulse": "neon-pulse 10s ease-in-out infinite",
       },
       keyframes: {
         grid: {
