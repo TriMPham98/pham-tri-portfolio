@@ -23,7 +23,7 @@ export function Header() {
   }, []);
 
   return (
-    <header className={`p-4 md:p-6 flex flex-col md:flex-row justify-between items-center fixed w-full z-50 transition-all duration-300 ${
+    <header className={`p-1 sm:p-2 md:p-4 lg:p-6 flex flex-col md:flex-row justify-between items-center fixed w-full z-50 transition-all duration-300 ${
       isScrolled ? "bg-black bg-opacity-70 backdrop-blur-md shadow-lg" : "bg-transparent"
     }`}>
       <FadeText
@@ -38,7 +38,7 @@ export function Header() {
         }}>
         <Link
           href="/"
-          className="text-2xl font-bold text-white hover:text-gray-300 transition-colors mb-4 md:mb-0">
+          className="text-lg sm:text-xl md:text-2xl font-bold text-white hover:text-gray-300 transition-colors mb-1 sm:mb-2 md:mb-0">
           Tri Pham
         </Link>
       </FadeText>
@@ -47,7 +47,7 @@ export function Header() {
           {["About", "Projects", "Skills", "Contact"].map((item, index) => (
             <NavigationMenuItem
               key={item}
-              className="mx-2 my-1 md:mx-0 md:my-0">
+              className="mx-1 my-0.5 sm:my-1 md:mx-2 md:my-0">
               <FadeText
                 direction="down"
                 framerProps={{
@@ -59,7 +59,7 @@ export function Header() {
                   },
                 }}>
                 <Link href={`#${item.toLowerCase()}`} legacyBehavior passHref>
-                  <NavigationMenuLink className="text-gray-300 hover:text-white transition-colors px-2 py-1 md:px-0 md:py-0">
+                  <NavigationMenuLink className="text-sm md:text-base text-gray-300 hover:text-white transition-colors px-1 py-1 md:px-2 md:py-0">
                     {item}
                   </NavigationMenuLink>
                 </Link>
