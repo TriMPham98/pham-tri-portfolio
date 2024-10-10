@@ -80,13 +80,12 @@ export function Skills() {
             className="mb-12 animate-neon-pulse max-w-2xl mx-auto"
             borderSize={2}
             borderRadius={20}
-            neonColors={{ firstColor: "#4ade80", secondColor: "#3b82f6" }}
-          >
+            neonColors={{ firstColor: "#4ade80", secondColor: "#3b82f6" }}>
             <div className="p-4 cursor-pointer">
               <IconCloud
                 iconSlugs={techStackSlugs}
                 onIconClick={(slug) => console.log(`Clicked on ${slug}`)}
-                className="w-full h-64" // Adjust the height as needed
+                className="w-full h-64"
               />
             </div>
           </NeonGradientCard>

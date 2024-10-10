@@ -16,7 +16,7 @@ interface NeonColorsProps {
   secondColor: string;
 }
 
-interface NeonGradientCardProps {
+interface NeonGradientCardProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * @default <div />
    * @type ReactElement
@@ -24,13 +24,6 @@ interface NeonGradientCardProps {
    * The component to be rendered as the card
    * */
   as?: ReactElement;
-  /**
-   * @default ""
-   * @type string
-   * @description
-   * The className of the card
-   */
-  className?: string;
 
   /**
    * @default ""
@@ -58,13 +51,11 @@ interface NeonGradientCardProps {
 
   /**
    * @default "{ firstColor: '#ff00aa', secondColor: '#00FFF1' }"
-   * @type string
+   * @type object
    * @description
    * The colors of the neon gradient
    * */
   neonColors?: NeonColorsProps;
-
-  [key: string]: any;
 }
 
 const NeonGradientCard: React.FC<NeonGradientCardProps> = ({
@@ -124,10 +115,9 @@ const NeonGradientCard: React.FC<NeonGradientCardProps> = ({
       }
       className={cn(
         "relative z-10 size-full rounded-[var(--border-radius)]",
-        className,
+        className
       )}
-      {...props}
-    >
+      {...props}>
       <div
         className={cn(
           "relative size-full min-h-[inherit] rounded-[var(--card-content-radius)] bg-gray-100 p-6",
@@ -139,9 +129,8 @@ const NeonGradientCard: React.FC<NeonGradientCardProps> = ({
           "after:h-[var(--pseudo-element-height)] after:w-[var(--pseudo-element-width)] after:rounded-[var(--border-radius)] after:blur-[var(--after-blur)] after:content-['']",
           "after:bg-[linear-gradient(0deg,var(--neon-first-color),var(--neon-second-color))] after:bg-[length:100%_200%] after:opacity-80",
           "after:animate-background-position-spin",
-          "dark:bg-neutral-900",
-        )}
-      >
+          "dark:bg-neutral-900"
+        )}>
         {children}
       </div>
     </div>
