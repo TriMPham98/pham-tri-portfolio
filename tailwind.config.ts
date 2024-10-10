@@ -63,7 +63,9 @@ const config: Config = {
   		},
   		animation: {
   			grid: 'grid 15s linear infinite',
-  			rainbow: 'rainbow var(--speed, 2s) infinite linear'
+  			rainbow: 'rainbow var(--speed, 2s) infinite linear',
+  			'background-position-spin': 'background-position-spin 3000ms infinite alternate',
+  			'neon-pulse': 'neon-pulse 2s ease-in-out infinite',
   		},
   		keyframes: {
   			grid: {
@@ -81,6 +83,18 @@ const config: Config = {
   				'100%': {
   					'background-position': '200%'
   				}
+  			},
+  			'background-position-spin': {
+  				'0%': {
+  					backgroundPosition: 'top center'
+  				},
+  				'100%': {
+  					backgroundPosition: 'bottom center'
+  				}
+  			},
+  			'neon-pulse': {
+  				'0%, 100%': { opacity: 1 },
+  				'50%': { opacity: 0.8 },
   			}
   		}
   	}
