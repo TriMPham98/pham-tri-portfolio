@@ -78,7 +78,16 @@ export function Projects() {
       href: "https://github.com/TriMPham98/sjz-dashboard",
       cta: "Discover",
       background: (
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900 opacity-50" />
+        <div className="absolute inset-0 overflow-hidden">
+          <Image
+            src="/images/sjz-dashboard.png"
+            alt="Music Teacher Admin Dashboard Screenshot"
+            layout="fill"
+            objectFit="cover"
+            className="transform scale-105 hover:scale-110 transition-transform duration-300"
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-900/70 to-black/70" />
+        </div>
       ),
     },
   ];
