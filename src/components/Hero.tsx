@@ -15,7 +15,17 @@ export function Hero() {
       <ParticleLinks className="absolute inset-0" />
       <div className="container mx-auto px-4 flex flex-col items-center justify-center relative z-10 pt-16 sm:pt-20 md:pt-0 md:-mt-16 mb-24">
         <div className="flex flex-col items-center space-y-6 sm:space-y-8">
-          <ProfileAvatar className="w-28 h-28 sm:w-32 sm:h-32 md:w-40 md:h-40 lg:w-48 lg:h-48" />
+          <AnimateOnScroll
+            animation={{
+              hidden: { opacity: 0, scale: 0.9 },
+              visible: {
+                opacity: 1,
+                scale: 1,
+                transition: { duration: 0.6, ease: "easeOut" },
+              },
+            }}>
+            <ProfileAvatar className="w-28 h-28 sm:w-32 sm:h-32 md:w-40 md:h-40 lg:w-48 lg:h-48" />
+          </AnimateOnScroll>
           <GradualSpacing
             text="Howdy, I'm Tri!"
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white text-center"
