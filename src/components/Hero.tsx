@@ -32,17 +32,30 @@ export function Hero() {
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 max-w-2xl text-center mb-6 sm:mb-8 md:mb-12">
               I design user interfaces that connect humans and machines.
             </p>
-            <div className="flex justify-center">
-              <Link
-                href="/files/Tri-Pham-Resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer">
-                <RainbowButton className="hover:scale-105 flex items-center gap-2 text-sm sm:text-base md:text-lg py-2 px-3 sm:py-2 sm:px-4 md:py-3 md:px-6">
-                  <FileText size={18} className="sm:w-5 sm:h-5 md:w-6 md:h-6" />
-                  View Résumé
-                </RainbowButton>
-              </Link>
-            </div>
+            <AnimateOnScroll
+              animation={{
+                hidden: { opacity: 0, y: 20 },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  transition: { delay: 0.4, duration: 0.6, ease: "easeOut" },
+                },
+              }}>
+              <div className="flex justify-center">
+                <Link
+                  href="/files/Tri-Pham-Resume.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer">
+                  <RainbowButton className="hover:scale-105 flex items-center gap-2 text-sm sm:text-base md:text-lg py-2 px-3 sm:py-2 sm:px-4 md:py-3 md:px-6">
+                    <FileText
+                      size={18}
+                      className="sm:w-5 sm:h-5 md:w-6 md:h-6"
+                    />
+                    View Résumé
+                  </RainbowButton>
+                </Link>
+              </div>
+            </AnimateOnScroll>
           </AnimateOnScroll>
         </div>
       </div>
