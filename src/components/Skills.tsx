@@ -39,20 +39,33 @@ export function Skills() {
 
   const skillsList = [
     {
-      category: "Programming Languages",
-      skills: "JavaScript, TypeScript, HTML/CSS, Python, C/C++, Java",
-    },
-    { category: "Databases", skills: "MySQL, SQLite" },
-    { category: "Frameworks", skills: "React, Next.js, Vue.js, Node.js" },
-    {
-      category: "Developer Tools",
-      skills: "Git, GitHub, VS Code, Cursor, PyCharm, CLion, Eclipse, Vercel",
+      category: "Programming Languages and Web Technologies",
+      skills: "JavaScript, TypeScript, HTML, CSS, Python, C, C++, Java",
     },
     {
-      category: "Design Tools",
+      category: "Web Development",
+      skills: "React, Vue.js, Node.js, Next.js",
+    },
+    {
+      category: "Databases",
+      skills: "MySQL, SQLite",
+    },
+    {
+      category: "Version Control and Deployment",
+      skills: "Git, GitHub, Vercel",
+    },
+    {
+      category: "Development Tools and IDEs",
+      skills: "Visual Studio Code, Cursor, PyCharm, CLion, Eclipse",
+    },
+    {
+      category: "Design and Creative Tools",
       skills: "Figma, Adobe Lightroom, Adobe Photoshop",
     },
-    { category: "Libraries", skills: "shadcn/ui, Three.js, Vite, pyautogui" },
+    {
+      category: "Libraries and Additional Tools",
+      skills: "shadcn/ui, Three.js, Vite, pyautogui",
+    },
   ];
 
   if (!mounted) {
