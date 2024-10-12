@@ -1,12 +1,18 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import IconCloud from "./ui/icon-cloud";
 import { AnimateOnScroll } from "@/components/AnimateOnScroll";
 import ParticleLinks from "@/components/ui/particle-links";
 import { NeonGradientCard } from "@/components/ui/neon-gradient-card";
 
 export function Skills() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const techStackSlugs = [
     "adobelightroom",
     "adobephotoshop",
@@ -48,6 +54,10 @@ export function Skills() {
     },
     { category: "Libraries", skills: "shadcn/ui, Three.js, Vite, pyautogui" },
   ];
+
+  if (!mounted) {
+    return null; // or a loading placeholder
+  }
 
   return (
     <section id="skills" className="relative py-12">
