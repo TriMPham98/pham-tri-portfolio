@@ -8,6 +8,7 @@ import {
   GamepadIcon,
   BrainIcon,
   PuzzleIcon,
+  MusicIcon,
 } from "lucide-react";
 import Image from "next/image";
 import Marquee from "@/components/ui/marquee";
@@ -98,21 +99,25 @@ export function Projects() {
 
   const funProjects = [
     {
-      name: "Tic-Tac-Toe AI",
+      name: "Keyboard Drum Set",
       icon: GamepadIcon,
-      href: "https://github.com/yourusername/tic-tac-toe-ai",
+      href: "https://github.com/TriMPham98/javascript-drum-set",
     },
     {
-      name: "Sudoku Solver",
+      name: "Wordle",
       icon: PuzzleIcon,
-      href: "https://github.com/yourusername/sudoku-solver",
+      href: "https://github.com/TriMPham98/wordle",
     },
     {
-      name: "Neural Network Visualizer",
-      icon: BrainIcon,
-      href: "https://github.com/yourusername/neural-network-visualizer",
+      name: "3-D Earth",
+      icon: GlobeIcon,
+      href: "https://github.com/TriMPham98/threejs-earth",
     },
-    // Add more fun projects as needed
+    {
+      name: "MP3 Visualizer",
+      icon: MusicIcon,
+      href: "https://github.com/TriMPham98/mp3-audio-visualizer",
+    },
   ];
 
   return (
