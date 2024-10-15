@@ -6,7 +6,6 @@ import {
   GlobeIcon,
   LayoutDashboardIcon,
   GamepadIcon,
-  BrainIcon,
   PuzzleIcon,
   MusicIcon,
 } from "lucide-react";
