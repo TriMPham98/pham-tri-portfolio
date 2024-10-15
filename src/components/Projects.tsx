@@ -5,8 +5,12 @@ import {
   UtensilsIcon,
   GlobeIcon,
   LayoutDashboardIcon,
+  GamepadIcon,
+  BrainIcon,
+  PuzzleIcon,
 } from "lucide-react";
 import Image from "next/image";
+import Marquee from "@/components/ui/marquee";
 
 export function Projects() {
   const projects = [
@@ -92,6 +96,25 @@ export function Projects() {
     },
   ];
 
+  const funProjects = [
+    {
+      name: "Tic-Tac-Toe AI",
+      icon: GamepadIcon,
+      href: "https://github.com/yourusername/tic-tac-toe-ai",
+    },
+    {
+      name: "Sudoku Solver",
+      icon: PuzzleIcon,
+      href: "https://github.com/yourusername/sudoku-solver",
+    },
+    {
+      name: "Neural Network Visualizer",
+      icon: BrainIcon,
+      href: "https://github.com/yourusername/neural-network-visualizer",
+    },
+    // Add more fun projects as needed
+  ];
+
   return (
     <section
       id="projects"
@@ -116,6 +139,25 @@ export function Projects() {
             />
           ))}
         </BentoGrid>
+        {/* Fun Projects Section */}
+        <div className="mt-16">
+          <h3 className="text-2xl font-bold text-white text-center mb-8">
+            Fun Projects
+          </h3>
+          <Marquee className="py-4 bg-gradient-to-r from-purple-900 to-indigo-900 rounded-lg">
+            {funProjects.map((project, index) => (
+              <a
+                key={index}
+                href={project.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center space-x-2 mx-8 text-white hover:text-gray-300 transition-colors duration-300">
+                <project.icon className="w-6 h-6" />
+                <span className="text-lg font-semibold">{project.name}</span>
+              </a>
+            ))}
+          </Marquee>
+        </div>
       </div>
     </section>
   );
