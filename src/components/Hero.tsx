@@ -13,8 +13,8 @@ export function Hero() {
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
       <ParticleLinks className="absolute inset-0" />
-      <div className="container mx-auto px-4 flex flex-col items-center justify-center relative z-10 pt-16 sm:pt-20 md:pt-0 md:-mt-16 mb-24">
-        <div className="flex flex-col items-center space-y-6 sm:space-y-8">
+      <div className="container mx-auto px-4 flex flex-col items-center justify-center relative z-10 pt-0 sm:pt-8 md:pt-0 md:-mt-16 mb-24">
+        <div className="flex flex-col items-center space-y-6 sm:space-y-8 -mt-16 sm:-mt-8 md:mt-0">
           <AnimateOnScroll
             animation={{
               hidden: { opacity: 0, scale: 0.9 },
