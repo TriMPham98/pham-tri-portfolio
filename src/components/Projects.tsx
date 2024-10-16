@@ -145,7 +145,7 @@ export function Projects() {
         </BentoGrid>
         {/* Fun Projects Section */}
         <div className="mt-16">
-          <Marquee className="py-4 bg-gradient-to-r from-gray-900 to-black border border-gray-800 rounded-lg">
+          <Marquee className="py-4 bg-gradient-to-r from-gray-900 to-black rounded-lg">
             {funProjects.map((project, index) => (
               <a
                 key={index}
