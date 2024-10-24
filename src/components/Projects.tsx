@@ -40,7 +40,7 @@ export function Projects() {
       description:
         "Custom-built smart mirror combining hardware and software. Features include facial recognition with OpenCV, real-time weather updates, and calendar integration. Built with Raspberry Pi, MagicMirror² software, and custom woodworking.",
       icon: MonitorIcon,
-      href: "https://github.com/TriMPham98/smart-mirror",
+      href: "https://github.com/TriMPham98/MagicMirror",
       cta: "View Build",
       background: (
         <div className="absolute inset-0 overflow-hidden">
