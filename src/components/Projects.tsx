@@ -45,7 +45,7 @@ export function Projects() {
       background: (
         <div className="absolute inset-0 overflow-hidden">
           <Image
-            src="/images/smart-mirror.png"
+            src="/images/smart-mirror-project.jpg"
             alt="Smart Mirror Project"
             layout="fill"
             objectFit="cover"
