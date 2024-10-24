@@ -8,6 +8,7 @@ import {
   GamepadIcon,
   PuzzleIcon,
   MusicIcon,
+  MonitorIcon,
 } from "lucide-react";
 import Image from "next/image";
 import Marquee from "@/components/ui/marquee";
@@ -26,6 +27,26 @@ export function Projects() {
           <Image
             src="/images/infinite-ocean.png"
             alt="Infinite Ocean 3D Art Gallery Screenshot"
+            layout="fill"
+            objectFit="cover"
+            className="transform scale-105 hover:scale-110 transition-transform duration-300"
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-900/70 to-black/70" />
+        </div>
+      ),
+    },
+    {
+      name: "Smart Mirror",
+      description:
+        "Custom-built smart mirror combining hardware and software. Features include facial recognition with OpenCV, real-time weather updates, and calendar integration. Built with Raspberry Pi, MagicMirror² software, and custom woodworking.",
+      icon: MonitorIcon,
+      href: "https://github.com/TriMPham98/smart-mirror",
+      cta: "View Build",
+      background: (
+        <div className="absolute inset-0 overflow-hidden">
+          <Image
+            src="/images/smart-mirror.png"
+            alt="Smart Mirror Project"
             layout="fill"
             objectFit="cover"
             className="transform scale-105 hover:scale-110 transition-transform duration-300"
