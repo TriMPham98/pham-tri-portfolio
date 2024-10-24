@@ -35,26 +35,6 @@ export function Projects() {
       ),
     },
     {
-      name: "Upscale Restaurant Landing Page",
-      description:
-        "Modern UI/UX restaurant landing page with responsive design, animations, and gradients. Developed using React, JavaScript, CSS, HTML, and Node.js.",
-      icon: UtensilsIcon,
-      href: "https://github.com/TriMPham98/fine-dining-restaurant-landing-page",
-      cta: "Explore",
-      background: (
-        <div className="absolute inset-0 overflow-hidden">
-          <Image
-            src="/images/restaurant-landing-page.png"
-            alt="Restaurant Landing Page Screenshot"
-            layout="fill"
-            objectFit="cover"
-            className="transform scale-105 hover:scale-110 transition-transform duration-300"
-          />
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-900/70 to-black/70" />
-        </div>
-      ),
-    },
-    {
       name: "Pokédex React App",
       description:
         "Responsive web application displaying Pokémon data from PokéAPI. Features include an interactive grid, animated sprites, and detailed information. Built with React and JavaScript.",
@@ -117,6 +97,11 @@ export function Projects() {
       icon: MusicIcon,
       href: "https://github.com/TriMPham98/mp3-audio-visualizer",
     },
+    {
+      name: "Upscale Restaurant",
+      icon: UtensilsIcon,
+      href: "https://github.com/TriMPham98/fine-dining-restaurant-landing-page",
+    },
   ];
 
   return (
@@ -145,7 +130,6 @@ export function Projects() {
         </BentoGrid>
         {/* Fun Projects Section */}
         <div className="mt-16 overflow-hidden rounded-xl">
-          {" "}
           <Marquee className="py-4 bg-gradient-to-r from-gray-900 to-black">
             {funProjects.map((project, index) => (
               <a
