@@ -1,68 +1,48 @@
 import React from "react";
 import { AnimateOnScroll } from "@/components/AnimateOnScroll";
+import { Music, Code, Camera } from "lucide-react";
 
-interface TimelineItemProps {
-  year: string;
-  title: string;
-  description: string;
-}
-
-const TimelineItem = ({ year, title, description }: TimelineItemProps) => (
+const RoleCard = ({ icon: Icon, title, description }) => (
   <AnimateOnScroll
     animation={{
-      hidden: { opacity: 0, x: -20 },
+      hidden: { opacity: 0, y: 20 },
       visible: {
         opacity: 1,
-        x: 0,
+        y: 0,
         transition: { duration: 0.6, ease: "easeOut" },
       },
     }}>
-    <div className="mb-12 flex w-full items-start">
-      <div className="flex flex-col items-center mr-4">
-        <div className="flex items-center justify-center w-16 h-16 rounded-full bg-gray-800 text-white text-xl font-bold">
-          {year}
+    <div className="bg-gray-900 rounded-xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 h-full">
+      <div className="flex flex-col items-center text-center">
+        <div className="bg-gray-800 p-4 rounded-full mb-6">
+          <Icon className="w-8 h-8 text-white" />
         </div>
-        <div className="w-1 h-full bg-gray-800 mt-2"></div>
-      </div>
-      <div className="flex-1">
-        <div className="p-6 bg-gray-900 rounded-lg shadow-xl">
-          <h3 className="mb-3 font-bold text-white text-2xl text-left">
-            {title}
-          </h3>
-          <p className="text-base leading-relaxed tracking-wide text-gray-300 text-left">
-            {description}
-          </p>
-        </div>
+        <h3 className="text-2xl font-bold text-white mb-4">{title}</h3>
+        <p className="text-gray-300 leading-relaxed">{description}</p>
       </div>
     </div>
   </AnimateOnScroll>
 );
 
 export function About() {
-  const timelineData = [
+  const roles = [
     {
-      year: "2019",
-      title: "Started Computer Science Journey",
+      icon: Music,
+      title: "Rock Band Instructor 🎸",
       description:
-        "Began my academic journey in Computer Science at De Anza College, laying the foundation for my future in technology.",
+        "Empowering young musicians at San Jose Jazz - Bridges Academy Middle School, combining my passion for music education with hands-on instrument instruction and ensemble leadership.",
     },
     {
-      year: "2022",
-      title: "Advanced Education & Career Start",
+      icon: Code,
+      title: "Front-End Engineer 💻",
       description:
-        "Transferred to California State University, East Bay to pursue a Bachelor of Science in Computer Science. Simultaneously, I began my role as a Rock Band Instructor at San Jose Jazz - Bridges Academy Middle School, combining my passion for music and education.",
+        "Creating intuitive and responsive web experiences using modern technologies. BS in Computer Science from California State University, East Bay, with a focus on user-centric development.",
     },
     {
-      year: "2023",
-      title: "Expanded Career Experience",
+      icon: Camera,
+      title: "Photographer 📸",
       description:
-        "Started as a Freelance Photographer, broadening my professional skill set and gaining experience in visual arts alongside my technical studies.",
-    },
-    {
-      year: "2024",
-      title: "Graduation",
-      description:
-        "Graduated with a BS in Computer Science from California State University, East Bay, marking a significant milestone in my academic and professional journey.",
+        "Capturing moments and stories through a creative lens, specializing in both digital and analog photography to create compelling visual narratives.",
     },
   ];
 
@@ -79,18 +59,25 @@ export function About() {
             transition: { duration: 0.6, ease: "easeOut" },
           },
         }}>
-        <h2 className="text-4xl font-extrabold text-white text-center mb-12">
-          About Me
-        </h2>
-      </AnimateOnScroll>
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl font-extrabold text-white text-center mb-8">
+            About Me
+          </h2>
+          <p className="text-gray-300 text-center max-w-3xl mx-auto mb-12 text-lg">
+            I'm a multidisciplinary creative professional whose work spans
+            across music education, software development, and visual arts. Each
+            role allows me to express creativity and innovation in unique ways.
+          </p>
 
-      <div className="container mx-auto w-full max-w-3xl">
-        <div className="relative wrap overflow-hidden p-4 h-full">
-          {timelineData.map((item, index) => (
-            <TimelineItem key={index} {...item} />
-          ))}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {roles.map((role, index) => (
+              <RoleCard key={index} {...role} />
+            ))}
+          </div>
         </div>
-      </div>
+      </AnimateOnScroll>
     </section>
   );
 }
+
+export default About;
