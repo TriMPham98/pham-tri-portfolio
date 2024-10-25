@@ -70,7 +70,7 @@ export function About() {
           },
         }}>
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-extrabold text-white text-center mb-8">
+          <h2 className="text-3xl font-extrabold text-white text-center mb-8">
             About Me
           </h2>
           <p className="text-gray-300 text-center max-w-3xl mx-auto mb-12 text-lg">
