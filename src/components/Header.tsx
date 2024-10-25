@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
@@ -6,7 +6,6 @@ import {
   NavigationMenu,
   NavigationMenuList,
   NavigationMenuItem,
-  NavigationMenuLink,
 } from "@/components/ui/navigation-menu";
 import { FadeText } from "@/components/ui/fade-text";
 
@@ -26,15 +25,19 @@ export function Header() {
     const section = document.getElementById(sectionId);
     if (section) {
       const yOffset = -80; // Adjust this value based on your header height
-      const y = section.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: 'smooth' });
+      const y =
+        section.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: "smooth" });
     }
   }, []);
 
   return (
-    <header className={`p-1 sm:p-2 md:p-4 lg:p-6 flex flex-col md:flex-row justify-between items-center fixed w-full z-50 transition-all duration-300 ${
-      isScrolled ? "bg-black bg-opacity-70 backdrop-blur-md shadow-lg" : "bg-transparent"
-    }`}>
+    <header
+      className={`p-1 sm:p-2 md:p-4 lg:p-6 flex flex-col md:flex-row justify-between items-center fixed w-full z-50 transition-all duration-300 ${
+        isScrolled
+          ? "bg-black bg-opacity-70 backdrop-blur-md shadow-lg"
+          : "bg-transparent"
+      }`}>
       <FadeText
         direction="down"
         framerProps={{
