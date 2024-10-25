@@ -2,7 +2,17 @@ import React from "react";
 import { AnimateOnScroll } from "@/components/AnimateOnScroll";
 import { Music, Code, Camera } from "lucide-react";
 
-const RoleCard = ({ icon: Icon, title, description }) => (
+interface RoleCardProps {
+  icon: React.ElementType;
+  title: string;
+  description: string;
+}
+
+const RoleCard: React.FC<RoleCardProps> = ({
+  icon: Icon,
+  title,
+  description,
+}) => (
   <AnimateOnScroll
     animation={{
       hidden: { opacity: 0, y: 20 },
@@ -24,28 +34,28 @@ const RoleCard = ({ icon: Icon, title, description }) => (
   </AnimateOnScroll>
 );
 
-export function About() {
-  const roles = [
-    {
-      icon: Music,
-      title: "Rock Band Instructor 🎸",
-      description:
-        "Empowering young musicians at San Jose Jazz - Bridges Academy Middle School, combining my passion for music education with hands-on instrument instruction and ensemble leadership.",
-    },
-    {
-      icon: Code,
-      title: "Front-End Engineer 💻",
-      description:
-        "Creating intuitive and responsive web experiences using modern technologies. BS in Computer Science from California State University, East Bay, with a focus on user-centric development.",
-    },
-    {
-      icon: Camera,
-      title: "Photographer 📸",
-      description:
-        "Capturing moments and stories through a creative lens, specializing in both digital and analog photography to create compelling visual narratives.",
-    },
-  ];
+const roles = [
+  {
+    icon: Music,
+    title: "Rock Band Instructor 🎸",
+    description:
+      "Empowering young musicians at San Jose Jazz - Bridges Academy Middle School, combining my passion for music education with hands-on instrument instruction and ensemble leadership.",
+  },
+  {
+    icon: Code,
+    title: "Front-End Engineer 💻",
+    description:
+      "Creating intuitive and responsive web experiences using modern technologies. BS in Computer Science from California State University, East Bay, with a focus on user-centric development.",
+  },
+  {
+    icon: Camera,
+    title: "Photographer 📸",
+    description:
+      "Capturing moments and stories through a creative lens, specializing in both digital and analog photography to create compelling visual narratives.",
+  },
+] as const;
 
+export function About() {
   return (
     <section
       id="about"
@@ -64,7 +74,7 @@ export function About() {
             About Me
           </h2>
           <p className="text-gray-300 text-center max-w-3xl mx-auto mb-12 text-lg">
-            I'm a multidisciplinary creative professional whose work spans
+            I&apos;m a multidisciplinary creative professional whose work spans
             across music education, software development, and visual arts. Each
             role allows me to express creativity and innovation in unique ways.
           </p>
