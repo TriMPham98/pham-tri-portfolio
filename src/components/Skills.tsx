@@ -73,7 +73,7 @@ export function Skills() {
   }
 
   return (
-    <section id="skills" className="relative py-12">
+    <section id="skills" className="relative py-12 pt-24">
       <ParticleLinks className="absolute inset-0" />
       <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <AnimateOnScroll

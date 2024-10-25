@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import {
   NavigationMenu,
@@ -20,6 +20,15 @@ export function Header() {
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToSection = useCallback((sectionId: string) => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      const yOffset = -80; // Adjust this value based on your header height
+      const y = section.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
   }, []);
 
   return (
@@ -58,11 +67,11 @@ export function Header() {
                     transition: { delay: 0.3 + index * 0.1, type: "spring" },
                   },
                 }}>
-                <Link href={`#${item.toLowerCase()}`} legacyBehavior passHref>
-                  <NavigationMenuLink className="text-sm md:text-base text-gray-300 hover:text-white transition-colors px-1 py-1 md:px-2 md:py-0">
-                    {item}
-                  </NavigationMenuLink>
-                </Link>
+                <button
+                  onClick={() => scrollToSection(item.toLowerCase())}
+                  className="text-sm md:text-base text-gray-300 hover:text-white transition-colors px-1 py-1 md:px-2 md:py-0">
+                  {item}
+                </button>
               </FadeText>
             </NavigationMenuItem>
           ))}

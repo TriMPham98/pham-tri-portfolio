@@ -9,7 +9,7 @@ export function Contact() {
   return (
     <section
       id="contact"
-      className="p-4 md:p-6 bg-black bg-opacity-50 backdrop-blur-sm">
+      className="p-4 md:p-6 bg-black bg-opacity-50 backdrop-blur-sm pt-24">
       <AnimateOnScroll
         animation={{
           hidden: { opacity: 0, y: 20 },
