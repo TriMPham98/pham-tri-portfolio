@@ -22,12 +22,12 @@ const RoleCard: React.FC<RoleCardProps> = ({
         transition: { duration: 0.6, ease: "easeOut" },
       },
     }}>
-    <div className="bg-gray-900 rounded-xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 h-full">
-      <div className="flex flex-col items-center text-center">
+    <div className="bg-gray-900 rounded-xl p-7 shadow-xl hover:shadow-2xl transition-all duration-300 h-full">
+      <div className="flex flex-col items-center text-center h-full justify-between py-3">
         <div className="bg-gray-800 p-4 rounded-full mb-6">
-          <Icon className="w-8 h-8 text-white" />
+          <Icon className="w-9 h-9 text-white" />
         </div>
-        <h3 className="text-2xl font-bold text-white mb-4">{title}</h3>
+        <h3 className="text-2xl font-bold text-white mb-5">{title}</h3>
         <p className="text-gray-300 leading-relaxed">{description}</p>
       </div>
     </div>
@@ -70,10 +70,10 @@ export function About() {
           },
         }}>
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-extrabold text-white text-center mb-8">
+          <h2 className="text-3xl font-extrabold text-white text-center mb-10">
             About Me
           </h2>
-          <p className="text-gray-300 text-center max-w-3xl mx-auto mb-12 text-lg">
+          <p className="text-gray-300 text-center max-w-3xl mx-auto mb-14 text-lg">
             I&apos;m a multidisciplinary creative professional whose work spans
             across music education, software development, and visual arts. Each
             role allows me to express creativity and innovation in unique ways.
