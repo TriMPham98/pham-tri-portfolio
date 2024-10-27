@@ -28,23 +28,25 @@ const RoleCard: React.FC<RoleCardProps> = ({
       },
     }}>
     <div
-      className={`bg-gray-900 rounded-xl p-7 shadow-xl hover:shadow-2xl transition-all duration-300 h-full relative overflow-hidden ${
+      className={`bg-gray-900 rounded-xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 min-h-[32rem] relative overflow-hidden ${
         backgroundImage ? "bg-cover bg-center" : ""
       }`}
       style={
         backgroundImage
           ? {
-              backgroundImage: `linear-gradient(rgba(17, 24, 39, 0.69), rgba(17, 24, 39, 0.69)), url(${backgroundImage})`,
+              backgroundImage: `linear-gradient(rgba(17, 24, 39, 0.5), rgba(17, 24, 39, 0.7)), url(${backgroundImage})`,
             }
           : undefined
       }>
       {customBackground}
-      <div className="flex flex-col items-center text-center h-full justify-between py-3 relative z-10">
-        <div className="bg-gray-800 p-4 rounded-full mb-6">
-          <Icon className="w-9 h-9 text-white" />
+      <div className="flex flex-col items-center text-center h-full justify-between py-6 relative z-10">
+        <div className="bg-gray-800/80 p-5 rounded-full mb-8 backdrop-blur-sm">
+          <Icon className="w-12 h-12 text-white" />
         </div>
-        <h3 className="text-2xl font-bold text-white mb-5">{title}</h3>
-        <p className="text-gray-300 leading-relaxed">{description}</p>
+        <div className="space-y-6">
+          <h3 className="text-3xl font-bold text-white">{title}</h3>
+          <p className="text-gray-100 leading-relaxed text-lg">{description}</p>
+        </div>
       </div>
     </div>
   </AnimateOnScroll>
@@ -127,7 +129,7 @@ export function About() {
   return (
     <section
       id="about"
-      className="p-4 md:p-8 bg-black bg-opacity-50 backdrop-blur-sm">
+      className="p-6 md:p-12 bg-black bg-opacity-50 backdrop-blur-sm">
       <AnimateOnScroll
         animation={{
           hidden: { opacity: 0, y: 20 },
@@ -137,11 +139,11 @@ export function About() {
             transition: { duration: 0.6, ease: "easeOut" },
           },
         }}>
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-extrabold text-white text-center mb-10">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-4xl font-extrabold text-white text-center mb-12">
             About Me
           </h2>
-          <p className="text-gray-300 text-center max-w-3xl mx-auto mb-14 text-lg">
+          <p className="text-gray-300 text-center max-w-4xl mx-auto mb-16 text-xl">
             I&apos;m a multidisciplinary creative professional whose work spans
             across music education, software development, and visual arts. Each
             role allows me to express creativity and innovation in unique ways.
