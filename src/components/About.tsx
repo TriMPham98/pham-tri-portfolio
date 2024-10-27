@@ -34,7 +34,7 @@ const RoleCard: React.FC<RoleCardProps> = ({
       style={
         backgroundImage
           ? {
-              backgroundImage: `linear-gradient(rgba(17, 24, 39, 0.5), rgba(17, 24, 39, 0.7)), url(${backgroundImage})`,
+              backgroundImage: `linear-gradient(rgba(17, 24, 39, 0.69), rgba(17, 24, 39, 0.69)), url(${backgroundImage})`,
             }
           : undefined
       }>
