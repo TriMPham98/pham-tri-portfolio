@@ -53,34 +53,155 @@ const RoleCard: React.FC<RoleCardProps> = ({
 );
 
 const sampleCode = {
-  before: `// A simple React component
+  before: `// A simple React component with basic styling
 function Welcome() {
   const styles = {
+    container: {
+      padding: '20px',
+      margin: '10px',
+      border: '1px solid #ddd',
+      borderRadius: '4px'
+    },
     greeting: {
       color: '#333',
+      fontSize: '24px',
+      fontFamily: 'Arial, sans-serif'
+    },
+    subtitle: {
+      color: '#666',
+      fontSize: '16px',
+      marginTop: '10px'
     }
   };
 
   return (
-    <div style={styles.greeting}>
-      <h1>Hello</h1>
+    <div style={styles.container}>
+      <div style={styles.greeting}>
+        <h1>Hello</h1>
+      </div>
+      <p style={styles.subtitle}>Welcome to our site</p>
+      <button 
+        onClick={() => console.log('Button clicked!')}
+        style={{
+          padding: '8px 16px',
+          backgroundColor: '#007bff',
+          color: 'white',
+          border: 'none',
+          borderRadius: '4px',
+          cursor: 'pointer'
+        }}
+      >
+        Click me
+      </button>
     </div>
   );
 }
 
 export default Welcome;`,
 
-  after: `// An enhanced React component
-function Welcome({ name = 'Guest', theme = 'light' }) {
+  after: `// An enhanced React component with advanced features
+function Welcome({ 
+  name = 'Guest', 
+  theme = 'light',
+  onButtonClick,
+  notifications = []
+}) {
+  const [isHovered, setIsHovered] = useState(false);
+  const [activeTheme, setActiveTheme] = useState(theme);
+  const [showNotifications, setShowNotifications] = useState(false);
+
   const styles = {
+    container: {
+      padding: '20px',
+      margin: '10px',
+      border: '1px solid #ddd',
+      borderRadius: '4px',
+      backgroundColor: activeTheme === 'light' ? '#ffffff' : '#1a1a1a',
+      transition: 'background-color 0.3s ease'
+    },
     greeting: {
-      color: theme === 'light' ? '#333' : '#fff',
+      color: activeTheme === 'light' ? '#333' : '#fff',
+      fontSize: '24px',
+      fontFamily: 'Arial, sans-serif',
+      transform: isHovered ? 'scale(1.05)' : 'scale(1)',
+      transition: 'transform 0.2s ease'
+    },
+    subtitle: {
+      color: activeTheme === 'light' ? '#666' : '#ccc',
+      fontSize: '16px',
+      marginTop: '10px'
+    },
+    notification: {
+      position: 'relative',
+      padding: '10px',
+      backgroundColor: '#f8f9fa',
+      borderRadius: '4px',
+      marginTop: '10px'
     }
   };
 
+  useEffect(() => {
+    // Update theme based on system preferences
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    setActiveTheme(prefersDark ? 'dark' : 'light');
+  }, []);
+
+  const handleButtonClick = () => {
+    setIsHovered(false);
+    onButtonClick?.();
+    setShowNotifications(!showNotifications);
+  };
+
   return (
-    <div style={styles.greeting}>
-      <h1>Hello {name}!</h1>
+    <div 
+      style={styles.container}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div style={styles.greeting}>
+        <h1>Hello {name}!</h1>
+      </div>
+      <p style={styles.subtitle}>Welcome to my portfolio</p>
+      
+      <button 
+        onClick={handleButtonClick}
+        style={{
+          padding: '8px 16px',
+          backgroundColor: isHovered ? '#0056b3' : '#007bff',
+          color: 'white',
+          border: 'none',
+          borderRadius: '4px',
+          cursor: 'pointer',
+          transition: 'background-color 0.2s ease'
+        }}
+      >
+        Toggle Notifications
+      </button>
+
+      {showNotifications && notifications.length > 0 && (
+        <div style={{ marginTop: '20px' }}>
+          {notifications.map((notification, index) => (
+            <div key={index} style={styles.notification}>
+              {notification.message}
+            </div>
+          ))}
+        </div>
+      )}
+
+      <button
+        onClick={() => setActiveTheme(prev => prev === 'light' ? 'dark' : 'light')}
+        style={{
+          padding: '8px 16px',
+          backgroundColor: 'transparent',
+          color: activeTheme === 'light' ? '#333' : '#fff',
+          border: '1px solid currentColor',
+          borderRadius: '4px',
+          cursor: 'pointer',
+          marginLeft: '10px'
+        }}
+      >
+        Toggle Theme
+      </button>
     </div>
   );
 }
