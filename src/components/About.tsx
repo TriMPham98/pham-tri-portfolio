@@ -65,6 +65,7 @@ const roles = [
     title: "Photographer",
     description:
       "Capturing moments and stories through a creative lens, specializing in both digital and analog photography to create compelling visual narratives.",
+    backgroundImage: "/images/wedding-background.jpg",
   },
 ] as const;
 
