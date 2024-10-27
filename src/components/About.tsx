@@ -6,12 +6,14 @@ interface RoleCardProps {
   icon: React.ElementType;
   title: string;
   description: string;
+  backgroundImage?: string;
 }
 
 const RoleCard: React.FC<RoleCardProps> = ({
   icon: Icon,
   title,
   description,
+  backgroundImage,
 }) => (
   <AnimateOnScroll
     animation={{
@@ -22,8 +24,18 @@ const RoleCard: React.FC<RoleCardProps> = ({
         transition: { duration: 0.6, ease: "easeOut" },
       },
     }}>
-    <div className="bg-gray-900 rounded-xl p-7 shadow-xl hover:shadow-2xl transition-all duration-300 h-full">
-      <div className="flex flex-col items-center text-center h-full justify-between py-3">
+    <div
+      className={`bg-gray-900 rounded-xl p-7 shadow-xl hover:shadow-2xl transition-all duration-300 h-full relative overflow-hidden ${
+        backgroundImage ? "bg-cover bg-center" : ""
+      }`}
+      style={
+        backgroundImage
+          ? {
+              backgroundImage: `linear-gradient(rgba(17, 24, 39, 0.69), rgba(17, 24, 39, 0.69)), url(${backgroundImage})`,
+            }
+          : undefined
+      }>
+      <div className="flex flex-col items-center text-center h-full justify-between py-3 relative z-10">
         <div className="bg-gray-800 p-4 rounded-full mb-6">
           <Icon className="w-9 h-9 text-white" />
         </div>
@@ -37,19 +49,20 @@ const RoleCard: React.FC<RoleCardProps> = ({
 const roles = [
   {
     icon: Music,
-    title: "Rock Band Instructor 🎸",
+    title: "Rock Band Instructor",
     description:
       "Empowering young musicians at San Jose Jazz - Bridges Academy Middle School, combining my passion for music education with hands-on instrument instruction and ensemble leadership.",
+    backgroundImage: "/images/guitar-background.jpg",
   },
   {
     icon: Code,
-    title: "Front-End Engineer 💻",
+    title: "Front-End Engineer",
     description:
       "Creating intuitive and responsive web experiences using modern technologies. BS in Computer Science from California State University, East Bay, with a focus on user-centric development.",
   },
   {
     icon: Camera,
-    title: "Photographer 📸",
+    title: "Photographer",
     description:
       "Capturing moments and stories through a creative lens, specializing in both digital and analog photography to create compelling visual narratives.",
   },
