@@ -25,7 +25,7 @@ const RoleCard: React.FC<RoleCardProps> = ({
       },
     }}>
     <div
-      className={`bg-gray-900 rounded-xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 min-h-[32rem] relative overflow-hidden ${
+      className={`bg-gray-900 rounded-xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 h-[36rem] relative overflow-hidden ${
         backgroundImage ? "bg-cover bg-center" : ""
       }`}
       style={
@@ -35,14 +35,12 @@ const RoleCard: React.FC<RoleCardProps> = ({
             }
           : undefined
       }>
-      <div className="flex flex-col items-center text-center h-full justify-between py-6 relative z-10">
-        <div className="bg-gray-800/80 p-5 rounded-full mb-8 backdrop-blur-sm">
+      <div className="flex flex-col items-center text-center h-full relative z-10">
+        <div className="bg-gray-800/80 p-5 rounded-full mb-6 backdrop-blur-sm">
           <Icon className="w-12 h-12 text-white" />
         </div>
-        <div className="space-y-6">
-          <h3 className="text-3xl font-bold text-white">{title}</h3>
-          <p className="text-gray-100 leading-relaxed text-lg">{description}</p>
-        </div>
+        <h3 className="text-3xl font-bold text-white mb-6">{title}</h3>
+        <p className="text-gray-100 leading-relaxed text-lg">{description}</p>
       </div>
     </div>
   </AnimateOnScroll>
