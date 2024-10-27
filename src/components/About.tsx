@@ -1,12 +1,14 @@
 import React from "react";
 import { AnimateOnScroll } from "@/components/AnimateOnScroll";
 import { Music, Code, Camera } from "lucide-react";
+import CodeComparison from "./ui/code-comparison";
 
 interface RoleCardProps {
   icon: React.ElementType;
   title: string;
   description: string;
   backgroundImage?: string;
+  customBackground?: React.ReactNode;
 }
 
 const RoleCard: React.FC<RoleCardProps> = ({
@@ -14,6 +16,7 @@ const RoleCard: React.FC<RoleCardProps> = ({
   title,
   description,
   backgroundImage,
+  customBackground,
 }) => (
   <AnimateOnScroll
     animation={{
@@ -35,6 +38,7 @@ const RoleCard: React.FC<RoleCardProps> = ({
             }
           : undefined
       }>
+      {customBackground}
       <div className="flex flex-col items-center text-center h-full justify-between py-3 relative z-10">
         <div className="bg-gray-800 p-4 rounded-full mb-6">
           <Icon className="w-9 h-9 text-white" />
@@ -45,6 +49,42 @@ const RoleCard: React.FC<RoleCardProps> = ({
     </div>
   </AnimateOnScroll>
 );
+
+const sampleCode = {
+  before: `// A simple React component
+function Welcome() {
+  const styles = {
+    greeting: {
+      color: '#333',
+    }
+  };
+
+  return (
+    <div style={styles.greeting}>
+      <h1>Hello</h1>
+    </div>
+  );
+}
+
+export default Welcome;`,
+
+  after: `// An enhanced React component
+function Welcome({ name = 'Guest', theme = 'light' }) {
+  const styles = {
+    greeting: {
+      color: theme === 'light' ? '#333' : '#fff',
+    }
+  };
+
+  return (
+    <div style={styles.greeting}>
+      <h1>Hello {name}!</h1>
+    </div>
+  );
+}
+
+export default Welcome;`,
+};
 
 const roles = [
   {
@@ -59,6 +99,20 @@ const roles = [
     title: "Front-End Engineer",
     description:
       "Creating intuitive and responsive web experiences using modern technologies. BS in Computer Science from California State University, East Bay, with a focus on user-centric development.",
+    customBackground: (
+      <div className="absolute inset-0 opacity-20">
+        <div className="scale-110 transform">
+          <CodeComparison
+            beforeCode={sampleCode.before}
+            afterCode={sampleCode.after}
+            language="typescript"
+            filename="Welcome.tsx"
+            lightTheme="github-light"
+            darkTheme="github-dark"
+          />
+        </div>
+      </div>
+    ),
   },
   {
     icon: Camera,
