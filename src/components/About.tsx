@@ -59,6 +59,7 @@ const roles = [
     title: "Front-End Engineer",
     description:
       "Creating intuitive and responsive web experiences using modern technologies. BS in Computer Science from California State University, East Bay, with a focus on user-centric development.",
+      backgroundImage: "/images/vscode.png"
   },
   {
     icon: Camera,
