@@ -7,6 +7,7 @@ interface RoleCardProps {
   title: string;
   description: string;
   backgroundImage?: string;
+  delay?: number;
 }
 
 const RoleCard: React.FC<RoleCardProps> = ({
@@ -14,14 +15,19 @@ const RoleCard: React.FC<RoleCardProps> = ({
   title,
   description,
   backgroundImage,
+  delay = 0,
 }) => (
   <AnimateOnScroll
     animation={{
-      hidden: { opacity: 0, y: 20 },
+      hidden: { opacity: 0, x: -20 },
       visible: {
         opacity: 1,
-        y: 0,
-        transition: { duration: 0.6, ease: "easeOut" },
+        x: 0,
+        transition: {
+          duration: 0.6,
+          ease: "easeOut",
+          delay: delay,
+        },
       },
     }}>
     <div
@@ -59,7 +65,7 @@ const roles = [
     title: "Front-End Engineer",
     description:
       "Creating intuitive and responsive web experiences using modern technologies. BS in Computer Science from California State University, East Bay, with a focus on user-centric development.",
-      backgroundImage: "/images/vscode.png"
+    backgroundImage: "/images/vscode.png",
   },
   {
     icon: Camera,
@@ -96,7 +102,11 @@ export function About() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {roles.map((role, index) => (
-              <RoleCard key={index} {...role} />
+              <RoleCard
+                key={index}
+                {...role}
+                delay={index * 0.2} // Add 0.2s delay for each subsequent card
+              />
             ))}
           </div>
         </div>
