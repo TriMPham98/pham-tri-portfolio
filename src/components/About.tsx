@@ -52,7 +52,7 @@ const roles = [
     title: "Rock Band Instructor",
     description:
       "Empowering young musicians at San Jose Jazz - Bridges Academy Middle School, combining my passion for music education with hands-on instrument instruction and ensemble leadership.",
-    backgroundImage: "/images/guitar-background.jpg",
+    backgroundImage: "/images/guitar-background.JPG",
   },
   {
     icon: Code,
