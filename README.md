@@ -1,3 +1,5 @@
+![pham-tri-portfolio](https://github.com/user-attachments/assets/919ba40c-a460-43af-a810-8ea6f48eb6c5)
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
