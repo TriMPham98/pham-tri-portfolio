@@ -53,7 +53,7 @@ export function Hero() {
               }}>
               <div className="flex justify-center">
                 <Link
-                  href="/files/Tri-Pham-Resume.pdf"
+                  href="/files/TriPhamResume2025.pdf"
                   target="_blank"
                   rel="noopener noreferrer">
                   <RainbowButton className="hover:scale-105 flex items-center gap-2 text-sm sm:text-base md:text-lg py-2 px-3 sm:py-2 sm:px-4 md:py-3 md:px-6">
