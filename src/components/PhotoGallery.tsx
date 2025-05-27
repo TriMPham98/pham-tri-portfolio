@@ -93,9 +93,45 @@ const photos = [
     category: "Portrait",
     description: "Expressive portrait photography",
   },
-  // Music Photography
+  // Landscape Photography
   {
     id: 13,
+    src: "/images/photography/DSC03544.jpg",
+    title: "Natural Beauty",
+    category: "Landscape",
+    description: "Capturing the beauty of natural landscapes",
+  },
+  {
+    id: 14,
+    src: "/images/photography/DSC03813.jpg",
+    title: "Scenic Vista",
+    category: "Landscape",
+    description: "Breathtaking scenic landscape view",
+  },
+  {
+    id: 15,
+    src: "/images/photography/DSC06639.jpg",
+    title: "Nature's Canvas",
+    category: "Landscape",
+    description: "Nature's artistry captured in frame",
+  },
+  {
+    id: 16,
+    src: "/images/photography/DSC08474.jpg",
+    title: "Landscape Serenity",
+    category: "Landscape",
+    description: "Peaceful and serene landscape moment",
+  },
+  {
+    id: 17,
+    src: "/images/photography/DSC09020.jpg",
+    title: "Horizon Dreams",
+    category: "Landscape",
+    description: "Dreamy horizon landscape photography",
+  },
+  // Music Photography
+  {
+    id: 18,
     src: "/images/guitar-background.JPG",
     title: "Musical Passion",
     category: "Music",
