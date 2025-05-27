@@ -60,14 +60,42 @@ const photos = [
   // Portrait Photography
   {
     id: 8,
-    src: "/images/TriGuitarHeadshot.jpg",
-    title: "Portrait Session",
+    src: "/images/photography/DSC08013.jpg",
+    title: "Wedding Portrait",
     category: "Portrait",
-    description: "Capturing personality and character",
+    description: "Beautiful wedding portrait moment",
+  },
+  {
+    id: 9,
+    src: "/images/photography/DSC08405-Edit.jpg",
+    title: "Portrait Study",
+    category: "Portrait",
+    description: "Professional portrait photography",
+  },
+  {
+    id: 10,
+    src: "/images/photography/DSC08525-Edit.jpg",
+    title: "Character Portrait",
+    category: "Portrait",
+    description: "Capturing unique personality",
+  },
+  {
+    id: 11,
+    src: "/images/photography/DSC08531-Edit.jpg",
+    title: "Artistic Portrait",
+    category: "Portrait",
+    description: "Creative portrait composition",
+  },
+  {
+    id: 12,
+    src: "/images/photography/DSC08498-Edit.jpg",
+    title: "Portrait Expression",
+    category: "Portrait",
+    description: "Expressive portrait photography",
   },
   // Music Photography
   {
-    id: 9,
+    id: 13,
     src: "/images/guitar-background.JPG",
     title: "Musical Passion",
     category: "Music",
