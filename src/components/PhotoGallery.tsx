@@ -5,33 +5,51 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
-// Sample photography data - you can replace these with your actual photos
+// Photography portfolio data - organized by category
 const photos = [
+  // Wedding Photography
   {
     id: 1,
     src: "/images/wedding-background.jpg",
     alt: "Wedding Photography",
-    title: "Wedding Moments",
+    title: "Wedding Ceremony",
     category: "Wedding",
     description: "Capturing the magic of special moments",
   },
   {
     id: 2,
-    src: "/images/guitar-background.JPG",
-    alt: "Music Photography",
-    title: "Musical Passion",
-    category: "Music",
-    description: "The art of music through visual storytelling",
+    src: "/images/photography/DSC00620.jpg",
+    alt: "Wedding Photography",
+    title: "Wedding Celebration",
+    category: "Wedding",
+    description: "Beautiful moments from a wedding celebration",
   },
   {
     id: 3,
+    src: "/images/photography/DSC00974.jpg",
+    alt: "Wedding Photography",
+    title: "Wedding Reception",
+    category: "Wedding",
+    description: "Joyful moments during the wedding reception",
+  },
+  // Portrait Photography
+  {
+    id: 4,
     src: "/images/TriGuitarHeadshot.jpg",
     alt: "Portrait Photography",
     title: "Portrait Session",
     category: "Portrait",
     description: "Capturing personality and character",
   },
-  // Add more photos as needed
+  // Music Photography
+  {
+    id: 5,
+    src: "/images/guitar-background.JPG",
+    alt: "Music Photography",
+    title: "Musical Passion",
+    category: "Music",
+    description: "The art of music through visual storytelling",
+  },
 ];
 
 export function PhotoGallery() {
