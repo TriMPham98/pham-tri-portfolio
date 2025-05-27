@@ -11,7 +11,6 @@ const photos = [
   {
     id: 1,
     src: "/images/wedding-background.jpg",
-    alt: "Wedding Photography",
     title: "Wedding Ceremony",
     category: "Wedding",
     description: "Capturing the magic of special moments",
@@ -19,7 +18,6 @@ const photos = [
   {
     id: 2,
     src: "/images/photography/DSC00620.jpg",
-    alt: "Wedding Photography",
     title: "Wedding Celebration",
     category: "Wedding",
     description: "Beautiful moments from a wedding celebration",
@@ -27,25 +25,50 @@ const photos = [
   {
     id: 3,
     src: "/images/photography/DSC00974.jpg",
-    alt: "Wedding Photography",
     title: "Wedding Reception",
     category: "Wedding",
     description: "Joyful moments during the wedding reception",
   },
-  // Portrait Photography
   {
     id: 4,
+    src: "/images/photography/DSC09903.jpg",
+    title: "Wedding Moments",
+    category: "Wedding",
+    description: "Capturing precious wedding memories",
+  },
+  {
+    id: 5,
+    src: "/images/photography/DSC00373.jpg",
+    title: "Wedding Joy",
+    category: "Wedding",
+    description: "Moments of pure happiness and celebration",
+  },
+  {
+    id: 6,
+    src: "/images/photography/DSC00453.jpg",
+    title: "Wedding Love",
+    category: "Wedding",
+    description: "Beautiful expressions of love and commitment",
+  },
+  {
+    id: 7,
+    src: "/images/photography/DSC00658.jpg",
+    title: "Wedding Bliss",
+    category: "Wedding",
+    description: "Capturing the essence of wedding day bliss",
+  },
+  // Portrait Photography
+  {
+    id: 8,
     src: "/images/TriGuitarHeadshot.jpg",
-    alt: "Portrait Photography",
     title: "Portrait Session",
     category: "Portrait",
     description: "Capturing personality and character",
   },
   // Music Photography
   {
-    id: 5,
+    id: 9,
     src: "/images/guitar-background.JPG",
-    alt: "Music Photography",
     title: "Musical Passion",
     category: "Music",
     description: "The art of music through visual storytelling",
@@ -123,23 +146,17 @@ export function PhotoGallery() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
-            className="break-inside-avoid cursor-pointer group"
+            className="break-inside-avoid cursor-pointer"
             onClick={() => openLightbox(photo.id)}>
             <div className="relative overflow-hidden rounded-lg bg-gray-900">
               <Image
                 src={photo.src}
-                alt={photo.alt}
+                alt=""
                 width={400}
                 height={600}
-                className="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105"
+                className="w-full h-auto object-cover"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
               />
-              <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-end">
-                <div className="p-4 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                  <h3 className="font-semibold text-lg">{photo.title}</h3>
-                  <p className="text-sm text-gray-300">{photo.category}</p>
-                </div>
-              </div>
             </div>
           </motion.div>
         ))}
@@ -162,21 +179,11 @@ export function PhotoGallery() {
               onClick={(e) => e.stopPropagation()}>
               <Image
                 src={selectedPhotoData.src}
-                alt={selectedPhotoData.alt}
+                alt=""
                 width={1200}
                 height={800}
                 className="max-w-full max-h-[80vh] object-contain"
               />
-
-              {/* Photo Info */}
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-6">
-                <h3 className="text-white text-2xl font-bold mb-2">
-                  {selectedPhotoData.title}
-                </h3>
-                <p className="text-gray-300 text-lg">
-                  {selectedPhotoData.description}
-                </p>
-              </div>
 
               {/* Close Button */}
               <button
