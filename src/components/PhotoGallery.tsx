@@ -54,20 +54,20 @@ const LazyImage: React.FC<{
   className?: string;
   sizes?: string;
   onClick?: () => void;
-}> = ({ src, alt, width, height, className, sizes, onClick }) => {
+  isLandscape?: boolean;
+}> = ({ src, alt, width, height, className, sizes, onClick, isLandscape }) => {
   const { elementRef, hasIntersected } = useIntersectionObserver();
   const [imageLoaded, setImageLoaded] = useState(false);
 
   return (
     <div
       ref={elementRef}
-      className={className}
-      onClick={onClick}
-      style={{ aspectRatio: `${width}/${height}` }}>
+      className={`${className} ${
+        isLandscape ? "landscape-photo" : "portrait-photo"
+      }`}
+      onClick={onClick}>
       {/* Invisible placeholder to maintain layout */}
-      <div
-        className="w-full h-full"
-        style={{ aspectRatio: `${width}/${height}` }}>
+      <div className="w-full h-full">
         {hasIntersected && (
           <>
             {/* Loading placeholder - visible until image loads */}
@@ -92,7 +92,6 @@ const LazyImage: React.FC<{
               sizes={sizes}
               loading="lazy"
               onLoad={() => setImageLoaded(true)}
-              style={{ aspectRatio: `${width}/${height}` }}
             />
           </>
         )}
@@ -367,14 +366,60 @@ export function PhotoGallery() {
       </div>
 
       {/* Photo Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 relative z-10">
+      <div className="masonry-grid relative z-10">
+        <style jsx>{`
+          .masonry-grid {
+            column-count: 1;
+            column-gap: 1rem;
+            padding: 0;
+          }
+
+          @media (min-width: 640px) {
+            .masonry-grid {
+              column-count: 2;
+            }
+          }
+
+          @media (min-width: 768px) {
+            .masonry-grid {
+              column-count: 3;
+            }
+          }
+
+          @media (min-width: 1024px) {
+            .masonry-grid {
+              column-count: 4;
+            }
+          }
+
+          @media (min-width: 1280px) {
+            .masonry-grid {
+              column-count: 5;
+            }
+          }
+
+          .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 1rem;
+            display: inline-block;
+            width: 100%;
+          }
+
+          .portrait-photo {
+            aspect-ratio: 2/3;
+          }
+
+          .landscape-photo {
+            aspect-ratio: 3/2;
+          }
+        `}</style>
         {filteredPhotos.map((photo, index) => (
           <motion.div
             key={photo.id}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
-            className="cursor-pointer">
+            className="masonry-item cursor-pointer">
             <div className="relative overflow-hidden rounded-lg bg-gray-900">
               <LazyImage
                 src={photo.src}
@@ -384,6 +429,7 @@ export function PhotoGallery() {
                 className="relative w-full"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                 onClick={() => openLightbox(photo.id)}
+                isLandscape={photo.category === "Landscape"}
               />
             </div>
           </motion.div>
