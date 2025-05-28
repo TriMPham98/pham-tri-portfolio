@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
@@ -45,6 +45,28 @@ const useIntersectionObserver = (options: IntersectionObserverInit = {}) => {
   return { elementRef, isIntersecting, hasIntersected };
 };
 
+// Image cache for better performance
+const imageCache = new Map<string, boolean>();
+
+// Image preloader utility with caching
+const preloadImage = (src: string): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    // Check if image is already cached
+    if (imageCache.has(src)) {
+      resolve();
+      return;
+    }
+
+    const img = new window.Image();
+    img.onload = () => {
+      imageCache.set(src, true);
+      resolve();
+    };
+    img.onerror = reject;
+    img.src = src;
+  });
+};
+
 // Lazy Image Component
 const LazyImage: React.FC<{
   src: string;
@@ -58,6 +80,20 @@ const LazyImage: React.FC<{
 }> = ({ src, alt, width, height, className, sizes, onClick, isLandscape }) => {
   const { elementRef, hasIntersected } = useIntersectionObserver();
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [fullResPreloaded, setFullResPreloaded] = useState(false);
+
+  // Preload full resolution image after thumbnail loads
+  useEffect(() => {
+    if (imageLoaded && !fullResPreloaded) {
+      preloadImage(src)
+        .then(() => {
+          setFullResPreloaded(true);
+        })
+        .catch(() => {
+          // Silently handle preload errors
+        });
+    }
+  }, [imageLoaded, src, fullResPreloaded]);
 
   return (
     <div
@@ -93,12 +129,86 @@ const LazyImage: React.FC<{
               loading="lazy"
               onLoad={() => setImageLoaded(true)}
             />
+
+            {/* Preloaded indicator (optional visual feedback) */}
+            {fullResPreloaded && (
+              <div className="absolute top-2 right-2 w-2 h-2 bg-green-500 rounded-full opacity-60"></div>
+            )}
           </>
         )}
 
         {/* Placeholder when not intersected */}
         {!hasIntersected && <div className="w-full h-full bg-gray-800" />}
       </div>
+    </div>
+  );
+};
+
+// Optimized Lightbox Image Component
+const LightboxImage: React.FC<{
+  src: string;
+  alt: string;
+  thumbnailSrc?: string;
+  onLoad?: () => void;
+}> = ({ src, alt, thumbnailSrc, onLoad }) => {
+  const [highResLoaded, setHighResLoaded] = useState(false);
+  const [showThumbnail, setShowThumbnail] = useState(!!thumbnailSrc);
+
+  useEffect(() => {
+    // Start loading high-res image immediately
+    const img = new window.Image();
+    img.onload = () => {
+      setHighResLoaded(true);
+      setShowThumbnail(false);
+      onLoad?.();
+    };
+    img.src = src;
+  }, [src, onLoad]);
+
+  // Generate optimized thumbnail URL using Next.js image optimization
+  const getThumbnailUrl = (originalSrc: string) => {
+    return `/_next/image?url=${encodeURIComponent(originalSrc)}&w=640&q=50`;
+  };
+
+  return (
+    <div className="relative">
+      {/* Show optimized thumbnail first for instant feedback */}
+      {showThumbnail && thumbnailSrc && (
+        <img
+          src={getThumbnailUrl(thumbnailSrc)}
+          alt={alt}
+          className="max-w-full max-h-[80vh] object-contain blur-sm scale-105 transition-all duration-300"
+          style={{ filter: "blur(2px) brightness(0.8)" }}
+        />
+      )}
+
+      {/* High-res image */}
+      <Image
+        src={src}
+        alt={alt}
+        width={1200}
+        height={800}
+        className={`max-w-full max-h-[80vh] object-contain transition-opacity duration-500 ${
+          showThumbnail ? "absolute inset-0" : ""
+        } ${highResLoaded ? "opacity-100" : "opacity-0"}`}
+        priority
+        quality={90}
+        onLoad={() => {
+          setHighResLoaded(true);
+          setShowThumbnail(false);
+          onLoad?.();
+        }}
+      />
+
+      {/* Loading indicator */}
+      {!highResLoaded && !showThumbnail && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="text-white text-lg flex flex-col items-center gap-3">
+            <div className="w-12 h-12 border-3 border-white border-t-transparent rounded-full animate-spin"></div>
+            <span>Loading high resolution...</span>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
@@ -340,6 +450,7 @@ const photos = [
 export function PhotoGallery() {
   const [selectedPhoto, setSelectedPhoto] = useState<number | null>(null);
   const [filter, setFilter] = useState<string>("All");
+  const [lightboxImageLoaded, setLightboxImageLoaded] = useState(false);
 
   const categories = [
     "All",
@@ -351,12 +462,66 @@ export function PhotoGallery() {
       ? photos
       : photos.filter((photo) => photo.category === filter);
 
+  // Preload adjacent images for faster navigation
+  useEffect(() => {
+    if (selectedPhoto === null) return;
+
+    const currentIndex = filteredPhotos.findIndex(
+      (photo) => photo.id === selectedPhoto
+    );
+
+    // Preload current, next, and previous images (3 total)
+    const preloadIndexes = [
+      currentIndex, // Current image
+      currentIndex > 0 ? currentIndex - 1 : filteredPhotos.length - 1, // Previous
+      currentIndex < filteredPhotos.length - 1 ? currentIndex + 1 : 0, // Next
+      // Also preload 2 images ahead and behind for smoother navigation
+      currentIndex > 1 ? currentIndex - 2 : filteredPhotos.length - 2,
+      currentIndex < filteredPhotos.length - 2 ? currentIndex + 2 : 1,
+    ];
+
+    preloadIndexes.forEach((index) => {
+      if (index >= 0 && index < filteredPhotos.length) {
+        preloadImage(filteredPhotos[index].src).catch(() => {
+          // Silently handle preload errors
+        });
+      }
+    });
+  }, [selectedPhoto, filteredPhotos]);
+
+  // Keyboard navigation
+  useEffect(() => {
+    if (selectedPhoto === null) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      switch (event.key) {
+        case "ArrowLeft":
+          event.preventDefault();
+          navigatePhoto("prev");
+          break;
+        case "ArrowRight":
+          event.preventDefault();
+          navigatePhoto("next");
+          break;
+        case "Escape":
+          event.preventDefault();
+          closeLightbox();
+          break;
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [selectedPhoto, filteredPhotos]);
+
   const openLightbox = (photoId: number) => {
     setSelectedPhoto(photoId);
+    setLightboxImageLoaded(false);
   };
 
   const closeLightbox = () => {
     setSelectedPhoto(null);
+    setLightboxImageLoaded(false);
   };
 
   const navigatePhoto = (direction: "prev" | "next") => {
@@ -376,6 +541,7 @@ export function PhotoGallery() {
     }
 
     setSelectedPhoto(filteredPhotos[newIndex].id);
+    setLightboxImageLoaded(false);
   };
 
   const selectedPhotoData = selectedPhoto
@@ -491,31 +657,29 @@ export function PhotoGallery() {
               exit={{ scale: 0.8 }}
               className="relative max-w-4xl max-h-full"
               onClick={(e) => e.stopPropagation()}>
-              <Image
+              <LightboxImage
                 src={selectedPhotoData.src}
                 alt=""
-                width={1200}
-                height={800}
-                className="max-w-full max-h-[80vh] object-contain"
-                priority
+                thumbnailSrc={selectedPhotoData.src} // Use same src as thumbnail for now
+                onLoad={() => setLightboxImageLoaded(true)}
               />
 
               {/* Close Button */}
               <button
                 onClick={closeLightbox}
-                className="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors">
+                className="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors z-10">
                 <X size={32} />
               </button>
 
               {/* Navigation Buttons */}
               <button
                 onClick={() => navigatePhoto("prev")}
-                className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 transition-colors">
+                className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 transition-colors z-10">
                 <ChevronLeft size={48} />
               </button>
               <button
                 onClick={() => navigatePhoto("next")}
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 transition-colors">
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 transition-colors z-10">
                 <ChevronRight size={48} />
               </button>
             </motion.div>
