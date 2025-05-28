@@ -53,7 +53,17 @@ const LazyImage: React.FC<{
   className?: string;
   sizes?: string;
   isLandscape?: boolean;
-}> = ({ src, alt, width, height, className, sizes, isLandscape }) => {
+  priority?: boolean;
+}> = ({
+  src,
+  alt,
+  width,
+  height,
+  className,
+  sizes,
+  isLandscape,
+  priority = false,
+}) => {
   const { elementRef, hasIntersected } = useIntersectionObserver();
   const [imageLoaded, setImageLoaded] = useState(false);
 
@@ -87,7 +97,8 @@ const LazyImage: React.FC<{
                 imageLoaded ? "opacity-100" : "opacity-0"
               }`}
               sizes={sizes}
-              loading="lazy"
+              loading={priority ? undefined : "lazy"}
+              priority={priority}
               onLoad={() => setImageLoaded(true)}
             />
           </>
@@ -432,6 +443,7 @@ export function PhotoGallery() {
                 className="relative w-full"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                 isLandscape={photo.category === "Landscape"}
+                priority={index === 0}
               />
             </div>
           </motion.div>
