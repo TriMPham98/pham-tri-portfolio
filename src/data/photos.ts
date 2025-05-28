@@ -247,11 +247,6 @@ export const photos = [
   },
   {
     id: 38,
-    src: "/images/photography/DSC04700.jpg",
-    category: "General",
-  },
-  {
-    id: 39,
     src: "/images/photography/DSC08289.jpg",
     category: "General",
   },
