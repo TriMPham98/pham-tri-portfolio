@@ -230,6 +230,16 @@ export const photos = [
     src: "/images/photography/DSC02809.jpg",
     category: "General",
   },
+  {
+    id: 35,
+    src: "/images/photography/DSC03683.jpg",
+    category: "General",
+  },
+  {
+    id: 36,
+    src: "/images/photography/DSC03434.jpg",
+    category: "General",
+  },
 ];
 
 // Type definition for photo objects
