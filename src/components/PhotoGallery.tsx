@@ -297,6 +297,20 @@ const photos = [
     category: "Landscape",
     description: "Breathtaking wilderness landscape photography",
   },
+  {
+    id: 29,
+    src: "/images/photography/DSC04107.jpg",
+    title: "Expansive View",
+    category: "Landscape",
+    description: "A wide and expansive landscape view.",
+  },
+  {
+    id: 30,
+    src: "/images/photography/DSC02852.jpg",
+    title: "Quiet Waters",
+    category: "Landscape",
+    description: "Serene waters reflecting the landscape.",
+  },
 ];
 
 export function PhotoGallery() {
