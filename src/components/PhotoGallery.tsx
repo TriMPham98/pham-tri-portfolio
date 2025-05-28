@@ -227,9 +227,23 @@ const photos = [
     category: "Landscape",
     description: "Dreamy horizon landscape photography",
   },
-  // Music Photography
   {
     id: 21,
+    src: "/images/photography/IMG_20190706_132705.jpg",
+    title: "Mountain Vista",
+    category: "Landscape",
+    description: "Stunning mountain landscape captured in natural light",
+  },
+  {
+    id: 22,
+    src: "/images/photography/DSC02260.jpg",
+    title: "Scenic Wilderness",
+    category: "Landscape",
+    description: "Breathtaking wilderness landscape photography",
+  },
+  // Music Photography
+  {
+    id: 23,
     src: "/images/guitar-background.JPG",
     title: "Musical Passion",
     category: "Music",
