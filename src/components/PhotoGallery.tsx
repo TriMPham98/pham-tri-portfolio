@@ -400,9 +400,10 @@ export function PhotoGallery() {
 
           .masonry-item {
             break-inside: avoid;
-            margin-bottom: 1rem;
+            /* margin-bottom: 3.5rem; */ /* Removed as it's now handled by inline style */
             display: inline-block;
             width: 100%;
+            /* border: 2px solid red; */ /* Reverted temporary debug border */
           }
 
           .portrait-photo {
@@ -419,7 +420,8 @@ export function PhotoGallery() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
-            className="masonry-item cursor-pointer">
+            className="masonry-item cursor-pointer"
+            style={{ marginBottom: "1.0rem" }}>
             <div className="relative overflow-hidden rounded-lg bg-gray-900">
               <LazyImage
                 src={photo.src}
