@@ -4,6 +4,7 @@ import React, { useState, useRef, useCallback } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import ParticleLinks from "./ui/particle-links";
 
 // Custom hook for intersection observer
 const useIntersectionObserver = (options: IntersectionObserverInit = {}) => {
@@ -345,9 +346,12 @@ export function PhotoGallery() {
     : null;
 
   return (
-    <div className="w-full">
+    <div className="w-full relative">
+      {/* Particle Links Background */}
+      <ParticleLinks className="fixed inset-0 z-0 pointer-events-none" />
+
       {/* Filter Buttons */}
-      <div className="flex flex-wrap justify-center gap-4 mb-8">
+      <div className="flex flex-wrap justify-center gap-4 mb-8 relative z-10">
         {categories.map((category) => (
           <button
             key={category}
@@ -363,7 +367,7 @@ export function PhotoGallery() {
       </div>
 
       {/* Photo Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 relative z-10">
         {filteredPhotos.map((photo, index) => (
           <motion.div
             key={photo.id}
