@@ -18,7 +18,7 @@ export default function Photography() {
           <div className="text-center mb-12">
             <GradualSpacing
               text="Photography Portfolio"
-              className="text-4xl md:text-6xl font-bold text-white mb-4"
+              className="text-3xl md:text-6xl font-bold text-white mb-4"
               duration={0.25}
               delayMultiple={0.07}
             />
@@ -38,8 +38,8 @@ export default function Photography() {
                 },
               }}>
               <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              A collection of my favorite moments
-            </p>
+                A collection of my favorite moments
+              </p>
             </FadeText>
           </div>
           <PhotoGallery />

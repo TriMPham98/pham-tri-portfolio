@@ -23,7 +23,7 @@ export default function GradualSpacing({
   className,
 }: GradualSpacingProps) {
   return (
-    <div className="flex justify-center space-x-1">
+    <div className="flex justify-center space-x-0.5">
       <AnimatePresence>
         {text.split("").map((char, i) => (
           <motion.h1
@@ -33,8 +33,7 @@ export default function GradualSpacing({
             exit="hidden"
             variants={framerProps}
             transition={{ duration, delay: i * delayMultiple }}
-            className={cn("drop-shadow-sm ", className)}
-          >
+            className={cn("drop-shadow-sm ", className)}>
             {char === " " ? <span>&nbsp;</span> : char}
           </motion.h1>
         ))}
