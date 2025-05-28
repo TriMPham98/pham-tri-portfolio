@@ -461,6 +461,7 @@ export function PhotoGallery() {
   const [preloadedImages, setPreloadedImages] = useState<Set<string>>(
     new Set()
   );
+  const [lastNavigationTime, setLastNavigationTime] = useState(0);
 
   const categories = [
     "All",
@@ -512,25 +513,41 @@ export function PhotoGallery() {
 
     const handleKeyDown = (event: KeyboardEvent) => {
       // Prevent navigation if currently navigating or image not loaded
-      if (isNavigating || !lightboxImageLoaded) return;
+      if (isNavigating || !lightboxImageLoaded) {
+        console.log(
+          "Keyboard navigation blocked - isNavigating:",
+          isNavigating,
+          "lightboxImageLoaded:",
+          lightboxImageLoaded
+        );
+        return;
+      }
 
+      // Prevent default behavior and stop propagation
       switch (event.key) {
         case "ArrowLeft":
           event.preventDefault();
+          event.stopPropagation();
+          console.log("Keyboard: ArrowLeft pressed");
           navigatePhoto("prev");
           break;
         case "ArrowRight":
           event.preventDefault();
+          event.stopPropagation();
+          console.log("Keyboard: ArrowRight pressed");
           navigatePhoto("next");
           break;
         case "Escape":
           event.preventDefault();
+          event.stopPropagation();
+          console.log("Keyboard: Escape pressed");
           closeLightbox();
           break;
       }
     };
 
-    document.addEventListener("keydown", handleKeyDown);
+    // Use keydown instead of keyup to prevent multiple events
+    document.addEventListener("keydown", handleKeyDown, { passive: false });
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [selectedPhoto, filteredPhotos, isNavigating, lightboxImageLoaded]);
 
@@ -538,18 +555,41 @@ export function PhotoGallery() {
     setSelectedPhoto(photoId);
     setLightboxImageLoaded(false);
     setIsNavigating(false);
+    setLastNavigationTime(0);
+    console.log("Lightbox opened for photo ID:", photoId);
   };
 
   const closeLightbox = () => {
     setSelectedPhoto(null);
     setLightboxImageLoaded(false);
     setIsNavigating(false);
+    setLastNavigationTime(0);
+    console.log("Lightbox closed");
   };
 
   const navigatePhoto = (direction: "prev" | "next") => {
-    if (selectedPhoto === null || isNavigating || !lightboxImageLoaded) return;
+    const now = Date.now();
+
+    // Debounce navigation - prevent rapid navigation within 150ms
+    if (now - lastNavigationTime < 150) {
+      console.log("Navigation debounced - too rapid");
+      return;
+    }
+
+    if (selectedPhoto === null || isNavigating || !lightboxImageLoaded) {
+      console.log(
+        "Navigation blocked - selectedPhoto:",
+        selectedPhoto,
+        "isNavigating:",
+        isNavigating,
+        "lightboxImageLoaded:",
+        lightboxImageLoaded
+      );
+      return;
+    }
 
     console.log("Starting navigation:", direction);
+    setLastNavigationTime(now);
 
     const currentIndex = filteredPhotos.findIndex(
       (photo) => photo.id === selectedPhoto
@@ -565,6 +605,11 @@ export function PhotoGallery() {
     }
 
     const nextImageSrc = filteredPhotos[newIndex].src;
+    const nextImageId = filteredPhotos[newIndex].id;
+
+    console.log(
+      `Navigating from index ${currentIndex} to ${newIndex}, image ID: ${nextImageId}`
+    );
 
     // Always show loading state first, then check if preloaded
     console.log("Setting navigation state to true");
@@ -577,7 +622,7 @@ export function PhotoGallery() {
       if (preloadedImages.has(nextImageSrc)) {
         console.log("Image is preloaded, navigating quickly");
         // Image is ready, navigate quickly
-        setSelectedPhoto(filteredPhotos[newIndex].id);
+        setSelectedPhoto(nextImageId);
         setLightboxImageLoaded(true);
         setIsNavigating(false);
       } else {
@@ -587,14 +632,14 @@ export function PhotoGallery() {
           .then(() => {
             console.log("Image loaded successfully");
             setPreloadedImages((prev) => new Set(prev).add(nextImageSrc));
-            setSelectedPhoto(filteredPhotos[newIndex].id);
+            setSelectedPhoto(nextImageId);
             setLightboxImageLoaded(true);
             setIsNavigating(false);
           })
           .catch(() => {
             console.log("Image load failed");
             // On error, still navigate but let the component handle loading
-            setSelectedPhoto(filteredPhotos[newIndex].id);
+            setSelectedPhoto(nextImageId);
             setLightboxImageLoaded(false);
             setIsNavigating(false);
           });
