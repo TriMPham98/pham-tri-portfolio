@@ -191,6 +191,41 @@ const photos = [
     category: "Portrait",
     description: "Expressive portrait photography",
   },
+  {
+    id: 24,
+    src: "/images/photography/DSC02577.jpg",
+    title: "Portrait Elegance",
+    category: "Portrait",
+    description: "Elegant portrait with natural lighting",
+  },
+  {
+    id: 25,
+    src: "/images/photography/DSC02668-Edit.jpg",
+    title: "Artistic Portrait",
+    category: "Portrait",
+    description: "Creative portrait with artistic editing",
+  },
+  {
+    id: 26,
+    src: "/images/photography/DSC03791.jpg",
+    title: "Natural Portrait",
+    category: "Portrait",
+    description: "Beautiful natural portrait photography",
+  },
+  {
+    id: 27,
+    src: "/images/photography/DSC09641.jpg",
+    title: "Portrait Study",
+    category: "Portrait",
+    description: "Professional portrait study",
+  },
+  {
+    id: 28,
+    src: "/images/photography/DSC04695.jpg",
+    title: "Portrait Composition",
+    category: "Portrait",
+    description: "Thoughtful portrait composition",
+  },
   // Landscape Photography
   {
     id: 16,
