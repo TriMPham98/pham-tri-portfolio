@@ -55,29 +55,47 @@ const LazyImage: React.FC<{
   onClick?: () => void;
 }> = ({ src, alt, width, height, className, sizes, onClick }) => {
   const { elementRef, hasIntersected } = useIntersectionObserver();
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   return (
     <div ref={elementRef} className={className} onClick={onClick}>
-      {hasIntersected ? (
-        <Image
-          src={src}
-          alt={alt}
-          width={width}
-          height={height}
-          className="w-full h-auto object-cover transition-opacity duration-300"
-          sizes={sizes}
-          loading="lazy"
-        />
-      ) : (
+      <div
+        className="relative w-full"
+        style={{ aspectRatio: `${width}/${height}` }}>
+        {/* Invisible placeholder to maintain layout */}
         <div
-          className="w-full bg-gray-800 animate-pulse flex items-center justify-center min-h-[200px]"
-          style={{ aspectRatio: `${width}/${height}` }}>
-          <div className="text-gray-400 text-sm flex flex-col items-center gap-2">
-            <div className="w-8 h-8 border-2 border-gray-600 border-t-gray-400 rounded-full animate-spin"></div>
-            <span>Loading...</span>
-          </div>
-        </div>
-      )}
+          className="absolute inset-0 w-full h-full"
+          style={{ aspectRatio: `${width}/${height}` }}
+        />
+
+        {hasIntersected && (
+          <>
+            {/* Loading placeholder */}
+            {!imageLoaded && (
+              <div className="absolute inset-0 w-full h-full bg-gray-800 animate-pulse flex items-center justify-center">
+                <div className="text-gray-400 text-sm flex flex-col items-center gap-2">
+                  <div className="w-8 h-8 border-2 border-gray-600 border-t-gray-400 rounded-full animate-spin"></div>
+                  <span>Loading...</span>
+                </div>
+              </div>
+            )}
+
+            {/* Actual image */}
+            <Image
+              src={src}
+              alt={alt}
+              width={width}
+              height={height}
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${
+                imageLoaded ? "opacity-100" : "opacity-0"
+              }`}
+              sizes={sizes}
+              loading="lazy"
+              onLoad={() => setImageLoaded(true)}
+            />
+          </>
+        )}
+      </div>
     </div>
   );
 };
