@@ -58,21 +58,20 @@ const LazyImage: React.FC<{
   const [imageLoaded, setImageLoaded] = useState(false);
 
   return (
-    <div ref={elementRef} className={className} onClick={onClick}>
+    <div
+      ref={elementRef}
+      className={className}
+      onClick={onClick}
+      style={{ aspectRatio: `${width}/${height}` }}>
+      {/* Invisible placeholder to maintain layout */}
       <div
-        className="relative w-full"
+        className="w-full h-full"
         style={{ aspectRatio: `${width}/${height}` }}>
-        {/* Invisible placeholder to maintain layout */}
-        <div
-          className="absolute inset-0 w-full h-full"
-          style={{ aspectRatio: `${width}/${height}` }}
-        />
-
         {hasIntersected && (
           <>
-            {/* Loading placeholder */}
+            {/* Loading placeholder - visible until image loads */}
             {!imageLoaded && (
-              <div className="absolute inset-0 w-full h-full bg-gray-800 animate-pulse flex items-center justify-center">
+              <div className="absolute inset-0 bg-gray-800 animate-pulse flex items-center justify-center">
                 <div className="text-gray-400 text-sm flex flex-col items-center gap-2">
                   <div className="w-8 h-8 border-2 border-gray-600 border-t-gray-400 rounded-full animate-spin"></div>
                   <span>Loading...</span>
@@ -86,15 +85,19 @@ const LazyImage: React.FC<{
               alt={alt}
               width={width}
               height={height}
-              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${
+              className={`w-full h-full object-cover transition-opacity duration-300 ${
                 imageLoaded ? "opacity-100" : "opacity-0"
               }`}
               sizes={sizes}
               loading="lazy"
               onLoad={() => setImageLoaded(true)}
+              style={{ aspectRatio: `${width}/${height}` }}
             />
           </>
         )}
+
+        {/* Placeholder when not intersected */}
+        {!hasIntersected && <div className="w-full h-full bg-gray-800" />}
       </div>
     </div>
   );
@@ -360,21 +363,21 @@ export function PhotoGallery() {
       </div>
 
       {/* Photo Grid */}
-      <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
         {filteredPhotos.map((photo, index) => (
           <motion.div
             key={photo.id}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
-            className="break-inside-avoid cursor-pointer">
+            className="cursor-pointer">
             <div className="relative overflow-hidden rounded-lg bg-gray-900">
               <LazyImage
                 src={photo.src}
                 alt=""
                 width={400}
                 height={600}
-                className="w-full h-auto object-cover"
+                className="relative w-full"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                 onClick={() => openLightbox(photo.id)}
               />
