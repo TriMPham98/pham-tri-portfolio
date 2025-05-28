@@ -129,11 +129,6 @@ const LazyImage: React.FC<{
               loading="lazy"
               onLoad={() => setImageLoaded(true)}
             />
-
-            {/* Preloaded indicator (optional visual feedback) */}
-            {fullResPreloaded && (
-              <div className="absolute top-2 right-2 w-2 h-2 bg-green-500 rounded-full opacity-60"></div>
-            )}
           </>
         )}
 
@@ -150,12 +145,23 @@ const LightboxImage: React.FC<{
   alt: string;
   thumbnailSrc?: string;
   onLoad?: () => void;
-}> = ({ src, alt, thumbnailSrc, onLoad }) => {
-  const [highResLoaded, setHighResLoaded] = useState(false);
-  const [showThumbnail, setShowThumbnail] = useState(!!thumbnailSrc);
+  isPreloaded?: boolean;
+}> = ({ src, alt, thumbnailSrc, onLoad, isPreloaded = false }) => {
+  const [highResLoaded, setHighResLoaded] = useState(isPreloaded);
+  const [showThumbnail, setShowThumbnail] = useState(
+    !!thumbnailSrc && !isPreloaded
+  );
 
   useEffect(() => {
-    // Start loading high-res image immediately
+    // If image is preloaded, mark as loaded immediately
+    if (isPreloaded) {
+      setHighResLoaded(true);
+      setShowThumbnail(false);
+      onLoad?.();
+      return;
+    }
+
+    // Start loading high-res image
     const img = new window.Image();
     img.onload = () => {
       setHighResLoaded(true);
@@ -163,7 +169,7 @@ const LightboxImage: React.FC<{
       onLoad?.();
     };
     img.src = src;
-  }, [src, onLoad]);
+  }, [src, onLoad, isPreloaded]);
 
   // Generate optimized thumbnail URL using Next.js image optimization
   const getThumbnailUrl = (originalSrc: string) => {
@@ -451,6 +457,10 @@ export function PhotoGallery() {
   const [selectedPhoto, setSelectedPhoto] = useState<number | null>(null);
   const [filter, setFilter] = useState<string>("All");
   const [lightboxImageLoaded, setLightboxImageLoaded] = useState(false);
+  const [isNavigating, setIsNavigating] = useState(false);
+  const [preloadedImages, setPreloadedImages] = useState<Set<string>>(
+    new Set()
+  );
 
   const categories = [
     "All",
@@ -462,7 +472,7 @@ export function PhotoGallery() {
       ? photos
       : photos.filter((photo) => photo.category === filter);
 
-  // Preload adjacent images for faster navigation
+  // Enhanced preloading with state tracking
   useEffect(() => {
     if (selectedPhoto === null) return;
 
@@ -470,7 +480,7 @@ export function PhotoGallery() {
       (photo) => photo.id === selectedPhoto
     );
 
-    // Preload current, next, and previous images (3 total)
+    // Preload current, next, and previous images (5 total for smoother experience)
     const preloadIndexes = [
       currentIndex, // Current image
       currentIndex > 0 ? currentIndex - 1 : filteredPhotos.length - 1, // Previous
@@ -482,18 +492,28 @@ export function PhotoGallery() {
 
     preloadIndexes.forEach((index) => {
       if (index >= 0 && index < filteredPhotos.length) {
-        preloadImage(filteredPhotos[index].src).catch(() => {
-          // Silently handle preload errors
-        });
+        const imageSrc = filteredPhotos[index].src;
+        if (!preloadedImages.has(imageSrc)) {
+          preloadImage(imageSrc)
+            .then(() => {
+              setPreloadedImages((prev) => new Set(prev).add(imageSrc));
+            })
+            .catch(() => {
+              // Silently handle preload errors
+            });
+        }
       }
     });
-  }, [selectedPhoto, filteredPhotos]);
+  }, [selectedPhoto, filteredPhotos, preloadedImages]);
 
-  // Keyboard navigation
+  // Keyboard navigation with loading check
   useEffect(() => {
     if (selectedPhoto === null) return;
 
     const handleKeyDown = (event: KeyboardEvent) => {
+      // Prevent navigation if currently navigating or image not loaded
+      if (isNavigating || !lightboxImageLoaded) return;
+
       switch (event.key) {
         case "ArrowLeft":
           event.preventDefault();
@@ -512,20 +532,24 @@ export function PhotoGallery() {
 
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [selectedPhoto, filteredPhotos]);
+  }, [selectedPhoto, filteredPhotos, isNavigating, lightboxImageLoaded]);
 
   const openLightbox = (photoId: number) => {
     setSelectedPhoto(photoId);
     setLightboxImageLoaded(false);
+    setIsNavigating(false);
   };
 
   const closeLightbox = () => {
     setSelectedPhoto(null);
     setLightboxImageLoaded(false);
+    setIsNavigating(false);
   };
 
   const navigatePhoto = (direction: "prev" | "next") => {
-    if (selectedPhoto === null) return;
+    if (selectedPhoto === null || isNavigating || !lightboxImageLoaded) return;
+
+    console.log("Starting navigation:", direction);
 
     const currentIndex = filteredPhotos.findIndex(
       (photo) => photo.id === selectedPhoto
@@ -540,8 +564,42 @@ export function PhotoGallery() {
         currentIndex < filteredPhotos.length - 1 ? currentIndex + 1 : 0;
     }
 
-    setSelectedPhoto(filteredPhotos[newIndex].id);
+    const nextImageSrc = filteredPhotos[newIndex].src;
+
+    // Always show loading state first, then check if preloaded
+    console.log("Setting navigation state to true");
+    setIsNavigating(true);
     setLightboxImageLoaded(false);
+
+    // Small delay to ensure loading state is visible
+    setTimeout(() => {
+      // Check if next image is preloaded
+      if (preloadedImages.has(nextImageSrc)) {
+        console.log("Image is preloaded, navigating quickly");
+        // Image is ready, navigate quickly
+        setSelectedPhoto(filteredPhotos[newIndex].id);
+        setLightboxImageLoaded(true);
+        setIsNavigating(false);
+      } else {
+        console.log("Image not preloaded, loading...");
+        // Image not ready, start loading
+        preloadImage(nextImageSrc)
+          .then(() => {
+            console.log("Image loaded successfully");
+            setPreloadedImages((prev) => new Set(prev).add(nextImageSrc));
+            setSelectedPhoto(filteredPhotos[newIndex].id);
+            setLightboxImageLoaded(true);
+            setIsNavigating(false);
+          })
+          .catch(() => {
+            console.log("Image load failed");
+            // On error, still navigate but let the component handle loading
+            setSelectedPhoto(filteredPhotos[newIndex].id);
+            setLightboxImageLoaded(false);
+            setIsNavigating(false);
+          });
+      }
+    }, 100); // Small delay to ensure loading state is visible
   };
 
   const selectedPhotoData = selectedPhoto
@@ -662,7 +720,28 @@ export function PhotoGallery() {
                 alt=""
                 thumbnailSrc={selectedPhotoData.src} // Use same src as thumbnail for now
                 onLoad={() => setLightboxImageLoaded(true)}
+                isPreloaded={preloadedImages.has(selectedPhotoData.src)}
               />
+
+              {/* Navigation loading overlay */}
+              {isNavigating && (
+                <div className="absolute inset-0 bg-black bg-opacity-75 flex items-center justify-center z-30">
+                  <div className="text-white text-xl flex flex-col items-center gap-4 bg-black bg-opacity-50 p-6 rounded-lg">
+                    <div className="w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+                    <span className="font-medium">Loading next image...</span>
+                  </div>
+                </div>
+              )}
+
+              {/* Loading state for initial image */}
+              {!lightboxImageLoaded && !isNavigating && (
+                <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
+                  <div className="text-white text-lg flex flex-col items-center gap-3">
+                    <div className="w-12 h-12 border-3 border-white border-t-transparent rounded-full animate-spin"></div>
+                    <span>Loading image...</span>
+                  </div>
+                </div>
+              )}
 
               {/* Close Button */}
               <button
@@ -674,12 +753,22 @@ export function PhotoGallery() {
               {/* Navigation Buttons */}
               <button
                 onClick={() => navigatePhoto("prev")}
-                className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 transition-colors z-10">
+                disabled={isNavigating || !lightboxImageLoaded}
+                className={`absolute left-4 top-1/2 transform -translate-y-1/2 transition-all z-10 ${
+                  isNavigating || !lightboxImageLoaded
+                    ? "text-gray-600 cursor-not-allowed"
+                    : "text-white hover:text-gray-300 hover:scale-110"
+                }`}>
                 <ChevronLeft size={48} />
               </button>
               <button
                 onClick={() => navigatePhoto("next")}
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 transition-colors z-10">
+                disabled={isNavigating || !lightboxImageLoaded}
+                className={`absolute right-4 top-1/2 transform -translate-y-1/2 transition-all z-10 ${
+                  isNavigating || !lightboxImageLoaded
+                    ? "text-gray-600 cursor-not-allowed"
+                    : "text-white hover:text-gray-300 hover:scale-110"
+                }`}>
                 <ChevronRight size={48} />
               </button>
             </motion.div>
