@@ -61,6 +61,16 @@ export const photos = [
     src: "/images/photography/DSC01078.jpg",
     category: "Wedding",
   },
+  {
+    id: 50,
+    src: "/images/photography/DSC00011.jpg",
+    category: "Wedding",
+  },
+  {
+    id: 51,
+    src: "/images/photography/DSC00293.jpg",
+    category: "Wedding",
+  },
   // Portrait Photography
   {
     id: 11,
