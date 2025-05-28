@@ -1,9 +1,86 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useCallback } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
+
+// Custom hook for intersection observer
+const useIntersectionObserver = (options: IntersectionObserverInit = {}) => {
+  const [isIntersecting, setIsIntersecting] = useState(false);
+  const [hasIntersected, setHasIntersected] = useState(false);
+  const elementRef = useRef<HTMLDivElement>(null);
+
+  const callbackFunction = useCallback(
+    (entries: IntersectionObserverEntry[]) => {
+      const [entry] = entries;
+      setIsIntersecting(entry.isIntersecting);
+      if (entry.isIntersecting && !hasIntersected) {
+        setHasIntersected(true);
+      }
+    },
+    [hasIntersected]
+  );
+
+  React.useEffect(() => {
+    const element = elementRef.current;
+    if (!element) return;
+
+    const observer = new IntersectionObserver(callbackFunction, {
+      threshold: 0.1,
+      rootMargin: "50px",
+      ...options,
+    });
+
+    observer.observe(element);
+
+    return () => {
+      if (element) {
+        observer.unobserve(element);
+      }
+    };
+  }, [callbackFunction, options]);
+
+  return { elementRef, isIntersecting, hasIntersected };
+};
+
+// Lazy Image Component
+const LazyImage: React.FC<{
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  className?: string;
+  sizes?: string;
+  onClick?: () => void;
+}> = ({ src, alt, width, height, className, sizes, onClick }) => {
+  const { elementRef, hasIntersected } = useIntersectionObserver();
+
+  return (
+    <div ref={elementRef} className={className} onClick={onClick}>
+      {hasIntersected ? (
+        <Image
+          src={src}
+          alt={alt}
+          width={width}
+          height={height}
+          className="w-full h-auto object-cover transition-opacity duration-300"
+          sizes={sizes}
+          loading="lazy"
+        />
+      ) : (
+        <div
+          className="w-full bg-gray-800 animate-pulse flex items-center justify-center min-h-[200px]"
+          style={{ aspectRatio: `${width}/${height}` }}>
+          <div className="text-gray-400 text-sm flex flex-col items-center gap-2">
+            <div className="w-8 h-8 border-2 border-gray-600 border-t-gray-400 rounded-full animate-spin"></div>
+            <span>Loading...</span>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
 
 // Photography portfolio data - organized by category
 const photos = [
@@ -231,16 +308,16 @@ export function PhotoGallery() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
-            className="break-inside-avoid cursor-pointer"
-            onClick={() => openLightbox(photo.id)}>
+            className="break-inside-avoid cursor-pointer">
             <div className="relative overflow-hidden rounded-lg bg-gray-900">
-              <Image
+              <LazyImage
                 src={photo.src}
                 alt=""
                 width={400}
                 height={600}
                 className="w-full h-auto object-cover"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                onClick={() => openLightbox(photo.id)}
               />
             </div>
           </motion.div>
@@ -268,6 +345,7 @@ export function PhotoGallery() {
                 width={1200}
                 height={800}
                 className="max-w-full max-h-[80vh] object-contain"
+                priority
               />
 
               {/* Close Button */}
