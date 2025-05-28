@@ -311,6 +311,35 @@ const photos = [
     category: "Landscape",
     description: "Serene waters reflecting the landscape.",
   },
+  // New Photos - General Category
+  {
+    id: 31,
+    src: "/images/photography/IMG_0809.JPG",
+    title: "Photography",
+    category: "General",
+    description: "Beautiful photography moment",
+  },
+  {
+    id: 32,
+    src: "/images/photography/DSC04583.jpg",
+    title: "Photography",
+    category: "General",
+    description: "Captured moment in time",
+  },
+  {
+    id: 33,
+    src: "/images/photography/DSC02779.jpg",
+    title: "Photography",
+    category: "General",
+    description: "Artistic photography capture",
+  },
+  {
+    id: 34,
+    src: "/images/photography/DSC02809.jpg",
+    title: "Photography",
+    category: "General",
+    description: "Professional photography work",
+  },
 ];
 
 export function PhotoGallery() {
