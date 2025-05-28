@@ -263,6 +263,57 @@ const photos = [
     src: "/images/photography/DSC02852.jpg",
     category: "Landscape",
   },
+  // Aviation Photography
+  {
+    id: 37,
+    src: "/images/photography/DSC06866.jpg",
+    category: "Aviation",
+  },
+  {
+    id: 38,
+    src: "/images/photography/DSC06819.jpg",
+    category: "Aviation",
+  },
+  {
+    id: 39,
+    src: "/images/photography/DSC06455.jpg",
+    category: "Aviation",
+  },
+  {
+    id: 40,
+    src: "/images/photography/DSC03206.jpg",
+    category: "Aviation",
+  },
+  {
+    id: 41,
+    src: "/images/photography/DSC02832.jpg",
+    category: "Aviation",
+  },
+  {
+    id: 42,
+    src: "/images/photography/DSC02658.jpg",
+    category: "Aviation",
+  },
+  {
+    id: 43,
+    src: "/images/photography/DSC02409.jpg",
+    category: "Aviation",
+  },
+  {
+    id: 44,
+    src: "/images/photography/DSC02317.jpg",
+    category: "Aviation",
+  },
+  {
+    id: 45,
+    src: "/images/photography/DSC04810.jpg",
+    category: "Aviation",
+  },
+  {
+    id: 46,
+    src: "/images/photography/DSC05540.jpg",
+    category: "Aviation",
+  },
   // New Photos - General Category
   {
     id: 31,
