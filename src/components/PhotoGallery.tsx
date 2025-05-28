@@ -241,14 +241,6 @@ const photos = [
     category: "Landscape",
     description: "Breathtaking wilderness landscape photography",
   },
-  // Music Photography
-  {
-    id: 23,
-    src: "/images/guitar-background.JPG",
-    title: "Musical Passion",
-    category: "Music",
-    description: "The art of music through visual storytelling",
-  },
 ];
 
 export function PhotoGallery() {
