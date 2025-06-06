@@ -64,14 +64,14 @@ const roles = [
     icon: Code,
     title: "Front-End Engineer",
     description:
-      "Creating intuitive and responsive web experiences using modern technologies. BS in Computer Science from California State University, East Bay, with a focus on user-centric development.",
+      "Creating intuitive and responsive web experiences using modern technologies with a focus on user-centric development.",
     backgroundImage: "/images/vscode.png",
   },
   {
     icon: Camera,
     title: "Photographer",
     description:
-      "Capturing moments and stories through a creative lens, specializing in both digital and analog photography to create compelling visual narratives.",
+      "Capturing moments and stories through a creative lens, specializing in digital photography to create compelling visual narratives.",
     backgroundImage: "/images/wedding-background.jpg",
   },
 ] as const;
