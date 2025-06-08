@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Photography Portfolio - Tri Pham",
+  title: "Photography - Tri Pham",
   description:
     "Explore Tri Pham's photography portfolio featuring wedding, portrait, and music photography",
   keywords: [

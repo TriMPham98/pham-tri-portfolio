@@ -17,7 +17,7 @@ export default function Photography() {
         <div className="container mx-auto px-4 py-8">
           <div className="text-center mb-12">
             <GradualSpacing
-              text="Photography Portfolio"
+              text="Photography"
               className="text-3xl md:text-6xl font-bold text-white mb-4"
               duration={0.25}
               delayMultiple={0.07}
