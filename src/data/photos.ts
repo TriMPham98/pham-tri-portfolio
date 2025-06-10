@@ -244,44 +244,49 @@ export const photos = [
     src: "/images/photography/DSC05540.jpg",
     category: "Aviation",
   },
-  // General Photography
   {
     id: 49,
+    src: "/images/photography/DSC05387-Edit.jpg",
+    category: "Aviation",
+  },
+  // General Photography
+  {
+    id: 50,
     src: "/images/photography/IMG_0809.JPG",
     category: "General",
   },
   {
-    id: 50,
+    id: 51,
     src: "/images/photography/DSC04583.jpg",
     category: "General",
   },
   {
-    id: 51,
+    id: 52,
     src: "/images/photography/DSC02779.jpg",
     category: "General",
   },
   {
-    id: 52,
+    id: 53,
     src: "/images/photography/DSC02809.jpg",
     category: "General",
   },
   {
-    id: 53,
+    id: 54,
     src: "/images/photography/DSC03683.jpg",
     category: "General",
   },
   {
-    id: 54,
+    id: 55,
     src: "/images/photography/DSC03434.jpg",
     category: "General",
   },
   {
-    id: 55,
+    id: 56,
     src: "/images/photography/DSC03776-2.jpg",
     category: "General",
   },
   {
-    id: 56,
+    id: 57,
     src: "/images/photography/DSC08289.jpg",
     category: "General",
   },
