@@ -79,9 +79,7 @@ const LazyImage: React.FC<{
         {hasIntersected && (
           <>
             {/* Loading placeholder - visible until image loads */}
-            {!imageLoaded && (
-              <div className="absolute inset-0 bg-gray-800"></div>
-            )}
+            {!imageLoaded && <div className="absolute inset-0"></div>}
 
             {/* Actual image */}
             <Image
