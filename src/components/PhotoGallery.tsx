@@ -80,12 +80,7 @@ const LazyImage: React.FC<{
           <>
             {/* Loading placeholder - visible until image loads */}
             {!imageLoaded && (
-              <div className="absolute inset-0 bg-gray-800 animate-pulse flex items-center justify-center">
-                <div className="text-gray-400 text-sm flex flex-col items-center gap-2">
-                  <div className="w-8 h-8 border-2 border-gray-600 border-t-gray-400 rounded-full animate-spin"></div>
-                  <span>Loading...</span>
-                </div>
-              </div>
+              <div className="absolute inset-0 bg-gray-800"></div>
             )}
 
             {/* Actual image */}
