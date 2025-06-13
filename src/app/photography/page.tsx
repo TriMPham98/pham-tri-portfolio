@@ -38,7 +38,7 @@ export default function Photography() {
                 },
               }}>
               <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-                A collection of my favorite moments
+                Favorite Flicks of Fleeting Frames
               </p>
             </FadeText>
           </div>
