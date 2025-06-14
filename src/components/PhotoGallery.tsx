@@ -262,7 +262,9 @@ export function PhotoGallery() {
 
       {/* Lightbox */}
       {lightboxOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-12">
+        <div
+          className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-12"
+          onClick={closeLightbox}>
           {/* Close button */}
           <button
             onClick={closeLightbox}
@@ -272,14 +274,20 @@ export function PhotoGallery() {
 
           {/* Previous button */}
           <button
-            onClick={goToPrevious}
+            onClick={(e) => {
+              e.stopPropagation();
+              goToPrevious();
+            }}
             className="absolute left-6 top-1/2 transform -translate-y-1/2 text-white text-4xl hover:text-gray-300 z-60">
             ‹
           </button>
 
           {/* Next button */}
           <button
-            onClick={goToNext}
+            onClick={(e) => {
+              e.stopPropagation();
+              goToNext();
+            }}
             className="absolute right-6 top-1/2 transform -translate-y-1/2 text-white text-4xl hover:text-gray-300 z-60">
             ›
           </button>
@@ -292,12 +300,10 @@ export function PhotoGallery() {
               width={1200}
               height={800}
               className="max-w-full max-h-full object-contain"
+              onClick={(e) => e.stopPropagation()}
               priority
             />
           </div>
-
-          {/* Click outside to close */}
-          <div className="absolute inset-0 -z-10" onClick={closeLightbox} />
         </div>
       )}
     </div>
