@@ -262,30 +262,30 @@ export function PhotoGallery() {
 
       {/* Lightbox */}
       {lightboxOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center">
+        <div className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-12">
           {/* Close button */}
           <button
             onClick={closeLightbox}
-            className="absolute top-4 right-4 text-white text-2xl hover:text-gray-300 z-60">
+            className="absolute top-6 right-6 text-white text-3xl hover:text-gray-300 z-60">
             ×
           </button>
 
           {/* Previous button */}
           <button
             onClick={goToPrevious}
-            className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-3xl hover:text-gray-300 z-60">
+            className="absolute left-6 top-1/2 transform -translate-y-1/2 text-white text-4xl hover:text-gray-300 z-60">
             ‹
           </button>
 
           {/* Next button */}
           <button
             onClick={goToNext}
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-3xl hover:text-gray-300 z-60">
+            className="absolute right-6 top-1/2 transform -translate-y-1/2 text-white text-4xl hover:text-gray-300 z-60">
             ›
           </button>
 
           {/* Main image */}
-          <div className="max-w-[90vw] max-h-[90vh] relative">
+          <div className="w-full h-full flex items-center justify-center px-20">
             <Image
               src={filteredPhotos[currentImageIndex].src}
               alt=""
