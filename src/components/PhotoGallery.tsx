@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import ParticleLinks from "./ui/particle-links";
@@ -107,6 +107,8 @@ const LazyImage: React.FC<{
 
 export function PhotoGallery() {
   const [filter, setFilter] = useState<string>("All");
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const categories = [
     "All",
@@ -117,6 +119,52 @@ export function PhotoGallery() {
     filter === "All"
       ? photos
       : photos.filter((photo) => photo.category === filter);
+
+  // Handle keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!lightboxOpen) return;
+
+      if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        setCurrentImageIndex((prev) =>
+          prev === 0 ? filteredPhotos.length - 1 : prev - 1
+        );
+      } else if (e.key === "ArrowRight") {
+        e.preventDefault();
+        setCurrentImageIndex((prev) =>
+          prev === filteredPhotos.length - 1 ? 0 : prev + 1
+        );
+      } else if (e.key === "Escape") {
+        e.preventDefault();
+        setLightboxOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [lightboxOpen, filteredPhotos.length]);
+
+  const openLightbox = (index: number) => {
+    setCurrentImageIndex(index);
+    setLightboxOpen(true);
+  };
+
+  const closeLightbox = () => {
+    setLightboxOpen(false);
+  };
+
+  const goToPrevious = () => {
+    setCurrentImageIndex((prev) =>
+      prev === 0 ? filteredPhotos.length - 1 : prev - 1
+    );
+  };
+
+  const goToNext = () => {
+    setCurrentImageIndex((prev) =>
+      prev === filteredPhotos.length - 1 ? 0 : prev + 1
+    );
+  };
 
   return (
     <div className="w-full relative">
@@ -194,7 +242,9 @@ export function PhotoGallery() {
             transition={{ delay: index * 0.1 }}
             className="masonry-item"
             style={{ marginBottom: "1.0rem" }}>
-            <div className="relative overflow-hidden rounded-lg bg-gray-900">
+            <div
+              className="relative overflow-hidden rounded-lg bg-gray-900 cursor-pointer hover:opacity-90 transition-opacity"
+              onClick={() => openLightbox(index)}>
               <LazyImage
                 src={photo.src}
                 alt=""
@@ -209,6 +259,47 @@ export function PhotoGallery() {
           </motion.div>
         ))}
       </div>
+
+      {/* Lightbox */}
+      {lightboxOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center">
+          {/* Close button */}
+          <button
+            onClick={closeLightbox}
+            className="absolute top-4 right-4 text-white text-2xl hover:text-gray-300 z-60">
+            ×
+          </button>
+
+          {/* Previous button */}
+          <button
+            onClick={goToPrevious}
+            className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-3xl hover:text-gray-300 z-60">
+            ‹
+          </button>
+
+          {/* Next button */}
+          <button
+            onClick={goToNext}
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-3xl hover:text-gray-300 z-60">
+            ›
+          </button>
+
+          {/* Main image */}
+          <div className="max-w-[90vw] max-h-[90vh] relative">
+            <Image
+              src={filteredPhotos[currentImageIndex].src}
+              alt=""
+              width={1200}
+              height={800}
+              className="max-w-full max-h-full object-contain"
+              priority
+            />
+          </div>
+
+          {/* Click outside to close */}
+          <div className="absolute inset-0 -z-10" onClick={closeLightbox} />
+        </div>
+      )}
     </div>
   );
 }
