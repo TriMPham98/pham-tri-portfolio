@@ -109,6 +109,7 @@ export function PhotoGallery() {
   const [filter, setFilter] = useState<string>("All");
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
   const categories = [
     "All",
@@ -119,6 +120,17 @@ export function PhotoGallery() {
     filter === "All"
       ? photos
       : photos.filter((photo) => photo.category === filter);
+
+  // Check if device is mobile
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    checkIsMobile();
+    window.addEventListener("resize", checkIsMobile);
+    return () => window.removeEventListener("resize", checkIsMobile);
+  }, []);
 
   // Handle keyboard navigation
   useEffect(() => {
@@ -146,6 +158,7 @@ export function PhotoGallery() {
   }, [lightboxOpen, filteredPhotos.length]);
 
   const openLightbox = (index: number) => {
+    if (isMobile) return; // Disable lightbox on mobile
     setCurrentImageIndex(index);
     setLightboxOpen(true);
   };
@@ -243,7 +256,9 @@ export function PhotoGallery() {
             className="masonry-item"
             style={{ marginBottom: "1.0rem" }}>
             <div
-              className="relative overflow-hidden rounded-lg bg-gray-900 cursor-pointer hover:opacity-90 transition-opacity"
+              className={`relative overflow-hidden rounded-lg bg-gray-900 transition-opacity ${
+                isMobile ? "" : "cursor-pointer hover:opacity-90"
+              }`}
               onClick={() => openLightbox(index)}>
               <LazyImage
                 src={photo.src}
