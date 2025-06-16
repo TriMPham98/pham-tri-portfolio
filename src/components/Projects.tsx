@@ -56,26 +56,6 @@ export function Projects() {
       ),
     },
     {
-      name: "Pokédex React App",
-      description:
-        "Responsive web application displaying Pokémon data from PokéAPI. Features include an interactive grid, animated sprites, and detailed information. Built with React and JavaScript.",
-      icon: Code2Icon,
-      href: "https://github.com/TriMPham98/pokedex",
-      cta: "Learn More",
-      background: (
-        <div className="absolute inset-0 overflow-hidden">
-          <Image
-            src="/images/pokedex.png"
-            alt="Pokédex App Screenshot"
-            layout="fill"
-            objectFit="cover"
-            className="transform scale-105 hover:scale-110 transition-transform duration-300"
-          />
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-900/70 to-black/70" />
-        </div>
-      ),
-    },
-    {
       name: "Music Teacher Admin Dashboard",
       description:
         "Comprehensive web app for music lesson management and student progress tracking. Includes an interactive music note reading quiz. Developed with Next.js, Tailwind CSS, and SQLite.",
@@ -98,6 +78,11 @@ export function Projects() {
   ];
 
   const funProjects = [
+    {
+      name: "Pokédex App",
+      icon: Code2Icon,
+      href: "https://github.com/TriMPham98/pokedex",
+    },
     {
       name: "Keyboard Drum Set",
       icon: GamepadIcon,
