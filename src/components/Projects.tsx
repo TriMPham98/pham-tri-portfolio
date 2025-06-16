@@ -56,6 +56,26 @@ export function Projects() {
       ),
     },
     {
+      name: "Rogue Tank Royale",
+      description:
+        "Roguelike tank game with 3D combat mechanics, procedurally generated levels, and strategic upgrades. Features multiple enemy types, power-up systems, and dynamic gameplay. Built with React, Three.js, and TypeScript.",
+      icon: GamepadIcon,
+      href: "https://github.com/TriMPham98/rogue-tank-royale",
+      cta: "Play Game",
+      background: (
+        <div className="absolute inset-0 overflow-hidden">
+          <Image
+            src="/images/rogue-tank-royale.png"
+            alt="Rogue Tank Royale Game Screenshot"
+            layout="fill"
+            objectFit="cover"
+            className="transform scale-105 hover:scale-110 transition-transform duration-300"
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-900/70 to-black/70" />
+        </div>
+      ),
+    },
+    {
       name: "Music Teacher Admin Dashboard",
       description:
         "Comprehensive web app for music lesson management and student progress tracking. Includes an interactive music note reading quiz. Developed with Next.js, Tailwind CSS, and SQLite.",
@@ -78,11 +98,6 @@ export function Projects() {
   ];
 
   const funProjects = [
-    {
-      name: "Pokédex App",
-      icon: Code2Icon,
-      href: "https://github.com/TriMPham98/pokedex",
-    },
     {
       name: "Keyboard Drum Set",
       icon: GamepadIcon,
