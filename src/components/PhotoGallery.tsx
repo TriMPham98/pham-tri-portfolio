@@ -121,6 +121,14 @@ export function PhotoGallery() {
       ? photos
       : photos.filter((photo) => photo.category === filter);
 
+  // Reset currentImageIndex when filter changes to prevent index misalignment
+  React.useEffect(() => {
+    setCurrentImageIndex(0);
+    if (lightboxOpen) {
+      setLightboxOpen(false);
+    }
+  }, [filter]);
+
   // Check if device is mobile
   useEffect(() => {
     const checkIsMobile = () => {
@@ -139,14 +147,16 @@ export function PhotoGallery() {
 
       if (e.key === "ArrowLeft") {
         e.preventDefault();
-        setCurrentImageIndex((prev) =>
-          prev === 0 ? filteredPhotos.length - 1 : prev - 1
-        );
+        setCurrentImageIndex((prev) => {
+          const newIndex = prev === 0 ? filteredPhotos.length - 1 : prev - 1;
+          return newIndex;
+        });
       } else if (e.key === "ArrowRight") {
         e.preventDefault();
-        setCurrentImageIndex((prev) =>
-          prev === filteredPhotos.length - 1 ? 0 : prev + 1
-        );
+        setCurrentImageIndex((prev) => {
+          const newIndex = prev === filteredPhotos.length - 1 ? 0 : prev + 1;
+          return newIndex;
+        });
       } else if (e.key === "Escape") {
         e.preventDefault();
         setLightboxOpen(false);
@@ -159,8 +169,12 @@ export function PhotoGallery() {
 
   const openLightbox = (index: number) => {
     if (isMobile) return; // Disable lightbox on mobile
-    setCurrentImageIndex(index);
-    setLightboxOpen(true);
+
+    // Validate index and ensure photo exists
+    if (index >= 0 && index < filteredPhotos.length && filteredPhotos[index]) {
+      setCurrentImageIndex(index);
+      setLightboxOpen(true);
+    }
   };
 
   const closeLightbox = () => {
@@ -168,15 +182,17 @@ export function PhotoGallery() {
   };
 
   const goToPrevious = () => {
-    setCurrentImageIndex((prev) =>
-      prev === 0 ? filteredPhotos.length - 1 : prev - 1
-    );
+    setCurrentImageIndex((prev) => {
+      const newIndex = prev === 0 ? filteredPhotos.length - 1 : prev - 1;
+      return newIndex;
+    });
   };
 
   const goToNext = () => {
-    setCurrentImageIndex((prev) =>
-      prev === filteredPhotos.length - 1 ? 0 : prev + 1
-    );
+    setCurrentImageIndex((prev) => {
+      const newIndex = prev === filteredPhotos.length - 1 ? 0 : prev + 1;
+      return newIndex;
+    });
   };
 
   return (
@@ -276,51 +292,55 @@ export function PhotoGallery() {
       </div>
 
       {/* Lightbox */}
-      {lightboxOpen && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-12"
-          onClick={closeLightbox}>
-          {/* Close button */}
-          <button
-            onClick={closeLightbox}
-            className="absolute top-6 right-6 text-white text-3xl hover:text-gray-300 z-60">
-            ×
-          </button>
+      {lightboxOpen &&
+        filteredPhotos.length > 0 &&
+        currentImageIndex < filteredPhotos.length && (
+          <div
+            className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-12"
+            onClick={closeLightbox}>
+            {/* Close button */}
+            <button
+              onClick={closeLightbox}
+              className="absolute top-6 right-6 text-white text-3xl hover:text-gray-300 z-60">
+              ×
+            </button>
 
-          {/* Previous button */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              goToPrevious();
-            }}
-            className="absolute left-6 top-1/2 transform -translate-y-1/2 text-white text-4xl hover:text-gray-300 z-60">
-            ‹
-          </button>
+            {/* Previous button */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                goToPrevious();
+              }}
+              className="absolute left-6 top-1/2 transform -translate-y-1/2 text-white text-4xl hover:text-gray-300 z-60">
+              ‹
+            </button>
 
-          {/* Next button */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              goToNext();
-            }}
-            className="absolute right-6 top-1/2 transform -translate-y-1/2 text-white text-4xl hover:text-gray-300 z-60">
-            ›
-          </button>
+            {/* Next button */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                goToNext();
+              }}
+              className="absolute right-6 top-1/2 transform -translate-y-1/2 text-white text-4xl hover:text-gray-300 z-60">
+              ›
+            </button>
 
-          {/* Main image */}
-          <div className="w-full h-full flex items-center justify-center px-20">
-            <Image
-              src={filteredPhotos[currentImageIndex].src}
-              alt=""
-              width={1200}
-              height={800}
-              className="max-w-full max-h-full object-contain"
-              onClick={(e) => e.stopPropagation()}
-              priority
-            />
+            {/* Main image */}
+            <div className="w-full h-full flex items-center justify-center px-20">
+              {filteredPhotos[currentImageIndex] && (
+                <Image
+                  src={filteredPhotos[currentImageIndex].src}
+                  alt=""
+                  width={1200}
+                  height={800}
+                  className="max-w-full max-h-full object-contain"
+                  onClick={(e) => e.stopPropagation()}
+                  priority
+                />
+              )}
+            </div>
           </div>
-        </div>
-      )}
+        )}
     </div>
   );
 }
