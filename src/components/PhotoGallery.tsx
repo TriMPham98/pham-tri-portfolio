@@ -127,7 +127,7 @@ export function PhotoGallery() {
     if (lightboxOpen) {
       setLightboxOpen(false);
     }
-  }, [filter]);
+  }, [filter, lightboxOpen]);
 
   // Check if device is mobile
   useEffect(() => {

@@ -1,7 +1,6 @@
 import React from "react";
 import { BentoGrid, BentoCard } from "@/components/ui/bento-grid";
 import {
-  Code2Icon,
   UtensilsIcon,
   GlobeIcon,
   LayoutDashboardIcon,
