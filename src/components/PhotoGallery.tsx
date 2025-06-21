@@ -127,7 +127,7 @@ export function PhotoGallery() {
     if (lightboxOpen) {
       setLightboxOpen(false);
     }
-  }, [filter, lightboxOpen]);
+  }, [filter]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Check if device is mobile
   useEffect(() => {
