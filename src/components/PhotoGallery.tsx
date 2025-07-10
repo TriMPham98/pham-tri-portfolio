@@ -1,6 +1,12 @@
 "use client";
 
-import React, { useState, useRef, useCallback, useEffect } from "react";
+import React, {
+  useState,
+  useRef,
+  useCallback,
+  useEffect,
+  useMemo,
+} from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import ParticleLinks from "./ui/particle-links";
@@ -23,7 +29,7 @@ const useIntersectionObserver = (options: IntersectionObserverInit = {}) => {
     [hasIntersected]
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     const element = elementRef.current;
     if (!element) return;
 
@@ -45,65 +51,67 @@ const useIntersectionObserver = (options: IntersectionObserverInit = {}) => {
   return { elementRef, isIntersecting, hasIntersected };
 };
 
-// Lazy Image Component
-const LazyImage: React.FC<{
-  src: string;
-  alt: string;
-  width: number;
-  height: number;
-  className?: string;
-  sizes?: string;
-  isLandscape?: boolean;
-  priority?: boolean;
-}> = ({
-  src,
-  alt,
-  width,
-  height,
-  className,
-  sizes,
-  isLandscape,
-  priority = false,
-}) => {
-  const { elementRef, hasIntersected } = useIntersectionObserver();
-  const [imageLoaded, setImageLoaded] = useState(false);
+// Memoized Lazy Image Component
+const LazyImage = React.memo(
+  ({
+    src,
+    alt,
+    width,
+    height,
+    className,
+    sizes,
+    isLandscape,
+    priority = false,
+  }: {
+    src: string;
+    alt: string;
+    width: number;
+    height: number;
+    className?: string;
+    sizes?: string;
+    isLandscape?: boolean;
+    priority?: boolean;
+  }) => {
+    const { elementRef, hasIntersected } = useIntersectionObserver();
+    const [imageLoaded, setImageLoaded] = useState(false);
 
-  return (
-    <div
-      ref={elementRef}
-      className={`${className} ${
-        isLandscape ? "landscape-photo" : "portrait-photo"
-      }`}>
-      {/* Invisible placeholder to maintain layout */}
-      <div className="w-full h-full">
-        {hasIntersected && (
-          <>
-            {/* Loading placeholder - visible until image loads */}
-            {!imageLoaded && <div className="absolute inset-0"></div>}
+    return (
+      <div
+        ref={elementRef}
+        className={`${className} ${
+          isLandscape ? "landscape-photo" : "portrait-photo"
+        }`}>
+        {/* Invisible placeholder to maintain layout */}
+        <div className="w-full h-full">
+          {hasIntersected && (
+            <>
+              {/* Loading placeholder - visible until image loads */}
+              {!imageLoaded && <div className="absolute inset-0"></div>}
 
-            {/* Actual image */}
-            <Image
-              src={src}
-              alt={alt}
-              width={width}
-              height={height}
-              className={`w-full h-full object-cover transition-opacity duration-300 ${
-                imageLoaded ? "opacity-100" : "opacity-0"
-              }`}
-              sizes={sizes}
-              loading={priority ? undefined : "lazy"}
-              priority={priority}
-              onLoad={() => setImageLoaded(true)}
-            />
-          </>
-        )}
+              {/* Actual image */}
+              <Image
+                src={src}
+                alt={alt}
+                width={width}
+                height={height}
+                className={`w-full h-full object-cover transition-opacity duration-300 ${
+                  imageLoaded ? "opacity-100" : "opacity-0"
+                }`}
+                sizes={sizes}
+                loading={priority ? undefined : "lazy"}
+                priority={priority}
+                onLoad={() => setImageLoaded(true)}
+              />
+            </>
+          )}
 
-        {/* Placeholder when not intersected */}
-        {!hasIntersected && <div className="w-full h-full bg-gray-800" />}
+          {/* Placeholder when not intersected */}
+          {!hasIntersected && <div className="w-full h-full bg-gray-800" />}
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+);
 
 export function PhotoGallery() {
   const [filter, setFilter] = useState<string>("All");
@@ -111,33 +119,46 @@ export function PhotoGallery() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
 
-  const categories = [
-    "All",
-    ...Array.from(new Set(photos.map((photo) => photo.category))),
-  ];
+  const categories = useMemo(
+    () => [
+      "All",
+      ...Array.from(new Set(photos.map((photo) => photo.category))),
+    ],
+    []
+  );
 
-  const filteredPhotos =
-    filter === "All"
-      ? photos
-      : photos.filter((photo) => photo.category === filter);
+  const filteredPhotos = useMemo(
+    () =>
+      filter === "All"
+        ? photos
+        : photos.filter((photo) => photo.category === filter),
+    [filter]
+  );
 
   // Reset currentImageIndex when filter changes to prevent index misalignment
-  React.useEffect(() => {
+  useEffect(() => {
     setCurrentImageIndex(0);
     if (lightboxOpen) {
       setLightboxOpen(false);
     }
-  }, [filter]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [filter, lightboxOpen]);
 
-  // Check if device is mobile
+  // Check if device is mobile with debounced resize
   useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
     const checkIsMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        setIsMobile(window.innerWidth <= 768);
+      }, 200);
     };
 
     checkIsMobile();
     window.addEventListener("resize", checkIsMobile);
-    return () => window.removeEventListener("resize", checkIsMobile);
+    return () => {
+      window.removeEventListener("resize", checkIsMobile);
+      clearTimeout(timeoutId);
+    };
   }, []);
 
   // Handle keyboard navigation
@@ -147,16 +168,14 @@ export function PhotoGallery() {
 
       if (e.key === "ArrowLeft") {
         e.preventDefault();
-        setCurrentImageIndex((prev) => {
-          const newIndex = prev === 0 ? filteredPhotos.length - 1 : prev - 1;
-          return newIndex;
-        });
+        setCurrentImageIndex((prev) =>
+          prev === 0 ? filteredPhotos.length - 1 : prev - 1
+        );
       } else if (e.key === "ArrowRight") {
         e.preventDefault();
-        setCurrentImageIndex((prev) => {
-          const newIndex = prev === filteredPhotos.length - 1 ? 0 : prev + 1;
-          return newIndex;
-        });
+        setCurrentImageIndex((prev) =>
+          prev === filteredPhotos.length - 1 ? 0 : prev + 1
+        );
       } else if (e.key === "Escape") {
         e.preventDefault();
         setLightboxOpen(false);
@@ -182,17 +201,15 @@ export function PhotoGallery() {
   };
 
   const goToPrevious = () => {
-    setCurrentImageIndex((prev) => {
-      const newIndex = prev === 0 ? filteredPhotos.length - 1 : prev - 1;
-      return newIndex;
-    });
+    setCurrentImageIndex((prev) =>
+      prev === 0 ? filteredPhotos.length - 1 : prev - 1
+    );
   };
 
   const goToNext = () => {
-    setCurrentImageIndex((prev) => {
-      const newIndex = prev === filteredPhotos.length - 1 ? 0 : prev + 1;
-      return newIndex;
-    });
+    setCurrentImageIndex((prev) =>
+      prev === filteredPhotos.length - 1 ? 0 : prev + 1
+    );
   };
 
   return (
@@ -268,7 +285,7 @@ export function PhotoGallery() {
             key={photo.id}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
+            transition={{ delay: index * 0.05 }} // Reduced delay for faster animation staggering
             className="masonry-item"
             style={{ marginBottom: "1.0rem" }}>
             <div
@@ -284,7 +301,7 @@ export function PhotoGallery() {
                 className="relative w-full"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                 isLandscape={photo.category === "Landscape"}
-                priority={index === 0}
+                priority={index < 3} // Priority for first 3 images
               />
             </div>
           </motion.div>
