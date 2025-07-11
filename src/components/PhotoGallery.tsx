@@ -112,6 +112,7 @@ const LazyImage = React.memo(
     );
   }
 );
+LazyImage.displayName = "LazyImage";
 
 export function PhotoGallery() {
   const [filter, setFilter] = useState<string>("All");
@@ -136,6 +137,7 @@ export function PhotoGallery() {
   );
 
   // Reset currentImageIndex when filter changes to prevent index misalignment
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     setCurrentImageIndex(0);
     if (lightboxOpen) {
