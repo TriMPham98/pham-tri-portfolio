@@ -141,7 +141,7 @@ export function PhotoGallery() {
     if (lightboxOpen) {
       setLightboxOpen(false);
     }
-  }, [filter, lightboxOpen]);
+  }, [filter]);
 
   // Check if device is mobile with debounced resize
   useEffect(() => {
