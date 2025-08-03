@@ -24,7 +24,7 @@ export function Hero() {
                 transition: { duration: 0.6, ease: "easeOut" },
               },
             }}>
-            <ProfileAvatar className="w-28 h-28 sm:w-32 sm:h-32 md:w-40 md:h-40 lg:w-48 lg:h-48" />
+            <ProfileAvatar className="w-[8.75rem] h-[8.75rem] sm:w-40 sm:h-40 md:w-[12.5rem] md:h-[12.5rem] lg:w-60 lg:h-60" />
           </AnimateOnScroll>
           <GradualSpacing
             text="Howdy, I'm Tri!"
