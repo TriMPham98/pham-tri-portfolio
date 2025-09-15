@@ -60,10 +60,6 @@ A modern, responsive portfolio website showcasing my journey as a software devel
 - Intersection Observer for scroll animations
 - Responsive design with mobile-first approach
 
-## 🎥 Live Demo
-
-🔗 **[View Live Portfolio](https://your-portfolio-url.vercel.app)**
-
 ## 🚀 Getting Started
 
 ### Prerequisites
