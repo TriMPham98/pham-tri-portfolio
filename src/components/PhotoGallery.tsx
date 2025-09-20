@@ -8,9 +8,13 @@ import React, {
   useMemo,
 } from "react";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
-import ParticleLinks from "./ui/particle-links";
 import { photos } from "../data/photos";
+
+const ParticleLinks = dynamic(() => import("./ui/particle-links"), {
+  ssr: false,
+});
 
 // Custom hook for intersection observer
 const useIntersectionObserver = (options: IntersectionObserverInit = {}) => {
@@ -86,7 +90,7 @@ const LazyImage = React.memo(
           {hasIntersected && (
             <>
               {/* Loading placeholder - visible until image loads */}
-              {!imageLoaded && <div className="absolute inset-0"></div>}
+              {!imageLoaded && <div className="absolute inset-0 bg-gray-800" />}
 
               {/* Actual image */}
               <Image
@@ -114,7 +118,70 @@ const LazyImage = React.memo(
 );
 LazyImage.displayName = "LazyImage";
 
-export function PhotoGallery() {
+const Lightbox = React.memo(
+  ({
+    filteredPhotos,
+    currentImageIndex,
+    onClose,
+    onPrevious,
+    onNext,
+  }: {
+    filteredPhotos: typeof photos;
+    currentImageIndex: number;
+    onClose: () => void;
+    onPrevious: () => void;
+    onNext: () => void;
+  }) => (
+    <div
+      className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-12"
+      onClick={onClose}>
+      {/* Close button */}
+      <button
+        onClick={onClose}
+        className="absolute top-6 right-6 text-white text-3xl hover:text-gray-300 z-60">
+        ×
+      </button>
+
+      {/* Previous button */}
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          onPrevious();
+        }}
+        className="absolute left-6 top-1/2 transform -translate-y-1/2 text-white text-4xl hover:text-gray-300 z-60">
+        ‹
+      </button>
+
+      {/* Next button */}
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          onNext();
+        }}
+        className="absolute right-6 top-1/2 transform -translate-y-1/2 text-white text-4xl hover:text-gray-300 z-60">
+        ›
+      </button>
+
+      {/* Main image */}
+      <div className="w-full h-full flex items-center justify-center px-20">
+        {filteredPhotos[currentImageIndex] && (
+          <Image
+            src={filteredPhotos[currentImageIndex].src}
+            alt=""
+            width={1200}
+            height={800}
+            className="max-w-full max-h-full object-contain"
+            onClick={(e) => e.stopPropagation()}
+            priority
+          />
+        )}
+      </div>
+    </div>
+  )
+);
+Lightbox.displayName = "Lightbox";
+
+export const PhotoGallery = React.memo(() => {
   const [filter, setFilter] = useState<string>("All");
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -137,7 +204,6 @@ export function PhotoGallery() {
   );
 
   // Reset currentImageIndex when filter changes to prevent index misalignment
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     setCurrentImageIndex(0);
     if (lightboxOpen) {
@@ -145,22 +211,13 @@ export function PhotoGallery() {
     }
   }, [filter]);
 
-  // Check if device is mobile with debounced resize
+  // Check if device is mobile with matchMedia
   useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
-    const checkIsMobile = () => {
-      clearTimeout(timeoutId);
-      timeoutId = setTimeout(() => {
-        setIsMobile(window.innerWidth <= 768);
-      }, 200);
-    };
-
-    checkIsMobile();
-    window.addEventListener("resize", checkIsMobile);
-    return () => {
-      window.removeEventListener("resize", checkIsMobile);
-      clearTimeout(timeoutId);
-    };
+    const mediaQuery = window.matchMedia("(max-width: 768px)");
+    const handleChange = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    handleChange({ matches: mediaQuery.matches } as MediaQueryListEvent);
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
   }, []);
 
   // Handle keyboard navigation
@@ -188,31 +245,38 @@ export function PhotoGallery() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [lightboxOpen, filteredPhotos.length]);
 
-  const openLightbox = (index: number) => {
-    if (isMobile) return; // Disable lightbox on mobile
+  const openLightbox = useCallback(
+    (index: number) => {
+      if (isMobile) return; // Disable lightbox on mobile
 
-    // Validate index and ensure photo exists
-    if (index >= 0 && index < filteredPhotos.length && filteredPhotos[index]) {
-      setCurrentImageIndex(index);
-      setLightboxOpen(true);
-    }
-  };
+      // Validate index and ensure photo exists
+      if (
+        index >= 0 &&
+        index < filteredPhotos.length &&
+        filteredPhotos[index]
+      ) {
+        setCurrentImageIndex(index);
+        setLightboxOpen(true);
+      }
+    },
+    [isMobile, filteredPhotos.length]
+  );
 
-  const closeLightbox = () => {
+  const closeLightbox = useCallback(() => {
     setLightboxOpen(false);
-  };
+  }, []);
 
-  const goToPrevious = () => {
+  const goToPrevious = useCallback(() => {
     setCurrentImageIndex((prev) =>
       prev === 0 ? filteredPhotos.length - 1 : prev - 1
     );
-  };
+  }, [filteredPhotos.length]);
 
-  const goToNext = () => {
+  const goToNext = useCallback(() => {
     setCurrentImageIndex((prev) =>
       prev === filteredPhotos.length - 1 ? 0 : prev + 1
     );
-  };
+  }, [filteredPhotos.length]);
 
   return (
     <div className="w-full relative">
@@ -287,7 +351,7 @@ export function PhotoGallery() {
             key={photo.id}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.05 }} // Reduced delay for faster animation staggering
+            transition={{ delay: Math.min(index * 0.05, 0.5) }} // Cap delay at 0.5s for faster staggering
             className="masonry-item"
             style={{ marginBottom: "1.0rem" }}>
             <div
@@ -314,52 +378,14 @@ export function PhotoGallery() {
       {lightboxOpen &&
         filteredPhotos.length > 0 &&
         currentImageIndex < filteredPhotos.length && (
-          <div
-            className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-12"
-            onClick={closeLightbox}>
-            {/* Close button */}
-            <button
-              onClick={closeLightbox}
-              className="absolute top-6 right-6 text-white text-3xl hover:text-gray-300 z-60">
-              ×
-            </button>
-
-            {/* Previous button */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                goToPrevious();
-              }}
-              className="absolute left-6 top-1/2 transform -translate-y-1/2 text-white text-4xl hover:text-gray-300 z-60">
-              ‹
-            </button>
-
-            {/* Next button */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                goToNext();
-              }}
-              className="absolute right-6 top-1/2 transform -translate-y-1/2 text-white text-4xl hover:text-gray-300 z-60">
-              ›
-            </button>
-
-            {/* Main image */}
-            <div className="w-full h-full flex items-center justify-center px-20">
-              {filteredPhotos[currentImageIndex] && (
-                <Image
-                  src={filteredPhotos[currentImageIndex].src}
-                  alt=""
-                  width={1200}
-                  height={800}
-                  className="max-w-full max-h-full object-contain"
-                  onClick={(e) => e.stopPropagation()}
-                  priority
-                />
-              )}
-            </div>
-          </div>
+          <Lightbox
+            filteredPhotos={filteredPhotos}
+            currentImageIndex={currentImageIndex}
+            onClose={closeLightbox}
+            onPrevious={goToPrevious}
+            onNext={goToNext}
+          />
         )}
     </div>
   );
-}
+});
