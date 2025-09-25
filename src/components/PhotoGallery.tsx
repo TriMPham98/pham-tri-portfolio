@@ -86,7 +86,7 @@ const LazyImage = React.memo(
           isLandscape ? "landscape-photo" : "portrait-photo"
         }`}>
         {/* Invisible placeholder to maintain layout */}
-        <div className="w-full h-full">
+        <div className="relative w-full h-full">
           {hasIntersected && (
             <>
               {/* Loading placeholder - visible until image loads */}
@@ -185,7 +185,7 @@ export const PhotoGallery = React.memo(() => {
   const [filter, setFilter] = useState<string>("All");
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
 
   const categories = useMemo(
     () => [
@@ -211,13 +211,22 @@ export const PhotoGallery = React.memo(() => {
     }
   }, [filter]);
 
-  // Check if device is mobile with matchMedia
+  // Check if device is mobile with matchMedia (SSR-safe)
   useEffect(() => {
+    if (typeof window === "undefined") return;
+
     const mediaQuery = window.matchMedia("(max-width: 768px)");
     const handleChange = (e: MediaQueryListEvent) => setIsMobile(e.matches);
-    handleChange({ matches: mediaQuery.matches } as MediaQueryListEvent);
+
     mediaQuery.addEventListener("change", handleChange);
     return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
+
+  // Initialize isMobile on mount (client-side only)
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setIsMobile(window.matchMedia("(max-width: 768px)").matches);
+    }
   }, []);
 
   // Handle keyboard navigation
@@ -281,7 +290,7 @@ export const PhotoGallery = React.memo(() => {
   return (
     <div className="w-full relative">
       {/* Particle Links Background */}
-      <ParticleLinks className="fixed inset-0 z-0 pointer-events-none" />
+      <ParticleLinks className="absolute inset-0 z-0 pointer-events-none" />
 
       {/* Filter Buttons */}
       <div className="flex flex-wrap justify-center gap-4 mb-8 relative z-10">
@@ -353,7 +362,7 @@ export const PhotoGallery = React.memo(() => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: Math.min(index * 0.05, 0.5) }} // Cap delay at 0.5s for faster staggering
             className="masonry-item"
-            style={{ marginBottom: "1.0rem" }}>
+            style={{ marginBottom: "1rem" }}>
             <div
               className={`relative overflow-hidden rounded-lg bg-gray-900 transition-opacity ${
                 isMobile ? "" : "cursor-pointer hover:opacity-90"
