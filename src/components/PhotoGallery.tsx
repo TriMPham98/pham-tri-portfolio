@@ -376,7 +376,7 @@ export const PhotoGallery = React.memo(() => {
                 className="relative w-full"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                 isLandscape={photo.category === "Landscape"}
-                priority={index < 3} // Priority for first 3 images
+                priority={index < 3}
               />
             </div>
           </motion.div>
