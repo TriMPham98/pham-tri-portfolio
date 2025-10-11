@@ -257,8 +257,6 @@ export const PhotoGallery = React.memo(() => {
   const openLightbox = useCallback(
     (index: number) => {
       if (isMobile) return; // Disable lightbox on mobile
-
-      // Validate index and ensure photo exists
       if (
         index >= 0 &&
         index < filteredPhotos.length &&
@@ -360,7 +358,7 @@ export const PhotoGallery = React.memo(() => {
             key={photo.id}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: Math.min(index * 0.05, 0.5) }} // Cap delay at 0.5s for faster staggering
+            transition={{ delay: Math.min(index * 0.05, 0.5) }}
             className="masonry-item"
             style={{ marginBottom: "1rem" }}>
             <div
