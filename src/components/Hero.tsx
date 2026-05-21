@@ -5,12 +5,12 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import GradualSpacing from "./ui/gradual-spacing";
 import { AnimateOnScroll } from "@/components/AnimateOnScroll";
+import ProfileAvatar from "./ProfileAvatar";
 import { FileText } from "lucide-react";
 
 const ParticleLinks = dynamic(() => import("@/components/ui/particle-links"), {
   ssr: false,
 });
-const ProfileAvatar = dynamic(() => import("./ProfileAvatar"), { ssr: false });
 const RainbowButton = dynamic(
   () =>
     import("@/components/ui/rainbow-button").then((mod) => ({
@@ -22,17 +22,7 @@ const RainbowButton = dynamic(
 const HeroContent = () => (
   <div className="container mx-auto px-4 flex flex-col items-center justify-center relative z-10 mb-24">
     <div className="flex flex-col items-center space-y-6 sm:space-y-8">
-      <AnimateOnScroll
-        animation={{
-          hidden: { opacity: 0, scale: 0.9 },
-          visible: {
-            opacity: 1,
-            scale: 1,
-            transition: { duration: 0.6, ease: "easeOut" },
-          },
-        }}>
-        <ProfileAvatar className="w-[8.75rem] h-[8.75rem] sm:w-40 sm:h-40 md:w-[12.5rem] md:h-[12.5rem] lg:w-60 lg:h-60" />
-      </AnimateOnScroll>
+      <ProfileAvatar className="w-[8.75rem] h-[8.75rem] sm:w-40 sm:h-40 md:w-[12.5rem] md:h-[12.5rem] lg:w-60 lg:h-60" />
       <GradualSpacing
         text="Howdy, I'm Tri!"
         className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white text-center"
@@ -81,3 +71,4 @@ export const Hero = React.memo(() => (
     <HeroContent />
   </section>
 ));
+Hero.displayName = "Hero";

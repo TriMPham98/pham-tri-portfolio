@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(sips -g pixelWidth -g pixelHeight \"public/images/photography/DSC00974.jpg\")",
+      "Bash(awk '{print}')"
     ]
   }
 }

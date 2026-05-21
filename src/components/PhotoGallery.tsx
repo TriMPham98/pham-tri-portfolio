@@ -396,3 +396,4 @@ export const PhotoGallery = React.memo(() => {
     </div>
   );
 });
+PhotoGallery.displayName = "PhotoGallery";
