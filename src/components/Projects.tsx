@@ -14,6 +14,26 @@ import Marquee from "@/components/ui/marquee";
 export function Projects() {
   const projects = [
     {
+      name: "Steinway MIDI Piano",
+      description:
+        "MIDI-controlled Steinway grand piano in Blender with live key animation driven by a Yamaha P515. Includes a Blender extension for real-time MIDI input and a Three.js web viewer. Built with Python, Blender, and JavaScript.",
+      icon: MusicIcon,
+      href: "https://github.com/TriMPham98/steinway-blender",
+      cta: "View Project",
+      background: (
+        <div className="absolute inset-0 overflow-hidden">
+          <Image
+            src="/images/steinway-blender.png"
+            alt="Steinway MIDI Piano Screenshot"
+            layout="fill"
+            objectFit="cover"
+            className="transform scale-105 hover:scale-110 transition-transform duration-300"
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-900/70 to-black/70" />
+        </div>
+      ),
+    },
+    {
       name: "Infinite Ocean 3D Art Gallery",
       description:
         "Interactive 3D art gallery featuring art and photography, with day-night transitions, dynamic frame lighting, and audio feedback. Built with Three.js, JavaScript, Node.js, and Vercel.",
@@ -25,26 +45,6 @@ export function Projects() {
           <Image
             src="/images/infinite-ocean.png"
             alt="Infinite Ocean 3D Art Gallery Screenshot"
-            layout="fill"
-            objectFit="cover"
-            className="transform scale-105 hover:scale-110 transition-transform duration-300"
-          />
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-900/70 to-black/70" />
-        </div>
-      ),
-    },
-    {
-      name: "Smart Mirror",
-      description:
-        "Custom-built smart mirror combining hardware and software. Features include facial recognition with OpenCV, real-time weather updates, and calendar integration. Built with Raspberry Pi, MagicMirror² software, and custom woodworking.",
-      icon: MonitorIcon,
-      href: "https://github.com/TriMPham98/MagicMirror",
-      cta: "View Build",
-      background: (
-        <div className="absolute inset-0 overflow-hidden">
-          <Image
-            src="/images/smart-mirror-project.jpg"
-            alt="Smart Mirror Project"
             layout="fill"
             objectFit="cover"
             className="transform scale-105 hover:scale-110 transition-transform duration-300"
@@ -74,17 +74,17 @@ export function Projects() {
       ),
     },
     {
-      name: "Steinway MIDI Piano",
+      name: "Smart Mirror",
       description:
-        "MIDI-controlled Steinway grand piano in Blender with live key animation driven by a Yamaha P515. Includes a Blender extension for real-time MIDI input and a Three.js web viewer. Built with Python, Blender, and JavaScript.",
-      icon: MusicIcon,
-      href: "https://github.com/TriMPham98/steinway-blender",
-      cta: "View Project",
+        "Custom-built smart mirror combining hardware and software. Features include facial recognition with OpenCV, real-time weather updates, and calendar integration. Built with Raspberry Pi, MagicMirror² software, and custom woodworking.",
+      icon: MonitorIcon,
+      href: "https://github.com/TriMPham98/MagicMirror",
+      cta: "View Build",
       background: (
         <div className="absolute inset-0 overflow-hidden">
           <Image
-            src="/images/steinway-blender.png"
-            alt="Steinway MIDI Piano Screenshot"
+            src="/images/smart-mirror-project.jpg"
+            alt="Smart Mirror Project"
             layout="fill"
             objectFit="cover"
             className="transform scale-105 hover:scale-110 transition-transform duration-300"
@@ -97,16 +97,6 @@ export function Projects() {
 
   const funProjects = [
     {
-      name: "Keyboard Drum Set",
-      icon: GamepadIcon,
-      href: "https://github.com/TriMPham98/javascript-drum-set",
-    },
-    {
-      name: "Wordle",
-      icon: PuzzleIcon,
-      href: "https://github.com/TriMPham98/wordle",
-    },
-    {
       name: "3-D Earth",
       icon: GlobeIcon,
       href: "https://github.com/TriMPham98/threejs-earth",
@@ -115,6 +105,16 @@ export function Projects() {
       name: "MP3 Visualizer",
       icon: MusicIcon,
       href: "https://github.com/TriMPham98/mp3-audio-visualizer",
+    },
+    {
+      name: "Keyboard Drum Set",
+      icon: GamepadIcon,
+      href: "https://github.com/TriMPham98/javascript-drum-set",
+    },
+    {
+      name: "Wordle",
+      icon: PuzzleIcon,
+      href: "https://github.com/TriMPham98/wordle",
     },
     {
       name: "Upscale Restaurant",
