@@ -3,7 +3,6 @@ import { BentoGrid, BentoCard } from "@/components/ui/bento-grid";
 import {
   UtensilsIcon,
   GlobeIcon,
-  LayoutDashboardIcon,
   GamepadIcon,
   PuzzleIcon,
   MusicIcon,
@@ -75,17 +74,17 @@ export function Projects() {
       ),
     },
     {
-      name: "Music Teacher Admin Dashboard",
+      name: "Steinway MIDI Piano",
       description:
-        "Comprehensive web app for music lesson management and student progress tracking. Includes an interactive music note reading quiz. Developed with Next.js, Tailwind CSS, and SQLite.",
-      icon: LayoutDashboardIcon,
-      href: "https://github.com/TriMPham98/sjz-dashboard",
-      cta: "Discover",
+        "MIDI-controlled Steinway grand piano in Blender with live key animation driven by a Yamaha P515. Includes a Blender extension for real-time MIDI input and a Three.js web viewer. Built with Python, Blender, and JavaScript.",
+      icon: MusicIcon,
+      href: "https://github.com/TriMPham98/steinway-blender",
+      cta: "View Project",
       background: (
         <div className="absolute inset-0 overflow-hidden">
           <Image
-            src="/images/sjz-dashboard.png"
-            alt="Music Teacher Admin Dashboard Screenshot"
+            src="/images/steinway-blender.png"
+            alt="Steinway MIDI Piano Screenshot"
             layout="fill"
             objectFit="cover"
             className="transform scale-105 hover:scale-110 transition-transform duration-300"
