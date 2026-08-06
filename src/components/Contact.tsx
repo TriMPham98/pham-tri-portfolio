@@ -75,7 +75,7 @@ export function Contact() {
             LinkedIn
           </Link>
           <Link
-            href="https://x.com/PhamTriPhoto"
+            href="https://x.com/Trizus"
             className="text-white hover:text-gray-200 transition-colors flex items-center w-full sm:w-auto justify-center sm:justify-start px-4 py-2 rounded-full border border-white hover:border-gray-200"
             target="_blank"
             rel="noopener noreferrer">
