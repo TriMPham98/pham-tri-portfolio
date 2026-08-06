@@ -7,12 +7,33 @@ import {
   PuzzleIcon,
   MusicIcon,
   MonitorIcon,
+  ZapIcon,
 } from "lucide-react";
 import Image from "next/image";
 import Marquee from "@/components/ui/marquee";
 
 export function Projects() {
   const projects = [
+    {
+      name: "Iron Man MK III Assembly",
+      description:
+        "Browser demo of an Iron Man MK III–inspired suit assembly: armor plates fly in and lock on, the arc reactor and eyes ignite, then you can orbit the finished suit and replay. Built with Three.js, GSAP, Vite, and TypeScript.",
+      icon: ZapIcon,
+      href: "https://github.com/TriMPham98/iron-man-animation",
+      cta: "View Project",
+      background: (
+        <div className="absolute inset-0 overflow-hidden">
+          <Image
+            src="/images/iron-man-animation.png"
+            alt="Iron Man MK III Assembly Screenshot"
+            layout="fill"
+            objectFit="cover"
+            className="transform scale-105 hover:scale-110 transition-transform duration-300"
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-900/70 to-black/70" />
+        </div>
+      ),
+    },
     {
       name: "Steinway MIDI Piano",
       description:
@@ -73,29 +94,14 @@ export function Projects() {
         </div>
       ),
     },
-    {
-      name: "Smart Mirror",
-      description:
-        "Custom-built smart mirror combining hardware and software. Features include facial recognition with OpenCV, real-time weather updates, and calendar integration. Built with Raspberry Pi, MagicMirror² software, and custom woodworking.",
-      icon: MonitorIcon,
-      href: "https://github.com/TriMPham98/MagicMirror",
-      cta: "View Build",
-      background: (
-        <div className="absolute inset-0 overflow-hidden">
-          <Image
-            src="/images/smart-mirror-project.jpg"
-            alt="Smart Mirror Project"
-            layout="fill"
-            objectFit="cover"
-            className="transform scale-105 hover:scale-110 transition-transform duration-300"
-          />
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-900/70 to-black/70" />
-        </div>
-      ),
-    },
   ];
 
   const funProjects = [
+    {
+      name: "Smart Mirror",
+      icon: MonitorIcon,
+      href: "https://github.com/TriMPham98/MagicMirror",
+    },
     {
       name: "3-D Earth",
       icon: GlobeIcon,
