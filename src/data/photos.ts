@@ -2,6 +2,21 @@
 export const photos = [
   // Wedding Photography
   {
+    id: 59,
+    src: "/images/photography/DSC08388.jpg",
+    category: "Wedding",
+  },
+  {
+    id: 60,
+    src: "/images/photography/DSC08411.jpg",
+    category: "Wedding",
+  },
+  {
+    id: 61,
+    src: "/images/photography/DSC08402.jpg",
+    category: "Wedding",
+  },
+  {
     id: 1,
     src: "/images/wedding-background.jpg",
     category: "Wedding",
