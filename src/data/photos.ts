@@ -379,8 +379,8 @@ export const photos = [
   {
     id: 51,
     src: "/images/photography/IMG_0809.JPG",
-    width: 2560,
-    height: 1706,
+    width: 1706,
+    height: 2560,
     category: "General",
   },
   {
