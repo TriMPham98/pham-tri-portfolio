@@ -15,6 +15,10 @@ html {
   scroll-behavior: smooth;
 }
 
+body[data-lightbox="open"] header {
+  visibility: hidden;
+}
+
 @layer base {
   :root {
     --color-1: 0 100% 63%;

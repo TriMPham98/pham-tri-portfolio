@@ -8,6 +8,7 @@ import React, {
   useMemo,
 } from "react";
 import Image from "next/image";
+import { createPortal } from "react-dom";
 import { photos, type Photo } from "../data/photos";
 
 const GalleryImage = React.memo(
@@ -149,7 +150,12 @@ const Lightbox = React.memo(
     onNext: () => void;
   }) => {
     const [shownIndex, setShownIndex] = useState(currentImageIndex);
+    const [portalReady, setPortalReady] = useState(false);
     const length = filteredPhotos.length;
+
+    useEffect(() => {
+      setPortalReady(true);
+    }, []);
     const mountedIndexes = useMemo(() => {
       const indexes = [
         shownIndex,
@@ -161,9 +167,11 @@ const Lightbox = React.memo(
       );
     }, [currentImageIndex, filteredPhotos, length, shownIndex]);
 
-    return (
+    if (!portalReady) return null;
+
+    return createPortal(
       <div
-        className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 sm:p-12"
+        className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 p-4 sm:p-12"
         onClick={onClose}
         role="dialog"
         aria-modal="true"
@@ -216,7 +224,8 @@ const Lightbox = React.memo(
             );
           })}
         </div>
-      </div>
+      </div>,
+      document.body
     );
   }
 );
@@ -299,8 +308,10 @@ export const PhotoGallery = React.memo(() => {
     if (!lightboxOpen) return;
     const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    document.body.dataset.lightbox = "open";
     return () => {
       document.body.style.overflow = previous;
+      delete document.body.dataset.lightbox;
     };
   }, [lightboxOpen]);
 
