@@ -25,7 +25,7 @@ export function Skills() {
     "java",
     "javascript",
     "mysql",
-    "nextjs",
+    "nextdotjs",
     "nodejs",
     "python",
     "react",

@@ -65,6 +65,32 @@ export const renderCustomIcon = (
   });
 };
 
+// Brand colors from Simple Icons data. react-icon-cloud 4.1.4 fetches colors
+// from a path that no longer exists upstream, so every icon fell back to #000.
+const BRAND_HEX: Record<string, string> = {
+  adobelightroom: "#31A8FF",
+  adobephotoshop: "#31A8FF",
+  c: "#A8B9CC",
+  cplusplus: "#00599C",
+  css3: "#1572B6",
+  figma: "#F24E1E",
+  git: "#F05032",
+  github: "#181717",
+  html5: "#E34F26",
+  java: "#007396",
+  javascript: "#F7DF1E",
+  mysql: "#4479A1",
+  nextdotjs: "#000000",
+  nodejs: "#339933",
+  python: "#3776AB",
+  react: "#61DAFB",
+  sqlite: "#003B57",
+  typescript: "#3178C6",
+  vercel: "#000000",
+  visualstudiocode: "#007ACC",
+  vuejs: "#4FC08D",
+};
+
 export type DynamicCloudProps = {
   iconSlugs: string[];
   onIconClick?: (slug: string) => void;
@@ -80,7 +106,13 @@ export default function IconCloud({
   const { theme } = useTheme();
 
   useEffect(() => {
-    fetchSimpleIcons({ slugs: iconSlugs }).then(setData);
+    fetchSimpleIcons({ slugs: iconSlugs }).then((res) => {
+      Object.values(res.simpleIcons).forEach((icon) => {
+        const hex = BRAND_HEX[icon.slug];
+        if (hex) icon.hex = hex;
+      });
+      setData(res);
+    });
   }, [iconSlugs]);
 
   const renderedIcons = useMemo(() => {
