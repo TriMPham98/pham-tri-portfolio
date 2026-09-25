@@ -6,18 +6,12 @@ import dynamic from "next/dynamic";
 import GradualSpacing from "./ui/gradual-spacing";
 import { AnimateOnScroll } from "@/components/AnimateOnScroll";
 import ProfileAvatar from "./ProfileAvatar";
+import { RainbowButton } from "@/components/ui/rainbow-button";
 import { FileText } from "lucide-react";
 
 const ParticleLinks = dynamic(() => import("@/components/ui/particle-links"), {
   ssr: false,
 });
-const RainbowButton = dynamic(
-  () =>
-    import("@/components/ui/rainbow-button").then((mod) => ({
-      default: mod.RainbowButton,
-    })),
-  { ssr: false }
-);
 
 const HeroContent = () => (
   <div className="container mx-auto px-4 flex flex-col items-center justify-center relative z-10 mb-24">

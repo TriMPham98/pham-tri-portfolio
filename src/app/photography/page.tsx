@@ -5,15 +5,25 @@ import GradualSpacing from "@/components/ui/gradual-spacing";
 import { FadeText } from "@/components/ui/fade-text";
 import dynamic from "next/dynamic";
 
+const ParticleLinks = dynamic(() => import("@/components/ui/particle-links"), {
+  ssr: false,
+});
+
 const ScrollToTop = dynamic(() => import("@/components/ScrollToTop"), {
   ssr: false,
 });
 
 export default function Photography() {
   return (
-    <div className="min-h-screen flex flex-col bg-black">
+    <div className="relative min-h-screen flex flex-col bg-black">
+      <ParticleLinks
+        count={100}
+        density={false}
+        id="photography-particles"
+        className="pointer-events-none fixed inset-0 z-0"
+      />
       <Header />
-      <main className="flex-grow pt-20 md:pt-24">
+      <main className="relative z-10 flex-grow pt-20 md:pt-24">
         <div className="container mx-auto px-4 py-8">
           <div className="text-center mb-12">
             <GradualSpacing

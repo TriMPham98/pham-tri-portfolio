@@ -8,115 +8,65 @@ import React, {
   useMemo,
 } from "react";
 import Image from "next/image";
-import dynamic from "next/dynamic";
-import { motion } from "framer-motion";
-import { photos } from "../data/photos";
+import { photos, type Photo } from "../data/photos";
 
-const ParticleLinks = dynamic(() => import("./ui/particle-links"), {
-  ssr: false,
-});
-
-// Custom hook for intersection observer
-const useIntersectionObserver = (options: IntersectionObserverInit = {}) => {
-  const [isIntersecting, setIsIntersecting] = useState(false);
-  const [hasIntersected, setHasIntersected] = useState(false);
-  const elementRef = useRef<HTMLDivElement>(null);
-
-  const callbackFunction = useCallback(
-    (entries: IntersectionObserverEntry[]) => {
-      const [entry] = entries;
-      setIsIntersecting(entry.isIntersecting);
-      if (entry.isIntersecting && !hasIntersected) {
-        setHasIntersected(true);
-      }
-    },
-    [hasIntersected]
-  );
-
-  useEffect(() => {
-    const element = elementRef.current;
-    if (!element) return;
-
-    const observer = new IntersectionObserver(callbackFunction, {
-      threshold: 0.1,
-      rootMargin: "50px",
-      ...options,
-    });
-
-    observer.observe(element);
-
-    return () => {
-      if (element) {
-        observer.unobserve(element);
-      }
-    };
-  }, [callbackFunction, options]);
-
-  return { elementRef, isIntersecting, hasIntersected };
-};
-
-// Memoized Lazy Image Component
-const LazyImage = React.memo(
-  ({
-    src,
-    alt,
-    width,
-    height,
-    className,
-    sizes,
-    isLandscape,
-    priority = false,
-  }: {
-    src: string;
-    alt: string;
-    width: number;
-    height: number;
-    className?: string;
-    sizes?: string;
-    isLandscape?: boolean;
-    priority?: boolean;
-  }) => {
-    const { elementRef, hasIntersected } = useIntersectionObserver();
+const GalleryImage = React.memo(
+  ({ photo, priority }: { photo: Photo; priority: boolean }) => {
+    const frameRef = useRef<HTMLDivElement>(null);
+    const [visible, setVisible] = useState(priority);
     const [imageLoaded, setImageLoaded] = useState(false);
+
+    const markLoaded = useCallback((img: HTMLImageElement | null) => {
+      if (!img) return;
+      if (img.complete && img.naturalWidth > 0) {
+        setImageLoaded(true);
+        return;
+      }
+      img.addEventListener("load", () => setImageLoaded(true), { once: true });
+    }, []);
+
+    useEffect(() => {
+      if (visible) return;
+      const frame = frameRef.current;
+      if (!frame) return;
+
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setVisible(true);
+            observer.disconnect();
+          }
+        },
+        { rootMargin: "400px" }
+      );
+      observer.observe(frame);
+      return () => observer.disconnect();
+    }, [visible]);
 
     return (
       <div
-        ref={elementRef}
-        className={`${className} ${
-          isLandscape ? "landscape-photo" : "portrait-photo"
-        }`}>
-        {/* Invisible placeholder to maintain layout */}
-        <div className="relative w-full h-full">
-          {hasIntersected && (
-            <>
-              {/* Loading placeholder - visible until image loads */}
-              {!imageLoaded && <div className="absolute inset-0 bg-gray-800" />}
-
-              {/* Actual image */}
-              <Image
-                src={src}
-                alt={alt}
-                width={width}
-                height={height}
-                className={`w-full h-full object-cover transition-opacity duration-300 ${
-                  imageLoaded ? "opacity-100" : "opacity-0"
-                }`}
-                sizes={sizes}
-                loading={priority ? undefined : "lazy"}
-                priority={priority}
-                onLoad={() => setImageLoaded(true)}
-              />
-            </>
-          )}
-
-          {/* Placeholder when not intersected */}
-          {!hasIntersected && <div className="w-full h-full bg-gray-800" />}
-        </div>
+        ref={frameRef}
+        className="relative w-full bg-neutral-900"
+        style={{ aspectRatio: `${photo.width} / ${photo.height}` }}>
+        {visible && (
+          <Image
+            src={photo.src}
+            alt=""
+            fill
+            ref={markLoaded}
+            className={`object-cover transition-opacity duration-300 ${
+              imageLoaded ? "opacity-100" : "opacity-0"
+            }`}
+            sizes="(max-width: 639px) 100vw, (max-width: 767px) 50vw, (max-width: 1023px) 33vw, (max-width: 1279px) 25vw, 20vw"
+            priority={priority}
+            loading={priority ? undefined : "eager"}
+          />
+        )}
       </div>
     );
   }
 );
-LazyImage.displayName = "LazyImage";
+GalleryImage.displayName = "GalleryImage";
 
 const Lightbox = React.memo(
   ({
@@ -133,44 +83,46 @@ const Lightbox = React.memo(
     onNext: () => void;
   }) => (
     <div
-      className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-12"
-      onClick={onClose}>
-      {/* Close button */}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 sm:p-12"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Photo">
       <button
         onClick={onClose}
-        className="absolute top-6 right-6 text-white text-3xl hover:text-gray-300 z-60">
+        aria-label="Close"
+        className="absolute right-3 top-3 z-60 flex h-11 w-11 items-center justify-center text-3xl text-white hover:text-gray-300 sm:right-6 sm:top-6">
         ×
       </button>
 
-      {/* Previous button */}
       <button
         onClick={(e) => {
           e.stopPropagation();
           onPrevious();
         }}
-        className="absolute left-6 top-1/2 transform -translate-y-1/2 text-white text-4xl hover:text-gray-300 z-60">
+        aria-label="Previous photo"
+        className="absolute left-1 top-1/2 z-60 flex h-11 w-11 -translate-y-1/2 items-center justify-center text-4xl text-white hover:text-gray-300 sm:left-6">
         ‹
       </button>
 
-      {/* Next button */}
       <button
         onClick={(e) => {
           e.stopPropagation();
           onNext();
         }}
-        className="absolute right-6 top-1/2 transform -translate-y-1/2 text-white text-4xl hover:text-gray-300 z-60">
+        aria-label="Next photo"
+        className="absolute right-1 top-1/2 z-60 flex h-11 w-11 -translate-y-1/2 items-center justify-center text-4xl text-white hover:text-gray-300 sm:right-6">
         ›
       </button>
 
-      {/* Main image */}
-      <div className="w-full h-full flex items-center justify-center px-20">
+      <div className="flex h-full w-full items-center justify-center px-12 sm:px-20">
         {filteredPhotos[currentImageIndex] && (
           <Image
             src={filteredPhotos[currentImageIndex].src}
             alt=""
-            width={1200}
-            height={800}
-            className="max-w-full max-h-full object-contain"
+            width={filteredPhotos[currentImageIndex].width}
+            height={filteredPhotos[currentImageIndex].height}
+            className="max-h-full max-w-full object-contain"
             onClick={(e) => e.stopPropagation()}
             priority
           />
@@ -254,9 +206,17 @@ export const PhotoGallery = React.memo(() => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [lightboxOpen, filteredPhotos.length]);
 
+  useEffect(() => {
+    if (!lightboxOpen) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, [lightboxOpen]);
+
   const openLightbox = useCallback(
     (index: number) => {
-      if (isMobile) return; // Disable lightbox on mobile
       if (
         index >= 0 &&
         index < filteredPhotos.length &&
@@ -266,7 +226,7 @@ export const PhotoGallery = React.memo(() => {
         setLightboxOpen(true);
       }
     },
-    [isMobile, filteredPhotos.length]
+    [filteredPhotos.length]
   );
 
   const closeLightbox = useCallback(() => {
@@ -287,9 +247,6 @@ export const PhotoGallery = React.memo(() => {
 
   return (
     <div className="w-full relative">
-      {/* Particle Links Background */}
-      <ParticleLinks className="absolute inset-0 z-0 pointer-events-none" />
-
       {/* Filter Buttons */}
       <div className="flex flex-wrap justify-center gap-4 mb-8 relative z-10">
         {categories.map((category) => (
@@ -344,40 +301,20 @@ export const PhotoGallery = React.memo(() => {
             display: inline-block;
             width: 100%;
           }
-
-          .portrait-photo {
-            aspect-ratio: 2/3;
-          }
-
-          .landscape-photo {
-            aspect-ratio: 3/2;
-          }
         `}</style>
         {filteredPhotos.map((photo, index) => (
-          <motion.div
+          <div
             key={photo.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: Math.min(index * 0.05, 0.5) }}
             className="masonry-item"
             style={{ marginBottom: "1rem" }}>
             <div
-              className={`relative overflow-hidden rounded-lg bg-gray-900 transition-opacity ${
+              className={`relative overflow-hidden rounded-lg bg-neutral-900 ${
                 isMobile ? "" : "cursor-pointer hover:opacity-90"
               }`}
               onClick={() => openLightbox(index)}>
-              <LazyImage
-                src={photo.src}
-                alt=""
-                width={400}
-                height={600}
-                className="relative w-full"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-                isLandscape={photo.category === "Landscape"}
-                priority={index < 3}
-              />
+              <GalleryImage photo={photo} priority={index === 0} />
             </div>
-          </motion.div>
+          </div>
         ))}
       </div>
 

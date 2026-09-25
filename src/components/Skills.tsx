@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react";
 import IconCloud from "./ui/icon-cloud";
 import { AnimateOnScroll } from "@/components/AnimateOnScroll";
-import ParticleLinks from "@/components/ui/particle-links";
 import { NeonGradientCard } from "@/components/ui/neon-gradient-card";
 
 export function Skills() {
@@ -74,7 +73,6 @@ export function Skills() {
 
   return (
     <section id="skills" className="relative py-12 pt-24">
-      <ParticleLinks className="absolute inset-0" />
       <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <AnimateOnScroll
           animation={{

@@ -1,16 +1,8 @@
 import { Header } from "@/components/Header";
+import { Hero } from "@/components/Hero";
 import { Projects } from "@/components/Projects";
 import { Footer } from "@/components/Footer";
 import dynamic from "next/dynamic";
-
-const DynamicHero = dynamic(
-  () => import("@/components/Hero").then((mod) => mod.Hero),
-  {
-    loading: () => (
-      <div className="h-screen bg-black bg-opacity-50 backdrop-blur-sm"></div>
-    ),
-  }
-);
 
 const DynamicAbout = dynamic(
   () => import("@/components/About").then((mod) => mod.About),
@@ -46,7 +38,7 @@ export default function Portfolio() {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-grow pt-20 md:pt-24"> {/* Added padding-top */}
-        <DynamicHero />
+        <Hero />
         <DynamicAbout />
         <Projects />
         <DynamicSkills />
