@@ -19,8 +19,13 @@ export function Projects() {
       description:
         "Browser demo of an Iron Man MK III–inspired suit assembly: armor plates fly in and lock on, the arc reactor and eyes ignite, then you can orbit the finished suit and replay. Built with Three.js, GSAP, Vite, and TypeScript.",
       icon: ZapIcon,
-      href: "https://github.com/TriMPham98/iron-man-animation",
-      cta: "View Project",
+      links: [
+        { href: "https://iron-man-animation.vercel.app", label: "Live demo" },
+        {
+          href: "https://github.com/TriMPham98/iron-man-animation",
+          label: "GitHub",
+        },
+      ],
       background: (
         <div className="absolute inset-0 overflow-hidden">
           <Image
@@ -39,8 +44,13 @@ export function Projects() {
       description:
         "MIDI-controlled Steinway grand piano in Blender with live key animation driven by a Yamaha P515. Includes a Blender extension for real-time MIDI input and a Three.js web viewer. Built with Python, Blender, and JavaScript.",
       icon: MusicIcon,
-      href: "https://github.com/TriMPham98/steinway-blender",
-      cta: "View Project",
+      links: [
+        { href: "https://steinway-blender.vercel.app", label: "Live demo" },
+        {
+          href: "https://github.com/TriMPham98/steinway-blender",
+          label: "GitHub",
+        },
+      ],
       background: (
         <div className="absolute inset-0 overflow-hidden">
           <Image
@@ -59,8 +69,16 @@ export function Projects() {
       description:
         "Interactive 3D art gallery featuring art and photography, with day-night transitions, dynamic frame lighting, and audio feedback. Built with Three.js, JavaScript, Node.js, and Vercel.",
       icon: GlobeIcon,
-      href: "https://github.com/TriMPham98/Infinite-Ocean-3D-Art-Gallery",
-      cta: "View Project",
+      links: [
+        {
+          href: "https://infinite-ocean-3d-art-gallery.vercel.app",
+          label: "Live demo",
+        },
+        {
+          href: "https://github.com/TriMPham98/Infinite-Ocean-3D-Art-Gallery",
+          label: "GitHub",
+        },
+      ],
       background: (
         <div className="absolute inset-0 overflow-hidden">
           <Image
@@ -79,8 +97,13 @@ export function Projects() {
       description:
         "Roguelike tank game with 3D combat mechanics, procedurally generated levels, and strategic upgrades. Features multiple enemy types, power-up systems, and dynamic gameplay. Built with React, Three.js, and TypeScript.",
       icon: GamepadIcon,
-      href: "https://github.com/TriMPham98/rogue-tank-royale",
-      cta: "Play Game",
+      links: [
+        { href: "https://rogue-tank-royale.vercel.app", label: "Live demo" },
+        {
+          href: "https://github.com/TriMPham98/rogue-tank-royale",
+          label: "GitHub",
+        },
+      ],
       background: (
         <div className="absolute inset-0 overflow-hidden">
           <Image
@@ -144,8 +167,7 @@ export function Projects() {
               name={project.name}
               description={project.description}
               Icon={project.icon}
-              href={project.href}
-              cta={project.cta}
+              links={project.links}
               className="col-span-1 h-full min-h-[250px] group"
               background={project.background}
               target="_blank"

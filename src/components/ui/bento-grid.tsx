@@ -30,8 +30,7 @@ const BentoCard = ({
   background,
   Icon,
   description,
-  href,
-  cta,
+  links,
   target,
   rel,
 }: {
@@ -40,8 +39,7 @@ const BentoCard = ({
   background: ReactNode;
   Icon: IconComponent;
   description: string;
-  href: string;
-  cta: string;
+  links: { href: string; label: string }[];
   target?: string;
   rel?: string;
 }) => (
@@ -66,12 +64,19 @@ const BentoCard = ({
       className={cn(
         "pointer-events-none absolute bottom-0 flex w-full translate-y-10 transform-gpu flex-row items-center p-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
       )}>
-      <Button variant="ghost" asChild size="sm" className="pointer-events-auto">
-        <a href={href} target={target} rel={rel}>
-          {cta}
-          <ArrowRightIcon className="ml-2 h-4 w-4" />
-        </a>
-      </Button>
+      {links.map((link) => (
+        <Button
+          key={link.href}
+          variant="ghost"
+          asChild
+          size="sm"
+          className="pointer-events-auto">
+          <a href={link.href} target={target} rel={rel}>
+            {link.label}
+            <ArrowRightIcon className="ml-2 h-4 w-4" />
+          </a>
+        </Button>
+      ))}
     </div>
     <div className="pointer-events-none absolute inset-0 transform-gpu transition-all duration-300 group-hover:bg-black/[.03] group-hover:dark:bg-neutral-800/10" />
   </div>
