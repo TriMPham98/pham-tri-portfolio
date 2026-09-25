@@ -25,8 +25,8 @@ export const photos = [
   {
     id: 1,
     src: "/images/wedding-background.jpg",
-    width: 6336,
-    height: 4224,
+    width: 2560,
+    height: 1706,
     category: "Wedding",
   },
   {

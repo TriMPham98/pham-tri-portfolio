@@ -68,6 +68,72 @@ const GalleryImage = React.memo(
 );
 GalleryImage.displayName = "GalleryImage";
 
+const LIGHTBOX_SIZES = "90vw";
+
+function neighborIndexes(index: number, length: number) {
+  if (length <= 1) return [];
+  const previous = (index - 1 + length) % length;
+  const next = (index + 1) % length;
+  return previous === next ? [next] : [previous, next];
+}
+
+const LightboxPhoto = React.memo(
+  ({
+    photo,
+    visible,
+    onDecoded,
+    onClick,
+  }: {
+    photo: Photo;
+    visible: boolean;
+    onDecoded?: () => void;
+    onClick?: (event: React.MouseEvent) => void;
+  }) => {
+    const imgRef = useRef<HTMLImageElement | null>(null);
+    const onDecodedRef = useRef(onDecoded);
+    onDecodedRef.current = onDecoded;
+
+    const notify = useCallback(() => {
+      onDecodedRef.current?.();
+    }, []);
+
+    const ref = useCallback(
+      (img: HTMLImageElement | null) => {
+        imgRef.current = img;
+        if (!img) return;
+        if (img.complete && img.naturalWidth > 0) notify();
+        else img.addEventListener("load", notify, { once: true });
+      },
+      [notify]
+    );
+
+    useEffect(() => {
+      const img = imgRef.current;
+      if (!onDecoded || !img || !img.complete || img.naturalWidth === 0) return;
+      notify();
+    }, [notify, onDecoded]);
+
+    return (
+      <Image
+        ref={ref}
+        src={photo.src}
+        alt=""
+        width={photo.width}
+        height={photo.height}
+        sizes={LIGHTBOX_SIZES}
+        priority
+        onClick={onClick}
+        className={
+          visible
+            ? "max-h-full max-w-full object-contain"
+            : "pointer-events-none fixed left-0 top-0 h-px w-px opacity-0"
+        }
+      />
+    );
+  }
+);
+LightboxPhoto.displayName = "LightboxPhoto";
+
 const Lightbox = React.memo(
   ({
     filteredPhotos,
@@ -81,55 +147,78 @@ const Lightbox = React.memo(
     onClose: () => void;
     onPrevious: () => void;
     onNext: () => void;
-  }) => (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 sm:p-12"
-      onClick={onClose}
-      role="dialog"
-      aria-modal="true"
-      aria-label="Photo">
-      <button
+  }) => {
+    const [shownIndex, setShownIndex] = useState(currentImageIndex);
+    const length = filteredPhotos.length;
+    const mountedIndexes = useMemo(() => {
+      const indexes = [
+        shownIndex,
+        currentImageIndex,
+        ...neighborIndexes(currentImageIndex, length),
+      ];
+      return Array.from(new Set(indexes)).filter(
+        (index) => index >= 0 && index < length && filteredPhotos[index]
+      );
+    }, [currentImageIndex, filteredPhotos, length, shownIndex]);
+
+    return (
+      <div
+        className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 sm:p-12"
         onClick={onClose}
-        aria-label="Close"
-        className="absolute right-3 top-3 z-60 flex h-11 w-11 items-center justify-center text-3xl text-white hover:text-gray-300 sm:right-6 sm:top-6">
-        ×
-      </button>
+        role="dialog"
+        aria-modal="true"
+        aria-label="Photo">
+        <button
+          onClick={onClose}
+          aria-label="Close"
+          className="absolute right-3 top-3 z-60 flex h-11 w-11 items-center justify-center text-3xl text-white hover:text-gray-300 sm:right-6 sm:top-6">
+          ×
+        </button>
 
-      <button
-        onClick={(e) => {
-          e.stopPropagation();
-          onPrevious();
-        }}
-        aria-label="Previous photo"
-        className="absolute left-1 top-1/2 z-60 flex h-11 w-11 -translate-y-1/2 items-center justify-center text-4xl text-white hover:text-gray-300 sm:left-6">
-        ‹
-      </button>
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onPrevious();
+          }}
+          aria-label="Previous photo"
+          className="absolute left-1 top-1/2 z-60 flex h-11 w-11 -translate-y-1/2 items-center justify-center text-4xl text-white hover:text-gray-300 sm:left-6">
+          ‹
+        </button>
 
-      <button
-        onClick={(e) => {
-          e.stopPropagation();
-          onNext();
-        }}
-        aria-label="Next photo"
-        className="absolute right-1 top-1/2 z-60 flex h-11 w-11 -translate-y-1/2 items-center justify-center text-4xl text-white hover:text-gray-300 sm:right-6">
-        ›
-      </button>
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onNext();
+          }}
+          aria-label="Next photo"
+          className="absolute right-1 top-1/2 z-60 flex h-11 w-11 -translate-y-1/2 items-center justify-center text-4xl text-white hover:text-gray-300 sm:right-6">
+          ›
+        </button>
 
-      <div className="flex h-full w-full items-center justify-center px-12 sm:px-20">
-        {filteredPhotos[currentImageIndex] && (
-          <Image
-            src={filteredPhotos[currentImageIndex].src}
-            alt=""
-            width={filteredPhotos[currentImageIndex].width}
-            height={filteredPhotos[currentImageIndex].height}
-            className="max-h-full max-w-full object-contain"
-            onClick={(e) => e.stopPropagation()}
-            priority
-          />
-        )}
+        <div className="flex h-full w-full items-center justify-center px-12 sm:px-20">
+          {mountedIndexes.map((index) => {
+            const photo = filteredPhotos[index];
+            const visible = index === shownIndex;
+            return (
+              <LightboxPhoto
+                key={photo.src}
+                photo={photo}
+                visible={visible}
+                onClick={
+                  visible ? (event) => event.stopPropagation() : undefined
+                }
+                onDecoded={
+                  index === currentImageIndex && index !== shownIndex
+                    ? () => setShownIndex(currentImageIndex)
+                    : undefined
+                }
+              />
+            );
+          })}
+        </div>
       </div>
-    </div>
-  )
+    );
+  }
 );
 Lightbox.displayName = "Lightbox";
 
