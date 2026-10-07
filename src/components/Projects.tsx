@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Marquee from "@/components/ui/marquee";
+import { DemoVideo } from "@/components/ui/demo-video";
 
 export function Projects() {
   const projects = [
@@ -28,11 +29,10 @@ export function Projects() {
       ],
       background: (
         <div className="absolute inset-0 overflow-hidden">
-          <Image
-            src="/images/iron-man-animation.png"
-            alt="Iron Man MK III Assembly Screenshot"
-            layout="fill"
-            objectFit="cover"
+          <DemoVideo
+            src="/videos/iron-man-animation.mp4"
+            poster="/videos/iron-man-animation-poster.webp"
+            label="Iron Man MK III Assembly demo"
             className="transform scale-105 hover:scale-110 transition-transform duration-300"
           />
           <div className="absolute inset-0 bg-gradient-to-br from-gray-900/70 to-black/70" />
@@ -106,11 +106,10 @@ export function Projects() {
       ],
       background: (
         <div className="absolute inset-0 overflow-hidden">
-          <Image
-            src="/images/rogue-tank-royale.png"
-            alt="Rogue Tank Royale Game Screenshot"
-            layout="fill"
-            objectFit="cover"
+          <DemoVideo
+            src="/videos/rogue-tank-royale.mp4"
+            poster="/videos/rogue-tank-royale-poster.webp"
+            label="Rogue Tank Royale gameplay demo"
             className="transform scale-105 hover:scale-110 transition-transform duration-300"
           />
           <div className="absolute inset-0 bg-gradient-to-br from-gray-900/70 to-black/70" />
