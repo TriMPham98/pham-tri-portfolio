@@ -81,11 +81,10 @@ export function Projects() {
       ],
       background: (
         <div className="absolute inset-0 overflow-hidden">
-          <Image
-            src="/images/infinite-ocean.png"
-            alt="Infinite Ocean 3D Art Gallery Screenshot"
-            layout="fill"
-            objectFit="cover"
+          <DemoVideo
+            src="/videos/infinite-ocean.mp4"
+            poster="/videos/infinite-ocean-poster.webp"
+            label="Infinite Ocean 3D Art Gallery demo"
             className="transform scale-105 hover:scale-110 transition-transform duration-300"
           />
           <div className="absolute inset-0 bg-gradient-to-br from-gray-900/70 to-black/70" />
