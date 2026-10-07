@@ -40,24 +40,23 @@ export function Projects() {
       ),
     },
     {
-      name: "Steinway MIDI Piano",
+      name: "Rogue Tank Royale",
       description:
-        "MIDI-controlled Steinway grand piano in Blender with live key animation driven by a Yamaha P515. Includes a Blender extension for real-time MIDI input and a Three.js web viewer. Built with Python, Blender, and JavaScript.",
-      icon: MusicIcon,
+        "Roguelike tank game with 3D combat mechanics, procedurally generated levels, and strategic upgrades. Features multiple enemy types, power-up systems, and dynamic gameplay. Built with React, Three.js, and TypeScript.",
+      icon: GamepadIcon,
       links: [
-        { href: "https://steinway-blender.vercel.app", label: "Live demo" },
+        { href: "https://rogue-tank-royale.vercel.app", label: "Live demo" },
         {
-          href: "https://github.com/TriMPham98/steinway-blender",
+          href: "https://github.com/TriMPham98/rogue-tank-royale",
           label: "GitHub",
         },
       ],
       background: (
         <div className="absolute inset-0 overflow-hidden">
-          <Image
-            src="/images/steinway-blender.png"
-            alt="Steinway MIDI Piano Screenshot"
-            layout="fill"
-            objectFit="cover"
+          <DemoVideo
+            src="/videos/rogue-tank-royale.mp4"
+            poster="/videos/rogue-tank-royale-poster.webp"
+            label="Rogue Tank Royale gameplay demo"
             className="transform scale-105 hover:scale-110 transition-transform duration-300"
           />
           <div className="absolute inset-0 bg-gradient-to-br from-gray-900/70 to-black/70" />
@@ -92,23 +91,24 @@ export function Projects() {
       ),
     },
     {
-      name: "Rogue Tank Royale",
+      name: "Steinway MIDI Piano",
       description:
-        "Roguelike tank game with 3D combat mechanics, procedurally generated levels, and strategic upgrades. Features multiple enemy types, power-up systems, and dynamic gameplay. Built with React, Three.js, and TypeScript.",
-      icon: GamepadIcon,
+        "MIDI-controlled Steinway grand piano in Blender with live key animation driven by a Yamaha P515. Includes a Blender extension for real-time MIDI input and a Three.js web viewer. Built with Python, Blender, and JavaScript.",
+      icon: MusicIcon,
       links: [
-        { href: "https://rogue-tank-royale.vercel.app", label: "Live demo" },
+        { href: "https://steinway-blender.vercel.app", label: "Live demo" },
         {
-          href: "https://github.com/TriMPham98/rogue-tank-royale",
+          href: "https://github.com/TriMPham98/steinway-blender",
           label: "GitHub",
         },
       ],
       background: (
         <div className="absolute inset-0 overflow-hidden">
-          <DemoVideo
-            src="/videos/rogue-tank-royale.mp4"
-            poster="/videos/rogue-tank-royale-poster.webp"
-            label="Rogue Tank Royale gameplay demo"
+          <Image
+            src="/images/steinway-blender.png"
+            alt="Steinway MIDI Piano Screenshot"
+            layout="fill"
+            objectFit="cover"
             className="transform scale-105 hover:scale-110 transition-transform duration-300"
           />
           <div className="absolute inset-0 bg-gradient-to-br from-gray-900/70 to-black/70" />
