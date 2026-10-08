@@ -9,7 +9,6 @@ import {
   MonitorIcon,
   ZapIcon,
 } from "lucide-react";
-import Image from "next/image";
 import Marquee from "@/components/ui/marquee";
 import { DemoVideo } from "@/components/ui/demo-video";
 
@@ -104,11 +103,10 @@ export function Projects() {
       ],
       background: (
         <div className="absolute inset-0 overflow-hidden">
-          <Image
-            src="/images/steinway-blender.png"
-            alt="Steinway MIDI Piano Screenshot"
-            layout="fill"
-            objectFit="cover"
+          <DemoVideo
+            src="/videos/steinway-blender.mp4"
+            poster="/videos/steinway-blender-poster.webp"
+            label="Steinway MIDI Piano demo"
             className="transform scale-105 hover:scale-110 transition-transform duration-300"
           />
           <div className="absolute inset-0 bg-gradient-to-br from-gray-900/70 to-black/70" />
