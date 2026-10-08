@@ -1,58 +1,30 @@
-"use client";
-
-import React, { useMemo } from "react";
-import { motion, Variants } from "framer-motion";
+import React from "react";
+import { cn } from "@/lib/utils";
 
 type FadeTextProps = {
   className?: string;
-  direction?: "up" | "down" | "left" | "right";
-  framerProps?: Variants;
+  direction?: "up" | "down";
+  // Seconds before the fade starts.
+  delay?: number;
   children: React.ReactNode;
 };
 
+// A CSS entrance animation: it runs from the server-rendered HTML, so the
+// content shows on first paint without waiting for hydration.
 export function FadeText({
   direction = "up",
   className,
-  framerProps = {
-    hidden: { opacity: 0 },
-    show: { opacity: 1, transition: { type: "spring" } },
-  },
+  delay = 0,
   children,
 }: FadeTextProps) {
-  const directionOffset = useMemo(() => {
-    const map = { up: 10, down: -10, left: -10, right: 10 };
-    return map[direction];
-  }, [direction]);
-
-  const axis = direction === "up" || direction === "down" ? "y" : "x";
-
-  const FADE_ANIMATION_VARIANTS = useMemo(() => {
-    const { hidden, show, ...rest } = framerProps as {
-      [name: string]: { [name: string]: number; opacity: number };
-    };
-
-    return {
-      ...rest,
-      hidden: {
-        ...(hidden ?? {}),
-        opacity: hidden?.opacity ?? 0,
-        [axis]: hidden?.[axis] ?? directionOffset,
-      },
-      show: {
-        ...(show ?? {}),
-        opacity: show?.opacity ?? 1,
-        [axis]: show?.[axis] ?? 0,
-      },
-    };
-  }, [directionOffset, axis, framerProps]);
-
   return (
-    <motion.div
-      initial="hidden"
-      animate="show"
-      viewport={{ once: true }}
-      variants={FADE_ANIMATION_VARIANTS}>
-      <motion.span className={className}>{children}</motion.span>
-    </motion.div>
+    <div
+      className={cn(
+        direction === "up" ? "animate-fade-up" : "animate-fade-down",
+        className
+      )}
+      style={{ animationDelay: `${delay}s` }}>
+      {children}
+    </div>
   );
 }

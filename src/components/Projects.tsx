@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import Marquee from "@/components/ui/marquee";
 import { DemoVideo } from "@/components/ui/demo-video";
+import { SectionHeading, sectionClassName } from "@/components/SectionHeading";
 
 export function Projects() {
   const projects = [
@@ -26,17 +27,11 @@ export function Projects() {
           label: "GitHub",
         },
       ],
-      background: (
-        <div className="absolute inset-0 overflow-hidden">
-          <DemoVideo
-            src="/videos/iron-man-animation.mp4"
-            poster="/videos/iron-man-animation-poster.webp"
-            label="Iron Man MK III Assembly demo"
-            className="transform scale-105 hover:scale-110 transition-transform duration-300"
-          />
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-900/70 to-black/70" />
-        </div>
-      ),
+      video: {
+        src: "/videos/iron-man-animation.mp4",
+        poster: "/videos/iron-man-animation-poster.webp",
+        label: "Iron Man MK III Assembly demo",
+      },
     },
     {
       name: "Rogue Tank Royale",
@@ -50,17 +45,11 @@ export function Projects() {
           label: "GitHub",
         },
       ],
-      background: (
-        <div className="absolute inset-0 overflow-hidden">
-          <DemoVideo
-            src="/videos/rogue-tank-royale.mp4"
-            poster="/videos/rogue-tank-royale-poster.webp"
-            label="Rogue Tank Royale gameplay demo"
-            className="transform scale-105 hover:scale-110 transition-transform duration-300"
-          />
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-900/70 to-black/70" />
-        </div>
-      ),
+      video: {
+        src: "/videos/rogue-tank-royale.mp4",
+        poster: "/videos/rogue-tank-royale-poster.webp",
+        label: "Rogue Tank Royale gameplay demo",
+      },
     },
     {
       name: "Infinite Ocean 3D Art Gallery",
@@ -77,17 +66,11 @@ export function Projects() {
           label: "GitHub",
         },
       ],
-      background: (
-        <div className="absolute inset-0 overflow-hidden">
-          <DemoVideo
-            src="/videos/infinite-ocean.mp4"
-            poster="/videos/infinite-ocean-poster.webp"
-            label="Infinite Ocean 3D Art Gallery demo"
-            className="transform scale-105 hover:scale-110 transition-transform duration-300"
-          />
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-900/70 to-black/70" />
-        </div>
-      ),
+      video: {
+        src: "/videos/infinite-ocean.mp4",
+        poster: "/videos/infinite-ocean-poster.webp",
+        label: "Infinite Ocean 3D Art Gallery demo",
+      },
     },
     {
       name: "Steinway MIDI Piano",
@@ -101,17 +84,11 @@ export function Projects() {
           label: "GitHub",
         },
       ],
-      background: (
-        <div className="absolute inset-0 overflow-hidden">
-          <DemoVideo
-            src="/videos/steinway-blender.mp4"
-            poster="/videos/steinway-blender-poster.webp"
-            label="Steinway MIDI Piano demo"
-            className="transform scale-105 hover:scale-110 transition-transform duration-300"
-          />
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-900/70 to-black/70" />
-        </div>
-      ),
+      video: {
+        src: "/videos/steinway-blender.mp4",
+        poster: "/videos/steinway-blender-poster.webp",
+        label: "Steinway MIDI Piano demo",
+      },
     },
   ];
 
@@ -149,40 +126,51 @@ export function Projects() {
   ];
 
   return (
-    <section
-      id="projects"
-      className="py-16 px-4 md:px-6 bg-gradient-to-br from-gray-900 to-black mb-16 pt-24">
-      <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl font-extrabold text-white text-center mb-12">
-          Projects
-        </h2>
-        <BentoGrid className="grid-cols-1 md:grid-cols-2 gap-8">
-          {projects.map((project, index) => (
+    <section id="projects" className={sectionClassName}>
+      <div className="mx-auto max-w-6xl">
+        <SectionHeading
+          title="Projects"
+          subtitle="Interactive 3D experiments and tools, each with a live demo you can try."
+        />
+        <BentoGrid className="grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
+          {projects.map((project) => (
             <BentoCard
-              key={index}
+              key={project.name}
               name={project.name}
               description={project.description}
               Icon={project.icon}
               links={project.links}
-              className="col-span-1 h-full min-h-[250px] group"
-              background={project.background}
+              className="col-span-1 h-full min-h-[22rem]"
+              background={
+                <DemoVideo
+                  src={project.video.src}
+                  poster={project.video.poster}
+                  label={project.video.label}
+                  className="scale-105 transition-transform duration-500 can-hover:group-hover:scale-110"
+                />
+              }
               target="_blank"
               rel="noopener noreferrer"
             />
           ))}
         </BentoGrid>
-        {/* Fun Projects Section */}
-        <div className="mt-16 overflow-hidden rounded-xl">
-          <Marquee className="py-4 bg-gradient-to-r from-gray-900 to-black">
-            {funProjects.map((project, index) => (
+
+        <div className="mt-16 md:mt-20">
+          <h3 className="mb-4 text-center text-sm font-semibold uppercase tracking-[0.2em] text-gray-400">
+            More experiments
+          </h3>
+          <Marquee
+            pauseOnHover
+            className="[mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+            {funProjects.map((project) => (
               <a
-                key={index}
+                key={project.name}
                 href={project.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center space-x-2 mx-8 text-gray-300 hover:text-white transition-colors duration-300">
-                <project.icon className="w-6 h-6" />
-                <span className="text-lg font-semibold">{project.name}</span>
+                className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-gray-300 transition-colors duration-300 hover:border-white/30 hover:bg-white/10 hover:text-white">
+                <project.icon aria-hidden="true" className="h-5 w-5" />
+                <span className="whitespace-nowrap font-medium">{project.name}</span>
               </a>
             ))}
           </Marquee>

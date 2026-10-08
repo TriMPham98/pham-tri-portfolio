@@ -53,13 +53,19 @@ const GalleryImage = React.memo(
         ref={frameRef}
         className="relative w-full bg-neutral-900"
         style={{ aspectRatio: `${photo.width} / ${photo.height}` }}>
+        {!imageLoaded && (
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 animate-shimmer bg-[linear-gradient(110deg,transparent_30%,rgba(255,255,255,0.06)_50%,transparent_70%)] bg-[length:200%_100%]"
+          />
+        )}
         {visible && (
           <Image
             src={photo.src}
             alt=""
             fill
             ref={markLoaded}
-            className={`object-cover transition-opacity duration-300 ${
+            className={`object-cover transition-[opacity,transform] duration-500 can-hover:group-hover:scale-[1.03] ${
               imageLoaded ? "opacity-100" : "opacity-0"
             }`}
             sizes="(max-width: 639px) 100vw, (max-width: 767px) 50vw, (max-width: 1023px) 33vw, (max-width: 1279px) 25vw, 20vw"
@@ -350,15 +356,17 @@ export const PhotoGallery = React.memo(() => {
   return (
     <div className="w-full relative">
       {/* Filter Buttons */}
-      <div className="flex flex-wrap justify-center gap-4 mb-8 relative z-10">
+      <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 relative z-10">
         {categories.map((category) => (
           <button
             key={category}
+            type="button"
+            aria-pressed={filter === category}
             onClick={() => setFilter(category)}
-            className={`px-6 py-2 rounded-full transition-all duration-300 ${
+            className={`px-5 py-2 rounded-full border text-sm sm:text-base transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white ${
               filter === category
-                ? "bg-white text-black"
-                : "bg-gray-800 text-white hover:bg-gray-700"
+                ? "border-white bg-white text-black"
+                : "border-white/15 bg-white/5 text-gray-200 hover:border-white/40 hover:bg-white/10 hover:text-white"
             }`}>
             {category}
           </button>
@@ -412,8 +420,8 @@ export const PhotoGallery = React.memo(() => {
             <button
               type="button"
               aria-label={`${photoAlt(photo)}, ${index + 1} of ${filteredPhotos.length}`}
-              className={`relative block w-full overflow-hidden rounded-lg bg-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white ${
-                isMobile ? "" : "cursor-pointer hover:opacity-90"
+              className={`group relative block w-full overflow-hidden rounded-lg bg-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white ${
+                isMobile ? "" : "cursor-pointer"
               }`}
               onClick={() => openLightbox(index)}>
               <GalleryImage photo={photo} priority={index === 0} />

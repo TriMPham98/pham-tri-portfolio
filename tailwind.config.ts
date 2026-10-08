@@ -68,7 +68,11 @@ const config: Config = {
   			'background-position-spin': 'background-position-spin 3000ms infinite alternate',
   			'neon-pulse': 'neon-pulse 10s ease-in-out infinite',
   			marquee: 'marquee var(--duration) infinite linear',
-  			'marquee-vertical': 'marquee-vertical var(--duration) linear infinite'
+  			'marquee-vertical': 'marquee-vertical var(--duration) linear infinite',
+  			'fade-up': 'fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both',
+  			'fade-down': 'fade-down 0.6s cubic-bezier(0.22, 1, 0.36, 1) both',
+  			'letter-in': 'letter-in 0.5s ease-out both',
+  			shimmer: 'shimmer 1.6s ease-in-out infinite'
   		},
   		keyframes: {
   			grid: {
@@ -117,6 +121,32 @@ const config: Config = {
   				},
   				to: {
   					transform: 'translateY(calc(-100% - var(--gap)))'
+  				}
+  			},
+  			'fade-up': {
+  				from: {
+  					opacity: '0',
+  					transform: 'translateY(16px)'
+  				}
+  			},
+  			'fade-down': {
+  				from: {
+  					opacity: '0',
+  					transform: 'translateY(-10px)'
+  				}
+  			},
+  			'letter-in': {
+  				from: {
+  					opacity: '0',
+  					transform: 'translateX(-20px)'
+  				}
+  			},
+  			shimmer: {
+  				from: {
+  					backgroundPosition: '200% 0'
+  				},
+  				to: {
+  					backgroundPosition: '-200% 0'
   				}
   			}
   		}

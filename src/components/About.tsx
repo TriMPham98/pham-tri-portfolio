@@ -1,5 +1,6 @@
 import React from "react";
 import { AnimateOnScroll } from "@/components/AnimateOnScroll";
+import { SectionHeading, sectionClassName } from "@/components/SectionHeading";
 import { Music, Code, Camera } from "lucide-react";
 
 interface RoleCardProps {
@@ -18,11 +19,12 @@ const RoleCard: React.FC<RoleCardProps> = ({
   delay = 0,
 }) => (
   <AnimateOnScroll
+    className="h-full"
     animation={{
-      hidden: { opacity: 0, x: -20 },
+      hidden: { opacity: 0, y: 24 },
       visible: {
         opacity: 1,
-        x: 0,
+        y: 0,
         transition: {
           duration: 0.6,
           ease: "easeOut",
@@ -31,22 +33,22 @@ const RoleCard: React.FC<RoleCardProps> = ({
       },
     }}>
     <div
-      className={`bg-gray-900 rounded-xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 h-[36rem] relative overflow-hidden ${
+      className={`group relative h-full min-h-[26rem] overflow-hidden rounded-xl border border-white/10 bg-gray-900 p-8 shadow-xl transition-all duration-300 can-hover:hover:-translate-y-1 can-hover:hover:border-white/25 can-hover:hover:shadow-2xl md:min-h-[32rem] ${
         backgroundImage ? "bg-cover bg-center" : ""
       }`}
       style={
         backgroundImage
           ? {
-              backgroundImage: `linear-gradient(rgba(17, 24, 39, 0.69), rgba(17, 24, 39, 0.69)), url(${backgroundImage})`,
+              backgroundImage: `linear-gradient(rgba(3, 7, 18, 0.85) 35%, rgba(17, 24, 39, 0.45)), url(${backgroundImage})`,
             }
           : undefined
       }>
       <div className="flex flex-col items-center text-center h-full relative z-10">
-        <div className="bg-gray-800/80 p-5 rounded-full mb-6 backdrop-blur-sm">
-          <Icon className="w-12 h-12 text-white" />
+        <div className="mb-6 rounded-full border border-white/10 bg-gray-800/80 p-5 backdrop-blur-sm">
+          <Icon aria-hidden="true" className="h-10 w-10 text-white md:h-12 md:w-12" />
         </div>
-        <h3 className="text-3xl font-bold text-white mb-6">{title}</h3>
-        <p className="text-gray-100 leading-relaxed text-lg">{description}</p>
+        <h3 className="mb-4 text-2xl font-bold text-white md:text-3xl">{title}</h3>
+        <p className="text-base leading-relaxed text-gray-100 md:text-lg">{description}</p>
       </div>
     </div>
   </AnimateOnScroll>
@@ -78,39 +80,18 @@ const roles = [
 
 export function About() {
   return (
-    <section
-      id="about"
-      className="p-6 md:p-12 bg-black bg-opacity-50 backdrop-blur-sm">
-      <AnimateOnScroll
-        animation={{
-          hidden: { opacity: 0, y: 20 },
-          visible: {
-            opacity: 1,
-            y: 0,
-            transition: { duration: 0.6, ease: "easeOut" },
-          },
-        }}>
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-extrabold text-white text-center mb-12">
-            About Me
-          </h2>
-          <p className="text-gray-300 text-center max-w-4xl mx-auto mb-16 text-xl">
-            I&apos;m a multidisciplinary creative professional whose work spans
-            across music education, software development, and visual arts. Each
-            role allows me to express creativity and innovation in unique ways.
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {roles.map((role, index) => (
-              <RoleCard
-                key={index}
-                {...role}
-                delay={index * 0.2} // Add 0.2s delay for each subsequent card
-              />
-            ))}
-          </div>
+    <section id="about" className={sectionClassName}>
+      <div className="mx-auto max-w-6xl">
+        <SectionHeading
+          title="About Me"
+          subtitle="I'm a multidisciplinary creative whose work spans music education, software development, and visual arts. Each role lets me express creativity and innovation in its own way."
+        />
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">
+          {roles.map((role, index) => (
+            <RoleCard key={role.title} {...role} delay={index * 0.15} />
+          ))}
         </div>
-      </AnimateOnScroll>
+      </div>
     </section>
   );
 }

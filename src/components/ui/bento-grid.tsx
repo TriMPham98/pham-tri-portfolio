@@ -44,20 +44,20 @@ const BentoCard = ({
   rel?: string;
 }) => (
   <div
-    key={name}
     className={cn(
-      "group relative col-span-3 flex flex-col justify-between overflow-hidden rounded-xl",
-      // light styles
-      "bg-white [box-shadow:0_0_0_1px_rgba(0,0,0,.03),0_2px_4px_rgba(0,0,0,.05),0_12px_24px_rgba(0,0,0,.05)]",
-      // dark styles
-      "transform-gpu dark:bg-black dark:[border:1px_solid_rgba(255,255,255,.1)] dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset]",
+      "group relative col-span-3 flex flex-col justify-end overflow-hidden rounded-xl border border-white/10 bg-neutral-950",
+      "transform-gpu transition-[border-color,box-shadow] duration-300 can-hover:hover:border-white/25 can-hover:hover:shadow-[0_0_40px_-12px_rgba(255,255,255,0.25)]",
       className
     )}>
-    <div>{background}</div>
+    <div className="absolute inset-0">{background}</div>
+    {/* Darken only behind the text so the demo footage stays visible above it. */}
+    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/95 via-black/65 via-45% to-black/0" />
     <div className="pointer-events-none z-10 flex transform-gpu flex-col gap-1 p-6 transition-all duration-300 can-hover:group-hover:-translate-y-10 can-hover:group-focus-within:-translate-y-10">
-      <Icon className="h-12 w-12 origin-left transform-gpu text-white transition-all duration-300 ease-in-out can-hover:group-hover:scale-75 can-hover:group-focus-within:scale-75" />
-      <h3 className="text-xl font-semibold text-white">{name}</h3>
-      <p className="max-w-lg text-white">{description}</p>
+      <Icon className="h-10 w-10 origin-left transform-gpu text-white transition-all duration-300 ease-in-out can-hover:group-hover:scale-75 can-hover:group-focus-within:scale-75" />
+      <h3 className="mt-2 text-xl font-semibold text-white">{name}</h3>
+      <p className="max-w-lg text-sm leading-relaxed text-gray-200 md:text-base">
+        {description}
+      </p>
     </div>
 
     <div
@@ -65,7 +65,7 @@ const BentoCard = ({
         // Always visible on touch screens; fades in on hover or keyboard focus
         // where a hover pointer exists. No offscreen translate here: focusing a
         // link outside the card would scroll the overflow-hidden card itself.
-        "pointer-events-none z-10 flex w-full flex-row flex-wrap items-center p-4 pt-0 transition-opacity duration-300",
+        "pointer-events-none z-10 flex w-full flex-row flex-wrap items-center gap-1 p-4 pt-0 transition-opacity duration-300",
         "can-hover:absolute can-hover:bottom-0 can-hover:pt-4 can-hover:opacity-0",
         "group-hover:opacity-100 group-focus-within:opacity-100"
       )}>
@@ -75,7 +75,7 @@ const BentoCard = ({
           variant="ghost"
           asChild
           size="sm"
-          className="pointer-events-auto">
+          className="pointer-events-auto text-white">
           <a href={link.href} target={target} rel={rel}>
             {link.label}
             <ArrowRightIcon className="ml-2 h-4 w-4" />
@@ -83,7 +83,6 @@ const BentoCard = ({
         </Button>
       ))}
     </div>
-    <div className="pointer-events-none absolute inset-0 transform-gpu transition-all duration-300 group-hover:bg-black/[.03] group-hover:dark:bg-neutral-800/10" />
   </div>
 );
 

@@ -2,30 +2,27 @@ import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
 import { Projects } from "@/components/Projects";
 import { Footer } from "@/components/Footer";
+import { BackgroundParticles } from "@/components/BackgroundParticles";
 import dynamic from "next/dynamic";
 
 const DynamicAbout = dynamic(
   () => import("@/components/About").then((mod) => mod.About),
   {
-    loading: () => (
-      <div className="h-96 bg-black bg-opacity-50 backdrop-blur-sm"></div>
-    ),
+    loading: () => <div className="h-96" />,
   }
 );
 
 const DynamicSkills = dynamic(
   () => import("@/components/Skills").then((mod) => mod.Skills),
   {
-    loading: () => <div className="h-96"></div>,
+    loading: () => <div className="h-96" />,
   }
 );
 
 const DynamicContact = dynamic(
   () => import("@/components/Contact").then((mod) => mod.Contact),
   {
-    loading: () => (
-      <div className="h-96 bg-gradient-to-br from-gray-900 to-black"></div>
-    ),
+    loading: () => <div className="h-96" />,
   }
 );
 
@@ -35,9 +32,10 @@ const ScrollToTop = dynamic(() => import("@/components/ScrollToTop"), {
 
 export default function Portfolio() {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="relative flex min-h-screen flex-col bg-black">
+      <BackgroundParticles id="particles" />
       <Header />
-      <main className="flex-grow pt-20 md:pt-24"> {/* Added padding-top */}
+      <main className="relative z-10 flex-grow pt-16 md:pt-20">
         <Hero />
         <DynamicAbout />
         <Projects />

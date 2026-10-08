@@ -4,6 +4,7 @@ import React from "react";
 import dynamic from "next/dynamic";
 import { AnimateOnScroll } from "@/components/AnimateOnScroll";
 import { NeonGradientCard } from "@/components/ui/neon-gradient-card";
+import { SectionHeading, sectionClassName } from "@/components/SectionHeading";
 
 // The cloud draws on a canvas, so only it waits for the browser; the skills
 // list below stays in the server-rendered HTML.
@@ -36,58 +37,47 @@ const techStackSlugs = [
   "vuejs",
 ];
 
-const skillsList = [
+const skillGroups = [
   {
-    category: "Programming Languages and Web Technologies",
-    skills: "JavaScript, TypeScript, HTML, CSS, Python, C, C++, Java",
+    category: "Languages",
+    skills: ["JavaScript", "TypeScript", "HTML", "CSS", "Python", "C", "C++", "Java"],
   },
   {
     category: "Web Development",
-    skills: "React, Vue.js, Node.js, Next.js",
+    skills: ["React", "Vue.js", "Node.js", "Next.js"],
+  },
+  {
+    category: "Libraries and Tools",
+    skills: ["Three.js", "shadcn/ui", "Vite", "pyautogui"],
   },
   {
     category: "Databases",
-    skills: "MySQL, SQLite",
+    skills: ["MySQL", "SQLite"],
   },
   {
     category: "Version Control and Deployment",
-    skills: "Git, GitHub, Vercel",
+    skills: ["Git", "GitHub", "Vercel"],
   },
   {
-    category: "Development Tools and IDEs",
-    skills: "Visual Studio Code, Cursor, PyCharm, CLion, Eclipse",
+    category: "Editors and IDEs",
+    skills: ["Visual Studio Code", "Cursor", "PyCharm", "CLion", "Eclipse"],
   },
   {
-    category: "Design and Creative Tools",
-    skills: "Figma, Adobe Lightroom, Adobe Photoshop",
-  },
-  {
-    category: "Libraries and Additional Tools",
-    skills: "shadcn/ui, Three.js, Vite, pyautogui",
+    category: "Design and Creative",
+    skills: ["Figma", "Adobe Lightroom", "Adobe Photoshop"],
   },
 ];
 
 export function Skills() {
   return (
-    <section id="skills" className="relative py-12 pt-24">
-      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <AnimateOnScroll
-          animation={{
-            hidden: { opacity: 0, y: 20 },
-            visible: {
-              opacity: 1,
-              y: 0,
-              transition: { duration: 0.6, ease: "easeOut" },
-            },
-          }}>
-          <h2 className="text-3xl font-extrabold text-white text-center mb-8">
-            Technical Skills
-          </h2>
-        </AnimateOnScroll>
+    <section id="skills" className={sectionClassName}>
+      <div className="mx-auto max-w-5xl">
+        <SectionHeading title="Technical Skills" />
 
         <AnimateOnScroll
+          className="mx-auto mb-16 max-w-xl"
           animation={{
-            hidden: { opacity: 0, scale: 0.9 },
+            hidden: { opacity: 0, scale: 0.95 },
             visible: {
               opacity: 1,
               scale: 1,
@@ -95,41 +85,47 @@ export function Skills() {
             },
           }}>
           <NeonGradientCard
-            className="mb-12 animate-neon-pulse max-w-2xl mx-auto"
+            className="animate-neon-pulse"
             borderSize={2}
             borderRadius={20}
             neonColors={{ firstColor: "#4ade80", secondColor: "#3b82f6" }}>
-            <div className="p-4 cursor-pointer">
+            <div className="cursor-grab active:cursor-grabbing">
               <IconCloud iconSlugs={techStackSlugs} />
             </div>
           </NeonGradientCard>
         </AnimateOnScroll>
 
-        <ul className="text-gray-300 max-w-2xl mx-auto space-y-2 text-base mb-12">
-          {skillsList.map((item, index) => (
+        <div className="grid grid-cols-1 gap-x-10 gap-y-8 sm:grid-cols-2">
+          {skillGroups.map((group, index) => (
             <AnimateOnScroll
-              key={item.category}
+              key={group.category}
               animation={{
                 hidden: { opacity: 0, y: 20 },
                 visible: {
                   opacity: 1,
                   y: 0,
                   transition: {
-                    delay: index * 0.1,
-                    duration: 0.6,
+                    delay: (index % 2) * 0.1,
+                    duration: 0.5,
                     ease: "easeOut",
                   },
                 },
               }}>
-              <li className="flex items-start">
-                <span className="text-green-400 mr-2">•</span>
-                <span>
-                  <strong>{item.category}:</strong> {item.skills}
-                </span>
-              </li>
+              <h3 className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-green-400">
+                {group.category}
+              </h3>
+              <ul className="flex flex-wrap gap-2">
+                {group.skills.map((skill) => (
+                  <li
+                    key={skill}
+                    className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-sm text-gray-200 transition-colors duration-200 hover:border-white/30 hover:bg-white/10 hover:text-white">
+                    {skill}
+                  </li>
+                ))}
+              </ul>
             </AnimateOnScroll>
           ))}
-        </ul>
+        </div>
       </div>
     </section>
   );

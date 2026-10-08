@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
-import { motion, useAnimation } from "framer-motion";
+import { motion, useAnimation, useReducedMotion } from "framer-motion";
 
 interface AnimateOnScrollProps {
   children: React.ReactNode;
@@ -9,42 +9,46 @@ interface AnimateOnScrollProps {
     hidden: object;
     visible: object;
   };
+  className?: string;
 }
 
+// Reveals its children the first time they scroll into view, then stays put,
+// so content never fades back out (or gets caught mid-fade) on the way back up.
 export const AnimateOnScroll: React.FC<AnimateOnScrollProps> = ({
   children,
   animation,
+  className,
 }) => {
   const controls = useAnimation();
   const ref = useRef<HTMLDivElement>(null);
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
     const currentRef = ref.current;
+    if (!currentRef) return;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           controls.start("visible");
-        } else {
-          controls.start("hidden");
+          observer.disconnect();
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
     );
+    observer.observe(currentRef);
 
-    if (currentRef) {
-      observer.observe(currentRef);
-    }
-
-    return () => {
-      if (currentRef) {
-        observer.unobserve(currentRef);
-      }
-    };
+    return () => observer.disconnect();
   }, [controls]);
+
+  if (reduceMotion) {
+    return <div className={className}>{children}</div>;
+  }
 
   return (
     <motion.div
       ref={ref}
+      className={className}
       initial="hidden"
       animate={controls}
       variants={animation}>

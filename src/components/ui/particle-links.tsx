@@ -45,6 +45,7 @@ const ParticleLinks: React.FC<ParticleLinksProps> = ({
       fpsLimit: 60,
       pauseOnBlur: true,
       pauseOnOutsideViewport: true,
+      fullScreen: { enable: false },
       background: {
         color: "transparent",
       },
@@ -72,6 +73,7 @@ const ParticleLinks: React.FC<ParticleLinksProps> = ({
         },
       },
       interactivity: {
+        detectsOn: "window",
         events: {
           onHover: {
             enable: true,

@@ -121,7 +121,7 @@ export default function IconCloud({
     return Object.values(data.simpleIcons).map((icon) =>
       renderCustomIcon(
         icon,
-        theme || "light",
+        theme || "dark",
         onIconClick ? () => onIconClick(icon.slug) : undefined
       )
     );

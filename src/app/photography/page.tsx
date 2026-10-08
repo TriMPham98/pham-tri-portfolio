@@ -3,11 +3,8 @@ import { Footer } from "@/components/Footer";
 import { PhotoGallery } from "@/components/PhotoGallery";
 import GradualSpacing from "@/components/ui/gradual-spacing";
 import { FadeText } from "@/components/ui/fade-text";
+import { BackgroundParticles } from "@/components/BackgroundParticles";
 import dynamic from "next/dynamic";
-
-const ParticleLinks = dynamic(() => import("@/components/ui/particle-links"), {
-  ssr: false,
-});
 
 const ScrollToTop = dynamic(() => import("@/components/ScrollToTop"), {
   ssr: false,
@@ -16,14 +13,13 @@ const ScrollToTop = dynamic(() => import("@/components/ScrollToTop"), {
 export default function Photography() {
   return (
     <div className="relative min-h-screen flex flex-col bg-black">
-      <ParticleLinks
+      <BackgroundParticles
         count={100}
         density={false}
         id="photography-particles"
-        className="pointer-events-none fixed inset-0 z-0"
       />
       <Header />
-      <main className="relative z-10 flex-grow pt-20 md:pt-24">
+      <main className="relative z-10 flex-grow pt-16 md:pt-20">
         <div className="container mx-auto px-4 py-8">
           <div className="text-center mb-12">
             <GradualSpacing
@@ -32,21 +28,7 @@ export default function Photography() {
               duration={0.25}
               delayMultiple={0.07}
             />
-            <FadeText
-              direction="up"
-              framerProps={{
-                hidden: { opacity: 0, y: 20 },
-                show: {
-                  opacity: 1,
-                  y: 0,
-                  transition: {
-                    delay: 1.5, // Delay to start after the header animation
-                    type: "spring",
-                    stiffness: 100,
-                    damping: 15,
-                  },
-                },
-              }}>
+            <FadeText delay={0.9}>
               <p className="text-xl text-gray-300 max-w-2xl mx-auto">
                 Favorite Flicks of Fleeting Frames
               </p>

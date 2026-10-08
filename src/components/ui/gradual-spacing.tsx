@@ -1,25 +1,19 @@
-"use client";
-
-import { AnimatePresence, motion, Variants } from "framer-motion";
-
 import { cn } from "@/lib/utils";
 
 interface GradualSpacingProps {
   text: string;
   duration?: number;
   delayMultiple?: number;
-  framerProps?: Variants;
   className?: string;
 }
 
+// Letters slide in with a CSS animation rather than Framer Motion, so the
+// heading starts animating on first paint instead of sitting invisible in the
+// server HTML until React hydrates.
 export default function GradualSpacing({
   text,
   duration = 0.5,
   delayMultiple = 0.04,
-  framerProps = {
-    hidden: { opacity: 0, x: -20 },
-    visible: { opacity: 1, x: 0 },
-  },
   className,
 }: GradualSpacingProps) {
   // One heading for assistive tech and crawlers; the per-letter spans are
@@ -28,20 +22,18 @@ export default function GradualSpacing({
     <h1
       aria-label={text}
       className={cn("flex justify-center space-x-0.5 drop-shadow-sm", className)}>
-      <AnimatePresence>
-        {text.split("").map((char, i) => (
-          <motion.span
-            key={i}
-            aria-hidden="true"
-            initial="hidden"
-            animate="visible"
-            exit="hidden"
-            variants={framerProps}
-            transition={{ duration, delay: i * delayMultiple }}>
-            {char === " " ? <span>&nbsp;</span> : char}
-          </motion.span>
-        ))}
-      </AnimatePresence>
+      {text.split("").map((char, i) => (
+        <span
+          key={i}
+          aria-hidden="true"
+          className="inline-block animate-letter-in"
+          style={{
+            animationDuration: `${duration}s`,
+            animationDelay: `${i * delayMultiple}s`,
+          }}>
+          {char === " " ? " " : char}
+        </span>
+      ))}
     </h1>
   );
 }

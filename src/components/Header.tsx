@@ -1,159 +1,128 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  NavigationMenu,
-  NavigationMenuList,
-  NavigationMenuItem,
-} from "@/components/ui/navigation-menu";
+import { Menu, X } from "lucide-react";
 import { FadeText } from "@/components/ui/fade-text";
+import { cn } from "@/lib/utils";
+import { homeSections } from "@/lib/site";
+
+// Section links point at /#id so they work from every page; on the home page
+// the browser just scrolls (sections carry scroll-margin for the fixed header).
+const navItems = [
+  ...homeSections.map((section) => ({
+    href: `/#${section.id}`,
+    label: section.label,
+  })),
+  { href: "/photography", label: "Photography" },
+];
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener("scroll", handleScroll);
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToSection = useCallback((sectionId: string) => {
-    const section = document.getElementById(sectionId);
-    if (section) {
-      const yOffset = -80; // Adjust this value based on your header height
-      const y =
-        section.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: "smooth" });
-    }
-  }, []);
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [menuOpen]);
 
-  const isHomePage = pathname === "/";
+  const solid = isScrolled || menuOpen;
 
   return (
     <header
-      className={`p-1 sm:p-2 md:p-4 lg:p-6 flex flex-col md:flex-row justify-between items-center fixed w-full z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-black bg-opacity-70 backdrop-blur-md shadow-lg"
-          : "bg-transparent"
-      }`}>
-      <FadeText
-        direction="down"
-        framerProps={{
-          hidden: { opacity: 0, y: -10 },
-          show: {
-            opacity: 1,
-            y: 0,
-            transition: { delay: 0.2, type: "spring" },
-          },
-        }}>
-        <Link
-          href="/"
-          className="text-lg sm:text-xl md:text-2xl font-bold text-white hover:text-gray-300 transition-colors mb-1 sm:mb-2 md:mb-0">
-          Tri Pham
-        </Link>
-      </FadeText>
-      <NavigationMenu>
-        <NavigationMenuList className="flex flex-wrap justify-center md:space-x-6">
-          {isHomePage ? (
-            // Home page navigation - scroll to sections
-            <>
-              {["About", "Projects", "Skills", "Contact"].map((item, index) => (
-                <NavigationMenuItem
-                  key={item}
-                  className="mx-1 my-0.5 sm:my-1 md:mx-2 md:my-0">
-                  <FadeText
-                    direction="down"
-                    framerProps={{
-                      hidden: { opacity: 0, y: -10 },
-                      show: {
-                        opacity: 1,
-                        y: 0,
-                        transition: {
-                          delay: 0.3 + index * 0.1,
-                          type: "spring",
-                        },
-                      },
-                    }}>
-                    <button
-                      onClick={() => scrollToSection(item.toLowerCase())}
-                      className="text-sm md:text-base text-gray-300 hover:text-white transition-colors px-1 py-1 md:px-2 md:py-0">
-                      {item}
-                    </button>
+      className={cn(
+        "fixed inset-x-0 top-0 z-50 border-b transition-colors duration-300",
+        solid
+          ? "border-white/10 bg-black/70 backdrop-blur-md"
+          : "border-transparent bg-transparent"
+      )}>
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 md:h-20 md:px-6">
+        <FadeText direction="down" delay={0.1}>
+          <Link
+            href="/"
+            onClick={() => setMenuOpen(false)}
+            className="text-xl font-bold tracking-tight text-white transition-colors hover:text-gray-300 md:text-2xl">
+            Tri Pham
+          </Link>
+        </FadeText>
+
+        <nav aria-label="Main" className="hidden md:block">
+          <ul className="flex items-center gap-1">
+            {navItems.map((item, index) => {
+              const isActive = pathname === item.href;
+              return (
+                <li key={item.href}>
+                  <FadeText direction="down" delay={0.2 + index * 0.07}>
+                    <Link
+                      href={item.href}
+                      aria-current={isActive ? "page" : undefined}
+                      className={cn(
+                        "rounded-full px-3 py-1.5 text-sm transition-colors lg:text-base",
+                        isActive
+                          ? "bg-white/10 text-white"
+                          : "text-gray-300 hover:bg-white/5 hover:text-white"
+                      )}>
+                      {item.label}
+                    </Link>
                   </FadeText>
-                </NavigationMenuItem>
-              ))}
-              <NavigationMenuItem className="mx-1 my-0.5 sm:my-1 md:mx-2 md:my-0">
-                <FadeText
-                  direction="down"
-                  framerProps={{
-                    hidden: { opacity: 0, y: -10 },
-                    show: {
-                      opacity: 1,
-                      y: 0,
-                      transition: { delay: 0.7, type: "spring" },
-                    },
-                  }}>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+
+        <button
+          type="button"
+          className="-mr-2 rounded-md p-2 text-gray-200 transition-colors hover:bg-white/10 hover:text-white md:hidden"
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={menuOpen}
+          aria-controls="mobile-nav"
+          onClick={() => setMenuOpen((open) => !open)}>
+          {menuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+        </button>
+      </div>
+
+      {menuOpen && (
+        <nav
+          id="mobile-nav"
+          aria-label="Main"
+          className="border-t border-white/10 px-4 pb-4 pt-2 md:hidden">
+          <ul className="flex flex-col">
+            {navItems.map((item) => {
+              const isActive = pathname === item.href;
+              return (
+                <li key={item.href}>
                   <Link
-                    href="/photography"
-                    className="text-sm md:text-base text-gray-300 hover:text-white transition-colors px-1 py-1 md:px-2 md:py-0">
-                    Photography
+                    href={item.href}
+                    aria-current={isActive ? "page" : undefined}
+                    onClick={() => setMenuOpen(false)}
+                    className={cn(
+                      "block rounded-lg px-3 py-3 text-base transition-colors",
+                      isActive
+                        ? "bg-white/10 text-white"
+                        : "text-gray-300 hover:bg-white/5 hover:text-white"
+                    )}>
+                    {item.label}
                   </Link>
-                </FadeText>
-              </NavigationMenuItem>
-            </>
-          ) : (
-            // Other pages navigation - use links
-            <>
-              <NavigationMenuItem className="mx-1 my-0.5 sm:my-1 md:mx-2 md:my-0">
-                <FadeText
-                  direction="down"
-                  framerProps={{
-                    hidden: { opacity: 0, y: -10 },
-                    show: {
-                      opacity: 1,
-                      y: 0,
-                      transition: { delay: 0.3, type: "spring" },
-                    },
-                  }}>
-                  <Link
-                    href="/"
-                    className="text-sm md:text-base text-gray-300 hover:text-white transition-colors px-1 py-1 md:px-2 md:py-0">
-                    Home
-                  </Link>
-                </FadeText>
-              </NavigationMenuItem>
-              <NavigationMenuItem className="mx-1 my-0.5 sm:my-1 md:mx-2 md:my-0">
-                <FadeText
-                  direction="down"
-                  framerProps={{
-                    hidden: { opacity: 0, y: -10 },
-                    show: {
-                      opacity: 1,
-                      y: 0,
-                      transition: { delay: 0.4, type: "spring" },
-                    },
-                  }}>
-                  <Link
-                    href="/photography"
-                    className={`text-sm md:text-base transition-colors px-1 py-1 md:px-2 md:py-0 ${
-                      pathname === "/photography"
-                        ? "text-white"
-                        : "text-gray-300 hover:text-white"
-                    }`}>
-                    Photography
-                  </Link>
-                </FadeText>
-              </NavigationMenuItem>
-            </>
-          )}
-        </NavigationMenuList>
-      </NavigationMenu>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+      )}
     </header>
   );
 }
