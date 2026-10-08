@@ -1,76 +1,73 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import IconCloud from "./ui/icon-cloud";
+import React from "react";
+import dynamic from "next/dynamic";
 import { AnimateOnScroll } from "@/components/AnimateOnScroll";
 import { NeonGradientCard } from "@/components/ui/neon-gradient-card";
 
+// The cloud draws on a canvas, so only it waits for the browser; the skills
+// list below stays in the server-rendered HTML.
+const IconCloud = dynamic(() => import("./ui/icon-cloud"), {
+  ssr: false,
+  loading: () => <div className="aspect-square w-full" />,
+});
+
+const techStackSlugs = [
+  "adobelightroom",
+  "adobephotoshop",
+  "c",
+  "cplusplus",
+  "css3",
+  "figma",
+  "git",
+  "github",
+  "html5",
+  "java",
+  "javascript",
+  "mysql",
+  "nextdotjs",
+  "nodejs",
+  "python",
+  "react",
+  "sqlite",
+  "typescript",
+  "vercel",
+  "visualstudiocode",
+  "vuejs",
+];
+
+const skillsList = [
+  {
+    category: "Programming Languages and Web Technologies",
+    skills: "JavaScript, TypeScript, HTML, CSS, Python, C, C++, Java",
+  },
+  {
+    category: "Web Development",
+    skills: "React, Vue.js, Node.js, Next.js",
+  },
+  {
+    category: "Databases",
+    skills: "MySQL, SQLite",
+  },
+  {
+    category: "Version Control and Deployment",
+    skills: "Git, GitHub, Vercel",
+  },
+  {
+    category: "Development Tools and IDEs",
+    skills: "Visual Studio Code, Cursor, PyCharm, CLion, Eclipse",
+  },
+  {
+    category: "Design and Creative Tools",
+    skills: "Figma, Adobe Lightroom, Adobe Photoshop",
+  },
+  {
+    category: "Libraries and Additional Tools",
+    skills: "shadcn/ui, Three.js, Vite, pyautogui",
+  },
+];
+
 export function Skills() {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const techStackSlugs = [
-    "adobelightroom",
-    "adobephotoshop",
-    "c",
-    "cplusplus",
-    "css3",
-    "figma",
-    "git",
-    "github",
-    "html5",
-    "java",
-    "javascript",
-    "mysql",
-    "nextdotjs",
-    "nodejs",
-    "python",
-    "react",
-    "sqlite",
-    "typescript",
-    "vercel",
-    "visualstudiocode",
-    "vuejs",
-  ];
-
-  const skillsList = [
-    {
-      category: "Programming Languages and Web Technologies",
-      skills: "JavaScript, TypeScript, HTML, CSS, Python, C, C++, Java",
-    },
-    {
-      category: "Web Development",
-      skills: "React, Vue.js, Node.js, Next.js",
-    },
-    {
-      category: "Databases",
-      skills: "MySQL, SQLite",
-    },
-    {
-      category: "Version Control and Deployment",
-      skills: "Git, GitHub, Vercel",
-    },
-    {
-      category: "Development Tools and IDEs",
-      skills: "Visual Studio Code, Cursor, PyCharm, CLion, Eclipse",
-    },
-    {
-      category: "Design and Creative Tools",
-      skills: "Figma, Adobe Lightroom, Adobe Photoshop",
-    },
-    {
-      category: "Libraries and Additional Tools",
-      skills: "shadcn/ui, Three.js, Vite, pyautogui",
-    },
-  ];
-
-  if (!mounted) {
-    return null; // or a loading placeholder
-  }
-
   return (
     <section id="skills" className="relative py-12 pt-24">
       <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -103,11 +100,7 @@ export function Skills() {
             borderRadius={20}
             neonColors={{ firstColor: "#4ade80", secondColor: "#3b82f6" }}>
             <div className="p-4 cursor-pointer">
-              <IconCloud
-                iconSlugs={techStackSlugs}
-                onIconClick={(slug) => console.log(`Clicked on ${slug}`)}
-                // Remove the className prop from here
-              />
+              <IconCloud iconSlugs={techStackSlugs} />
             </div>
           </NeonGradientCard>
         </AnimateOnScroll>

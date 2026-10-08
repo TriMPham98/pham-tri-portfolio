@@ -441,4 +441,6 @@ export interface Photo {
   category: string;
   width: number;
   height: number;
+  // Describe what's in the shot; falls back to the category when missing.
+  alt?: string;
 }

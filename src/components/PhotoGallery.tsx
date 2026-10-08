@@ -11,6 +11,10 @@ import Image from "next/image";
 import { createPortal } from "react-dom";
 import { photos, type Photo } from "../data/photos";
 
+function photoAlt(photo: Photo) {
+  return photo.alt ?? `${photo.category} photograph`;
+}
+
 const GalleryImage = React.memo(
   ({ photo, priority }: { photo: Photo; priority: boolean }) => {
     const frameRef = useRef<HTMLDivElement>(null);
@@ -118,7 +122,7 @@ const LightboxPhoto = React.memo(
       <Image
         ref={ref}
         src={photo.src}
-        alt=""
+        alt={photoAlt(photo)}
         width={photo.width}
         height={photo.height}
         sizes={LIGHTBOX_SIZES}
@@ -175,7 +179,7 @@ const Lightbox = React.memo(
         onClick={onClose}
         role="dialog"
         aria-modal="true"
-        aria-label="Photo">
+        aria-label={`Photo ${currentImageIndex + 1} of ${length}`}>
         <button
           onClick={onClose}
           aria-label="Close"
@@ -256,9 +260,7 @@ export const PhotoGallery = React.memo(() => {
   // Reset currentImageIndex when filter changes to prevent index misalignment
   useEffect(() => {
     setCurrentImageIndex(0);
-    if (lightboxOpen) {
-      setLightboxOpen(false);
-    }
+    setLightboxOpen(false);
   }, [filter]);
 
   // Check if device is mobile with matchMedia (SSR-safe)
@@ -326,7 +328,7 @@ export const PhotoGallery = React.memo(() => {
         setLightboxOpen(true);
       }
     },
-    [filteredPhotos.length]
+    [filteredPhotos]
   );
 
   const closeLightbox = useCallback(() => {
@@ -407,13 +409,15 @@ export const PhotoGallery = React.memo(() => {
             key={photo.id}
             className="masonry-item"
             style={{ marginBottom: "1rem" }}>
-            <div
-              className={`relative overflow-hidden rounded-lg bg-neutral-900 ${
+            <button
+              type="button"
+              aria-label={`${photoAlt(photo)}, ${index + 1} of ${filteredPhotos.length}`}
+              className={`relative block w-full overflow-hidden rounded-lg bg-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white ${
                 isMobile ? "" : "cursor-pointer hover:opacity-90"
               }`}
               onClick={() => openLightbox(index)}>
               <GalleryImage photo={photo} priority={index === 0} />
-            </div>
+            </button>
           </div>
         ))}
       </div>

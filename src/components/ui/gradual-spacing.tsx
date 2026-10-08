@@ -22,22 +22,26 @@ export default function GradualSpacing({
   },
   className,
 }: GradualSpacingProps) {
+  // One heading for assistive tech and crawlers; the per-letter spans are
+  // only there to animate.
   return (
-    <div className="flex justify-center space-x-0.5">
+    <h1
+      aria-label={text}
+      className={cn("flex justify-center space-x-0.5 drop-shadow-sm", className)}>
       <AnimatePresence>
         {text.split("").map((char, i) => (
-          <motion.h1
+          <motion.span
             key={i}
+            aria-hidden="true"
             initial="hidden"
             animate="visible"
             exit="hidden"
             variants={framerProps}
-            transition={{ duration, delay: i * delayMultiple }}
-            className={cn("drop-shadow-sm ", className)}>
+            transition={{ duration, delay: i * delayMultiple }}>
             {char === " " ? <span>&nbsp;</span> : char}
-          </motion.h1>
+          </motion.span>
         ))}
       </AnimatePresence>
-    </div>
+    </h1>
   );
 }

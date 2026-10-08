@@ -17,7 +17,16 @@ export const metadata: Metadata = {
     description:
       "Explore Tri Pham's photography portfolio featuring wedding, portrait, and music photography",
     type: "website",
+    url: "/photography",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Photography Portfolio - Tri Pham",
+    description:
+      "Explore Tri Pham's photography portfolio featuring wedding, portrait, and music photography",
+    creator: "@Trizus",
+  },
+  alternates: { canonical: "/photography" },
 };
 
 export default function PhotographyLayout({

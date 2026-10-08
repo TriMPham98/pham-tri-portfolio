@@ -14,7 +14,7 @@ const BentoGrid = ({
   return (
     <div
       className={cn(
-        "grid w-full auto-rows-[22rem] grid-cols-3 gap-4",
+        "grid w-full auto-rows-[minmax(22rem,auto)] grid-cols-3 gap-4",
         className
       )}>
       {children}
@@ -54,15 +54,20 @@ const BentoCard = ({
       className
     )}>
     <div>{background}</div>
-    <div className="pointer-events-none z-10 flex transform-gpu flex-col gap-1 p-6 transition-all duration-300 group-hover:-translate-y-10">
-      <Icon className="h-12 w-12 origin-left transform-gpu text-white transition-all duration-300 ease-in-out group-hover:scale-75" />
+    <div className="pointer-events-none z-10 flex transform-gpu flex-col gap-1 p-6 transition-all duration-300 can-hover:group-hover:-translate-y-10 can-hover:group-focus-within:-translate-y-10">
+      <Icon className="h-12 w-12 origin-left transform-gpu text-white transition-all duration-300 ease-in-out can-hover:group-hover:scale-75 can-hover:group-focus-within:scale-75" />
       <h3 className="text-xl font-semibold text-white">{name}</h3>
       <p className="max-w-lg text-white">{description}</p>
     </div>
 
     <div
       className={cn(
-        "pointer-events-none absolute bottom-0 flex w-full translate-y-10 transform-gpu flex-row items-center p-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
+        // Always visible on touch screens; fades in on hover or keyboard focus
+        // where a hover pointer exists. No offscreen translate here: focusing a
+        // link outside the card would scroll the overflow-hidden card itself.
+        "pointer-events-none z-10 flex w-full flex-row flex-wrap items-center p-4 pt-0 transition-opacity duration-300",
+        "can-hover:absolute can-hover:bottom-0 can-hover:pt-4 can-hover:opacity-0",
+        "group-hover:opacity-100 group-focus-within:opacity-100"
       )}>
       {links.map((link) => (
         <Button
