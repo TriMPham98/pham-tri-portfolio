@@ -1,15 +1,6 @@
 import React from "react";
 import { BentoGrid, BentoCard } from "@/components/ui/bento-grid";
-import {
-  UtensilsIcon,
-  GlobeIcon,
-  GamepadIcon,
-  PuzzleIcon,
-  MusicIcon,
-  MonitorIcon,
-  ZapIcon,
-} from "lucide-react";
-import Marquee from "@/components/ui/marquee";
+import { GlobeIcon, GamepadIcon, MusicIcon, ZapIcon } from "lucide-react";
 import { DemoVideo } from "@/components/ui/demo-video";
 import { SectionHeading, sectionClassName } from "@/components/SectionHeading";
 
@@ -92,39 +83,6 @@ export function Projects() {
     },
   ];
 
-  const funProjects = [
-    {
-      name: "Smart Mirror",
-      icon: MonitorIcon,
-      href: "https://github.com/TriMPham98/MagicMirror",
-    },
-    {
-      name: "3-D Earth",
-      icon: GlobeIcon,
-      href: "https://github.com/TriMPham98/threejs-earth",
-    },
-    {
-      name: "MP3 Visualizer",
-      icon: MusicIcon,
-      href: "https://github.com/TriMPham98/mp3-audio-visualizer",
-    },
-    {
-      name: "Keyboard Drum Set",
-      icon: GamepadIcon,
-      href: "https://github.com/TriMPham98/javascript-drum-set",
-    },
-    {
-      name: "Wordle",
-      icon: PuzzleIcon,
-      href: "https://github.com/TriMPham98/wordle",
-    },
-    {
-      name: "Upscale Restaurant",
-      icon: UtensilsIcon,
-      href: "https://github.com/TriMPham98/fine-dining-restaurant-landing-page",
-    },
-  ];
-
   return (
     <section id="projects" className={sectionClassName}>
       <div className="mx-auto max-w-6xl">
@@ -154,27 +112,6 @@ export function Projects() {
             />
           ))}
         </BentoGrid>
-
-        <div className="mt-16 md:mt-20">
-          <h3 className="mb-4 text-center text-sm font-semibold uppercase tracking-[0.2em] text-gray-400">
-            More experiments
-          </h3>
-          <Marquee
-            pauseOnHover
-            className="[mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
-            {funProjects.map((project) => (
-              <a
-                key={project.name}
-                href={project.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-gray-300 transition-colors duration-300 hover:border-white/30 hover:bg-white/10 hover:text-white">
-                <project.icon aria-hidden="true" className="h-5 w-5" />
-                <span className="whitespace-nowrap font-medium">{project.name}</span>
-              </a>
-            ))}
-          </Marquee>
-        </div>
       </div>
     </section>
   );
